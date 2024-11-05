@@ -11,12 +11,36 @@ class TaskManager {
 
     async loadTasks() {
         try {
+            // Загружаем данные из Google Sheets
             const response = await fetch('https://script.google.com/macros/s/AKfycbwMbiYIzsnP07ciF6zVwV3jiajZT6_fNFBnYxN1vRJJbuQ2VVaS12a6RwYiRV3IxTjP/exec');
-            const data = await response.json();
-            this.tasks = data.tasks || [];
+            const remoteData = await response.json();
+            const remoteTasks = remoteData.tasks || [];
+
+            // Загружаем локальные данные
+            const localData = localStorage.getItem('tasks');
+            const localTasks = localData ? JSON.parse(localData) : [];
+
+            // Объединяем задачи, используя ID как ключ
+            const tasksMap = new Map();
+            
+            // Сначала добавляем удаленные задачи
+            remoteTasks.forEach(task => {
+                tasksMap.set(task.id, task);
+            });
+
+            // Добавляем локальные задачи, если их нет в удаленных
+            localTasks.forEach(task => {
+                if (!tasksMap.has(task.id)) {
+                    tasksMap.set(task.id, task);
+                }
+            });
+
+            // Преобразуем Map обратно в массив
+            this.tasks = Array.from(tasksMap.values());
             this.renderTasks();
         } catch (error) {
             console.error('Error loading tasks:', error);
+            // Если не удалось загрузить удаленные данные, используем локальные
             const savedTasks = localStorage.getItem('tasks');
             this.tasks = savedTasks ? JSON.parse(savedTasks) : [];
         }
@@ -360,8 +384,20 @@ class TaskManager {
     }
 
     addTask(taskData) {
+        const generateUniqueId = () => {
+            const timestamp = Date.now();
+            const random = Math.floor(Math.random() * 10000);
+            return `${timestamp}-${random}`;
+        };
+
+        // Генерируем ID и проверяем его уникальность
+        let taskId;
+        do {
+            taskId = generateUniqueId();
+        } while (this.tasks.some(task => task.id === taskId));
+
         const task = {
-            id: Date.now().toString(),
+            id: taskId,
             taskNumber: taskData.taskNumber || null,
             title: taskData.title,
             description: taskData.description,
@@ -374,7 +410,6 @@ class TaskManager {
             updatedAt: new Date().toISOString()
         };
         
-        console.log('New task:', task);
         this.tasks.push(task);
         this.saveTasks();
     }
@@ -410,7 +445,7 @@ class TaskManager {
             zone.innerHTML = '';
         });
 
-        // Отрисовываем з��дачи в основн��й таблице
+        // Отрисовываем задачи в основной таблице
         this.tasks.forEach(task => {
             // Проверяем и конвертируем старый формат в новый
             if (!task.assignees && task.assignee) {
@@ -462,13 +497,18 @@ class TaskManager {
         const nonEmptyAssignees = (task.assignees || [task.assignee || 'empty'])
             .filter(assignee => assignee !== 'empty');
         
+        // Создаем номер задачи: если есть taskNumber используем его, 
+        // иначе берем последние 4 символа из ID, конвертируя в строку
+        const taskNumber = task.taskNumber || 
+            (typeof task.id === 'string' ? 
+                task.id.slice(-4) : 
+                String(task.id).slice(-4));
+        
         div.innerHTML = `
             <div class="task-card-header">
                 <div class="task-left">
                     <h4 class="task-title">${task.title}</h4>
-                    <div class="task-number">
-                        #${task.taskNumber || task.id.slice(-4)}
-                    </div>
+                    <div class="task-number">#${taskNumber}</div>
                     <p class="task-description">${task.description}</p>
                 </div>
                 <div class="task-right">

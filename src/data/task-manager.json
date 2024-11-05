@@ -1,0 +1,168 @@
+{
+    "tasks": [
+        {
+            "id": "1",
+            "title": "Разработка главной страницы",
+            "description": "Создать адаптивный дизайн главной страницы",
+            "category": "Must_Have",
+            "priorityStatus": "top-priority",
+            "progressStatus": "who-take",
+            "assignees": [
+                "empty"
+            ],
+            "subtasks": [
+                {
+                    "id": "sub1",
+                    "text": "Перелік фільтрів (справа) з урахування назви фільтру, кількості категорій у відповіді на запит та порядкового номеру сторінки",
+                    "completed": false
+                },
+                {
+                    "id": "sub2",
+                    "text": "Перелік вправ з фільтрацією по категорії та ключовому слову з урахування кількості вправ у запиті та порядкового номеру сторінки",
+                    "completed": false
+                },
+                {
+                    "id": "sub3",
+                    "text": "Детальна інформація про вправу",
+                    "completed": false
+                },
+                {
+                    "id": "sub4",
+                    "text": "Додавання рейтингу окремій вправі",
+                    "completed": false
+                },
+                {
+                    "id": "sub5",
+                    "text": "Цитата дня",
+                    "completed": false
+                },
+                {
+                    "id": "sub6",
+                    "text": "Оформлення підписки на розсилку нових вправ",
+                    "completed": false
+                }
+            ],
+            "createdAt": "2024-03-10T10:00:00.000Z",
+            "updatedAt": "2024-11-05T05:27:13.987Z"
+        },
+        {
+            "id": "1730761904631",
+            "title": "asadsfasdf",
+            "description": "asdfasdf",
+            "category": "Upgrade",
+            "priorityStatus": "top-priority",
+            "progressStatus": "in-progress",
+            "assignees": [
+                "Andrii Sushylnikov",
+                "Maks Ki"
+            ],
+            "subtasks": [
+                {
+                    "id": "1730784479300gr9mhc6xz",
+                    "text": "Перелік фільтрів (справа) з урахування назви фільтру",
+                    "completed": true
+                },
+                {
+                    "id": "1730784479300r9jl8urw0",
+                    "text": "Перелік вправ з фільтрацією по категорії",
+                    "completed": false
+                },
+                {
+                    "id": "1730784479300nmmbll13m",
+                    "text": "asdfasfasd",
+                    "completed": false
+                },
+                {
+                    "id": "17307844793001cpkh5kq7",
+                    "text": "adfasdf",
+                    "completed": false
+                }
+            ],
+            "createdAt": "2024-11-04T23:11:44.631Z",
+            "updatedAt": "2024-11-05T05:27:59.300Z",
+            "taskNumber": null
+        },
+        {
+            "id": "1730761967243",
+            "title": "aaaaaaaaaa",
+            "description": "ssssssssssss",
+            "category": "Must_Have",
+            "priorityStatus": "important",
+            "progressStatus": "done",
+            "assignees": [
+                "Maks Ki"
+            ],
+            "subtasks": [
+                {
+                    "id": "1730775535297tndn0137a",
+                    "text": "Додавання рейтингу окремій вправі",
+                    "completed": true
+                },
+                {
+                    "id": "1730775535297s623mgwzd",
+                    "text": "Цитата дня",
+                    "completed": true
+                }
+            ],
+            "createdAt": "2024-11-04T23:12:47.243Z",
+            "updatedAt": "2024-11-05T02:58:55.298Z",
+            "taskNumber": "31"
+        },
+        {
+            "id": "1730764016060",
+            "title": "фывфыв",
+            "description": "asdasdaasdfasdfasdfasdfasdasdasdaasdfasdfasdfasdfasdasdasdaasdfasdfasdfasdfasdasdasdaasdfasdfasdfasdfas\ndasdasdaasdfasdfasdfasdfasdasdasdaasdfasdfasdf\nasdfasdasdasdaasdfasdfasdfasdfasdasdasdaasdfasd",
+            "category": "Upgrade",
+            "priorityStatus": "to-fix",
+            "progressStatus": "in-progress",
+            "assignees": [
+                "Daria Honcharuk"
+            ],
+            "subtasks": [
+                {
+                    "id": "1730775545966pkmmn91ng",
+                    "text": "Перелік фільтрів (справа)",
+                    "completed": true
+                },
+                {
+                    "id": "17307755459668qszm223i",
+                    "text": "Перелік вправ з фільтрацією",
+                    "completed": false
+                },
+                {
+                    "id": "1730775545966t4wh2ahhk",
+                    "text": "Детальна інформація",
+                    "completed": true
+                }
+            ],
+            "createdAt": "2024-11-04T23:46:56.060Z",
+            "updatedAt": "2024-11-05T02:59:05.966Z",
+            "taskNumber": null
+        },
+        {
+            "id": "1730767498965",
+            "title": "asdasdas",
+            "description": "asdasdsd",
+            "category": "Must_Have",
+            "priorityStatus": "to-fix",
+            "progressStatus": "who-take",
+            "assignees": [
+                "Andrii Sushylnikov"
+            ],
+            "subtasks": [
+                {
+                    "id": "sub15",
+                    "text": "Оформлення підписки на розсилку нових вправ",
+                    "completed": false
+                },
+                {
+                    "id": "sub16",
+                    "text": "Цитата дня",
+                    "completed": false
+                }
+            ],
+            "createdAt": "2024-11-05T00:44:58.965Z",
+            "updatedAt": "2024-11-05T00:46:13.551Z"
+        }
+    ]
+}

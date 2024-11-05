@@ -1,0 +1,82 @@
+<div id="taskModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Задача</h2>
+            <div class="modal-controls">
+                <button type="button" class="delete-task-btn" style="display: none;">Удалить</button>
+                <span class="close">&times;</span>
+            </div>
+        </div>
+        <form id="taskForm">
+            <input type="text" id="taskTitle" placeholder="Заголовок задачи" required>
+            <div class="task-number-container">
+                <input type="text" id="taskNumber" placeholder="Номер задачи (необязательно)" pattern="[0-9]*">
+                <div id="taskNumberSuggestions" class="suggestions-container"></div>
+            </div>
+            <textarea id="taskDescription" placeholder="Описание задачи" required></textarea>
+            <select id="taskCategory" required>
+                <option value="Must_Have" selected>Must Have</option>
+                <option value="Upgrade">Upgrade</option>
+                <option value="Specific">Specific</option>
+            </select>
+            <select id="taskPriority" required>
+                <option value="top-priority">Top-priority</option>
+                <option value="important">Important</option>
+                <option value="to-fix">To Fix</option>
+                <option value="normal">Normal</option>
+            </select>
+            <select id="taskStatus" required>
+                <option value="who-take">Who Take</option>
+                <option value="in-progress">In Progress</option>
+                <option value="to-verify">To Verify</option>
+                <option value="done">Done</option>
+            </select>
+            <div class="assignees-container">
+                <div class="assignee-header">
+                    <label>Исполнители</label>
+                    <button type="button" id="addAssigneeBtn" class="add-assignee-btn">+</button>
+                </div>
+                <div id="assigneesList">
+                    <div class="assignee-item">
+                        <select class="taskAssignee" required>
+                            <option value="empty">Empty</option>
+                            <option value="Andrii Sushylnikov">Andrii Sushylnikov</option>
+                            <option value="Daria Honcharuk">Daria Honcharuk</option>
+                            <option value="Dmytro Mayevsky">Dmytro Mayevsky</option>
+                            <option value="Maks Ki">Maks Ki</option>
+                            <option value="Mariia Sv.">Mariia Sv.</option>
+                            <option value="Roman Turas">Roman Turas</option>
+                            <option value="Viktoriia Didenko">Viktoriia Didenko</option>
+                            <option value="Hryhorii Chernysh">Hryhorii Chernysh (Mentor)</option>
+                            <option value="Daria">Daria (client manager)</option>
+                            <option value="Lesya Katanova">Lesya Katanova</option>
+                            <option value="Olena Deineha">Olena Deineha</option>
+                        </select>
+                        <button type="button" class="remove-assignee-btn">×</button>
+                    </div>
+                </div>
+            </div>
+            <div class="subtasks-container">
+                <div class="subtasks-header">
+                    <label>Подзадачи</label>
+                    <button type="button" id="addSubtaskBtn" class="add-subtask-btn">+</button>
+                </div>
+                <div id="subtasksList">
+                    <!-- Здесь будут подзадачи -->
+                </div>
+            </div>
+            <button type="submit">Сохранить</button>
+        </form>
+    </div>
+</div>
+
+<div id="deleteConfirmModal" class="modal">
+    <div class="modal-content delete-confirm">
+        <h2>Подтверждение удаления</h2>
+        <p>Вы уверены, что хотите удалить эту задачу?</p>
+        <div class="confirm-buttons">
+            <button id="confirmDelete" class="danger-btn">Удалить</button>
+            <button id="cancelDelete" class="cancel-btn">Отмена</button>
+        </div>
+    </div>
+</div> 

@@ -11,35 +11,30 @@ class TaskManager {
 
     async loadTasks() {
         try {
-            const response = await fetch('../data/task-manager.json');
+            const response = await fetch('https://script.google.com/macros/s/AKfycbwMbiYIzsnP07ciF6zVwV3jiajZT6_fNFBnYxN1vRJJbuQ2VVaS12a6RwYiRV3IxTjP/exec');
             const data = await response.json();
             this.tasks = data.tasks || [];
             this.renderTasks();
         } catch (error) {
             console.error('Error loading tasks:', error);
-            this.tasks = [];
+            const savedTasks = localStorage.getItem('tasks');
+            this.tasks = savedTasks ? JSON.parse(savedTasks) : [];
         }
     }
 
     async saveTasks() {
         try {
-            const data = { tasks: this.tasks };
-            
-            const response = await fetch('/api/save-tasks', {
+            const response = await fetch('https://script.google.com/macros/s/AKfycbwMbiYIzsnP07ciF6zVwV3jiajZT6_fNFBnYxN1vRJJbuQ2VVaS12a6RwYiRV3IxTjP/exec', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data)
+                body: JSON.stringify({ tasks: this.tasks })
             });
-
-            if (!response.ok) {
-                throw new Error('Failed to save tasks');
-            }
-
-            console.log('Tasks saved successfully');
+            
+            if (!response.ok) throw new Error('Failed to save');
+            
+            localStorage.setItem('tasks', JSON.stringify(this.tasks));
         } catch (error) {
             console.error('Error saving tasks:', error);
+            localStorage.setItem('tasks', JSON.stringify(this.tasks));
         }
     }
 
@@ -415,7 +410,7 @@ class TaskManager {
             zone.innerHTML = '';
         });
 
-        // Отрисовываем задачи в основной таблице
+        // Отрисовываем з��дачи в основн��й таблице
         this.tasks.forEach(task => {
             // Проверяем и конвертируем старый формат в новый
             if (!task.assignees && task.assignee) {

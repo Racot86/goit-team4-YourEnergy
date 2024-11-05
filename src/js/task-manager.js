@@ -475,18 +475,14 @@ class TaskManager {
         const nonEmptyAssignees = (task.assignees || [task.assignee || 'empty'])
             .filter(assignee => assignee !== 'empty');
         
-        // Создаем номер задачи: если есть taskNumber используем его, 
-        // иначе берем последние 4 символа из ID, конвертируя в строку
-        const taskNumber = task.taskNumber || 
-            (typeof task.id === 'string' ? 
-                task.id.slice(-4) : 
-                String(task.id).slice(-4));
+        // Форматируем номер задачи: № 7 или № ###
+        const taskNumber = task.taskNumber ? `№ ${task.taskNumber}` : '№ ***';
         
         div.innerHTML = `
             <div class="task-card-header">
                 <div class="task-left">
                     <h4 class="task-title">${task.title}</h4>
-                    <div class="task-number">#${taskNumber}</div>
+                    <div class="task-number">${taskNumber}</div>
                     <p class="task-description">${task.description}</p>
                 </div>
                 <div class="task-right">

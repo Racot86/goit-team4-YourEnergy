@@ -1,4 +1,4 @@
-//string requests
+//string request
 export const baseUrl = () => {
   return 'https://your-energy.b.goit.study/api';
 }

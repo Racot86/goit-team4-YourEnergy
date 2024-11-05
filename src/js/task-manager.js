@@ -11,38 +11,13 @@ class TaskManager {
 
     async loadTasks() {
         try {
-            // Загружаем данные из Google Sheets
             const response = await fetch('https://script.google.com/macros/s/AKfycbwMbiYIzsnP07ciF6zVwV3jiajZT6_fNFBnYxN1vRJJbuQ2VVaS12a6RwYiRV3IxTjP/exec');
-            const remoteData = await response.json();
-            const remoteTasks = remoteData.tasks || [];
-
-            // Загружаем локальные данные
-            const localData = localStorage.getItem('tasks');
-            const localTasks = localData ? JSON.parse(localData) : [];
-
-            // Объединяем задачи, используя ID как ключ
-            const tasksMap = new Map();
-            
-            // Сначала добавляем удаленные задачи
-            remoteTasks.forEach(task => {
-                tasksMap.set(task.id, task);
-            });
-
-            // Добавляем локальные задачи, если их нет в удаленных
-            localTasks.forEach(task => {
-                if (!tasksMap.has(task.id)) {
-                    tasksMap.set(task.id, task);
-                }
-            });
-
-            // Преобразуем Map обратно в массив
-            this.tasks = Array.from(tasksMap.values());
+            const data = await response.json();
+            this.tasks = data.tasks || [];
             this.renderTasks();
         } catch (error) {
             console.error('Error loading tasks:', error);
-            // Если не удалось загрузить удаленные данные, используем локальные
-            const savedTasks = localStorage.getItem('tasks');
-            this.tasks = savedTasks ? JSON.parse(savedTasks) : [];
+            this.tasks = []; // Если не удалось загрузить, начинаем с пустого массива
         }
     }
 
@@ -53,12 +28,15 @@ class TaskManager {
                 body: JSON.stringify({ tasks: this.tasks })
             });
             
-            if (!response.ok) throw new Error('Failed to save');
+            if (!response.ok) {
+                throw new Error('Failed to save tasks');
+            }
             
-            localStorage.setItem('tasks', JSON.stringify(this.tasks));
+            console.log('Tasks saved successfully');
         } catch (error) {
             console.error('Error saving tasks:', error);
-            localStorage.setItem('tasks', JSON.stringify(this.tasks));
+            // Можно добавить уведомление пользователю о неудачном сохранении
+            alert('Не удалось сохранить изменения. Попробуйте еще раз.');
         }
     }
 

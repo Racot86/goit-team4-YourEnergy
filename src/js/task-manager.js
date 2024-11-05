@@ -321,9 +321,15 @@ class TaskManager {
             completed: item.querySelector('.subtask-checkbox').checked
         }));
 
+        // Собираем исполнителей, включая 'empty'
         const assignees = Array.from(form.querySelectorAll('.taskAssignee'))
             .map(select => select.value)
-            .filter(value => value !== 'empty');
+            .filter(value => value); // Убираем пустые значения, но оставляем 'empty'
+
+        // Если нет исполнителей или все исполнители были удалены, добавляем 'empty'
+        if (assignees.length === 0) {
+            assignees.push('empty');
+        }
 
         const taskData = {
             title: form.taskTitle.value,
@@ -417,30 +423,36 @@ class TaskManager {
                 delete task.assignee;
             }
             
-            const taskElement = this.createTaskElement(task);
-            const dropZone = document.querySelector(
-                `.drop-zone[data-priority="${task.priorityStatus}"][data-status="${task.progressStatus}"]`
-            );
-            if (dropZone) {
-                dropZone.appendChild(taskElement);
+            // Проверяем, есть ли среди исполнителей кто-то кроме Empty
+            const hasNonEmptyAssignee = task.assignees.some(assignee => assignee !== 'empty');
+            
+            // Создаем элемент задачи только если есть не-Empty исполнитель
+            if (hasNonEmptyAssignee) {
+                const taskElement = this.createTaskElement(task);
+                const dropZone = document.querySelector(
+                    `.drop-zone[data-priority="${task.priorityStatus}"][data-status="${task.progressStatus}"]`
+                );
+                if (dropZone) {
+                    dropZone.appendChild(taskElement);
+                }
             }
         });
 
-        // Отрисовываем Must Have задачи
+        // Отрисовываем Must Have задачи (включая Empty)
         const mustHaveGrid = document.querySelector('.must-have-grid');
         if (mustHaveGrid) {
             mustHaveGrid.innerHTML = '';
             const mustHaveTasks = this.tasks.filter(task => task.category === 'Must_Have');
-            const mustHaveByAssignee = this.groupTasksByAssignee(mustHaveTasks);
+            const mustHaveByAssignee = this.groupTasksByAssignee(mustHaveTasks, true);
             this.renderGroupedTasks(mustHaveByAssignee, mustHaveGrid);
         }
 
-        // Отрисовываем Upgrade задачи
+        // Отрисовываем Upgrade задачи (включая Empty)
         const upgradeGrid = document.querySelector('.upgrade-grid');
         if (upgradeGrid) {
             upgradeGrid.innerHTML = '';
             const upgradeTasks = this.tasks.filter(task => task.category === 'Upgrade');
-            const upgradeByAssignee = this.groupTasksByAssignee(upgradeTasks);
+            const upgradeByAssignee = this.groupTasksByAssignee(upgradeTasks, true);
             this.renderGroupedTasks(upgradeByAssignee, upgradeGrid);
         }
     }
@@ -451,8 +463,9 @@ class TaskManager {
         div.draggable = true;
         div.dataset.taskId = task.id;
         
-        // Проверяем и конвертируем старый формат в новый
-        const assignees = task.assignees || [task.assignee || 'empty'];
+        // Фильтруем исполнителей, исключая Empty
+        const nonEmptyAssignees = (task.assignees || [task.assignee || 'empty'])
+            .filter(assignee => assignee !== 'empty');
         
         div.innerHTML = `
             <div class="task-card-header">
@@ -465,7 +478,7 @@ class TaskManager {
                 </div>
                 <div class="task-right">
                     <div class="assignees-list">
-                        ${assignees.map(assignee => `
+                        ${nonEmptyAssignees.map(assignee => `
                             <div class="assignee-badge">${assignee}</div>
                         `).join('')}
                     </div>
@@ -554,17 +567,20 @@ class TaskManager {
         localStorage.setItem('theme', newTheme);
     }
 
-    // Вспомогательный метод для группировки задач по исполнителям
-    groupTasksByAssignee(tasks) {
+    // Обновленный метод groupTasksByAssignee с параметром includeEmpty
+    groupTasksByAssignee(tasks, includeEmpty = false) {
         const grouped = {};
         tasks.forEach(task => {
             const assignees = task.assignees || [task.assignee || 'empty'];
             assignees.forEach(assignee => {
-                if (!grouped[assignee]) {
-                    grouped[assignee] = [];
-                }
-                if (!grouped[assignee].includes(task)) {
-                    grouped[assignee].push(task);
+                // Включаем Empty только если includeEmpty = true
+                if (assignee !== 'empty' || includeEmpty) {
+                    if (!grouped[assignee]) {
+                        grouped[assignee] = [];
+                    }
+                    if (!grouped[assignee].includes(task)) {
+                        grouped[assignee].push(task);
+                    }
                 }
             });
         });

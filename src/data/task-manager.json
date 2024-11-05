@@ -8,42 +8,43 @@
             "priorityStatus": "top-priority",
             "progressStatus": "who-take",
             "assignees": [
-                "empty"
+                "Andrii Sushylnikov"
             ],
             "subtasks": [
                 {
-                    "id": "sub1",
+                    "id": "1730786336617eqaib0x3s",
                     "text": "Перелік фільтрів (справа) з урахування назви фільтру, кількості категорій у відповіді на запит та порядкового номеру сторінки",
                     "completed": false
                 },
                 {
-                    "id": "sub2",
+                    "id": "1730786336617f2u975e39",
                     "text": "Перелік вправ з фільтрацією по категорії та ключовому слову з урахування кількості вправ у запиті та порядкового номеру сторінки",
                     "completed": false
                 },
                 {
-                    "id": "sub3",
+                    "id": "1730786336617lj5ueba91",
                     "text": "Детальна інформація про вправу",
                     "completed": false
                 },
                 {
-                    "id": "sub4",
+                    "id": "1730786336617azyc4gi2t",
                     "text": "Додавання рейтингу окремій вправі",
                     "completed": false
                 },
                 {
-                    "id": "sub5",
+                    "id": "1730786336617nenmf89hi",
                     "text": "Цитата дня",
                     "completed": false
                 },
                 {
-                    "id": "sub6",
+                    "id": "17307863366171tok6s1fm",
                     "text": "Оформлення підписки на розсилку нових вправ",
                     "completed": false
                 }
             ],
             "createdAt": "2024-03-10T10:00:00.000Z",
-            "updatedAt": "2024-11-05T05:27:13.987Z"
+            "updatedAt": "2024-11-05T05:58:56.617Z",
+            "taskNumber": null
         },
         {
             "id": "1730761904631",
@@ -90,22 +91,22 @@
             "priorityStatus": "important",
             "progressStatus": "done",
             "assignees": [
-                "Maks Ki"
+                "Hryhorii Chernysh"
             ],
             "subtasks": [
                 {
-                    "id": "1730775535297tndn0137a",
+                    "id": "1730786318049642rswtwk",
                     "text": "Додавання рейтингу окремій вправі",
                     "completed": true
                 },
                 {
-                    "id": "1730775535297s623mgwzd",
+                    "id": "1730786318049km2rw5njx",
                     "text": "Цитата дня",
                     "completed": true
                 }
             ],
             "createdAt": "2024-11-04T23:12:47.243Z",
-            "updatedAt": "2024-11-05T02:58:55.298Z",
+            "updatedAt": "2024-11-05T05:58:38.049Z",
             "taskNumber": "31"
         },
         {
@@ -116,27 +117,27 @@
             "priorityStatus": "to-fix",
             "progressStatus": "in-progress",
             "assignees": [
-                "Daria Honcharuk"
+                "empty"
             ],
             "subtasks": [
                 {
-                    "id": "1730775545966pkmmn91ng",
+                    "id": "1730785901956yfrvqsqjv",
                     "text": "Перелік фільтрів (справа)",
                     "completed": true
                 },
                 {
-                    "id": "17307755459668qszm223i",
+                    "id": "1730785901956pv0oq5sax",
                     "text": "Перелік вправ з фільтрацією",
                     "completed": false
                 },
                 {
-                    "id": "1730775545966t4wh2ahhk",
+                    "id": "17307859019563v89l27js",
                     "text": "Детальна інформація",
                     "completed": true
                 }
             ],
             "createdAt": "2024-11-04T23:46:56.060Z",
-            "updatedAt": "2024-11-05T02:59:05.966Z",
+            "updatedAt": "2024-11-05T05:51:41.956Z",
             "taskNumber": null
         },
         {
@@ -144,8 +145,8 @@
             "title": "asdasdas",
             "description": "asdasdsd",
             "category": "Must_Have",
-            "priorityStatus": "to-fix",
-            "progressStatus": "who-take",
+            "priorityStatus": "top-priority",
+            "progressStatus": "to-verify",
             "assignees": [
                 "Andrii Sushylnikov"
             ],
@@ -162,7 +163,52 @@
                 }
             ],
             "createdAt": "2024-11-05T00:44:58.965Z",
-            "updatedAt": "2024-11-05T00:46:13.551Z"
+            "updatedAt": "2024-11-05T06:00:51.072Z"
+        },
+        {
+            "id": "1730786062993",
+            "taskNumber": null,
+            "title": "ыфф",
+            "description": "фыавфыв",
+            "category": "Must_Have",
+            "priorityStatus": "top-priority",
+            "progressStatus": "who-take",
+            "assignees": [
+                "Hryhorii Chernysh"
+            ],
+            "subtasks": [],
+            "createdAt": "2024-11-05T05:54:22.993Z",
+            "updatedAt": "2024-11-05T05:58:29.326Z"
+        },
+        {
+            "id": "1730786388674",
+            "taskNumber": "32",
+            "title": "asadsfasdf",
+            "description": "\\фывавыа",
+            "category": "Must_Have",
+            "priorityStatus": "top-priority",
+            "progressStatus": "who-take",
+            "assignees": [
+                "Dmytro Mayevsky"
+            ],
+            "subtasks": [],
+            "createdAt": "2024-11-05T05:59:48.674Z",
+            "updatedAt": "2024-11-05T05:59:48.674Z"
+        },
+        {
+            "id": "1730786423337",
+            "taskNumber": null,
+            "title": "пулл",
+            "description": "запушить\n",
+            "category": "Must_Have",
+            "priorityStatus": "top-priority",
+            "progressStatus": "who-take",
+            "assignees": [
+                "empty"
+            ],
+            "subtasks": [],
+            "createdAt": "2024-11-05T06:00:23.337Z",
+            "updatedAt": "2024-11-05T06:00:23.337Z"
         }
     ]
 }

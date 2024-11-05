@@ -23,20 +23,32 @@ class TaskManager {
 
     async saveTasks() {
         try {
-            const response = await fetch('https://script.google.com/macros/s/AKfycbwMbiYIzsnP07ciF6zVwV3jiajZT6_fNFBnYxN1vRJJbuQ2VVaS12a6RwYiRV3IxTjP/exec', {
-                method: 'POST',
-                body: JSON.stringify({ tasks: this.tasks })
-            });
-            
-            if (!response.ok) {
-                throw new Error('Failed to save tasks');
+            if (this.saveTimeout) {
+                clearTimeout(this.saveTimeout);
             }
-            
-            console.log('Tasks saved successfully');
+
+            return new Promise((resolve, reject) => {
+                this.saveTimeout = setTimeout(async () => {
+                    try {
+                        const response = await fetch('https://script.google.com/macros/s/AKfycbwMbiYIzsnP07ciF6zVwV3jiajZT6_fNFBnYxN1vRJJbuQ2VVaS12a6RwYiRV3IxTjP/exec', {
+                            method: 'POST',
+                            body: JSON.stringify({ tasks: this.tasks })
+                        });
+                        
+                        if (!response.ok) {
+                            throw new Error('Failed to save tasks');
+                        }
+                        
+                        resolve();
+                    } catch (error) {
+                        console.error('Error saving tasks:', error);
+                        reject(error);
+                    }
+                }, 300);
+            });
         } catch (error) {
-            console.error('Error saving tasks:', error);
-            // Можно добавить уведомление пользователю о неудачном сохранении
-            alert('Не удалось сохранить изменения. Попробуйте еще раз.');
+            console.error('Error in saveTasks:', error);
+            throw error;
         }
     }
 
@@ -102,7 +114,7 @@ class TaskManager {
             }
         });
 
-        // Добавляем обработчик для кнопки добавления подзадачи
+        // Добавляем обработчик для кнопки обавления подзадачи
         document.getElementById('addSubtaskBtn').addEventListener('click', () => {
             this.addSubtaskField();
         });
@@ -183,6 +195,9 @@ class TaskManager {
     }
 
     showModal(taskId = null) {
+        console.log('Opening modal for taskId:', taskId);
+        console.log('All tasks:', this.tasks);
+
         const modal = document.getElementById('taskModal');
         const form = document.getElementById('taskForm');
         const assigneesList = document.getElementById('assigneesList');
@@ -198,32 +213,46 @@ class TaskManager {
         subtasksList.innerHTML = '';
         
         if (taskId) {
-            const task = this.tasks.find(t => t.id === taskId);
+            // Ищем задачу по ID и добавляем проверку на строковое значение
+            const task = this.tasks.find(t => String(t.id) === String(taskId));
+            console.log('Found task:', task);
+            
             if (task) {
+                // Заполняем основные поля
+                form.taskTitle.value = task.title || '';
                 form.taskNumber.value = task.taskNumber || '';
-                form.taskTitle.value = task.title;
-                form.taskDescription.value = task.description;
-                form.taskCategory.value = task.category;
-                form.taskPriority.value = task.priorityStatus;
-                form.taskStatus.value = task.progressStatus;
+                form.taskDescription.value = task.description || '';
+                form.taskCategory.value = task.category || 'Must_Have';
+                form.taskPriority.value = task.priorityStatus || 'normal';
+                form.taskStatus.value = task.progressStatus || 'who-take';
                 
-                // Добавляем поля для каждого исполнителя
-                const assignees = task.assignees || [task.assignee || 'empty'];
+                // Обработка исполнителей
+                const assignees = Array.isArray(task.assignees) ? task.assignees : [task.assignee || 'empty'];
+                console.log('Processing assignees:', assignees);
                 assignees.forEach(assignee => {
-                    assigneesList.appendChild(this.createAssigneeItem(assignee));
+                    const assigneeItem = this.createAssigneeItem(assignee);
+                    assigneesList.appendChild(assigneeItem);
                 });
                 
-                // Добавляем подзадачи
-                task.subtasks?.forEach(subtask => {
-                    this.addSubtaskField(subtask.text, subtask.completed);
-                });
+                // Обработка подзадач
+                if (task.subtasks && Array.isArray(task.subtasks)) {
+                    console.log('Processing subtasks:', task.subtasks);
+                    task.subtasks.forEach(subtask => {
+                        if (typeof subtask === 'string') {
+                            this.addSubtaskField(subtask, false);
+                        } else if (typeof subtask === 'object') {
+                            this.addSubtaskField(subtask.text, subtask.completed);
+                        }
+                    });
+                }
                 
                 this.currentTaskId = taskId;
+            } else {
+                console.error('Task not found:', taskId);
             }
         } else {
             form.reset();
             form.taskCategory.value = 'Must_Have';
-            // Добавляем одно пустое поле исполнителя
             assigneesList.appendChild(this.createAssigneeItem('empty'));
         }
         
@@ -301,7 +330,7 @@ class TaskManager {
         const modal = document.getElementById('taskModal');
         modal.style.display = 'none';
         
-        // Удаляем обработчик Escape при закрытии модального окна
+        // Удаляем обработчк Escape при закрытии модального окна
         if (this.modalEscapeListener) {
             document.removeEventListener('keydown', this.modalEscapeListener);
             this.modalEscapeListener = null;
@@ -323,7 +352,7 @@ class TaskManager {
             .map(select => select.value)
             .filter(value => value); // Убираем пустые значения, но оставляем 'empty'
 
-        // Если нет исполнителей или все исполнители были удалены, добавляем 'empty'
+        // Если нт исполнителей или все исполнители были удалены, добавляем 'empty'
         if (assignees.length === 0) {
             assignees.push('empty');
         }
@@ -392,22 +421,41 @@ class TaskManager {
         this.saveTasks();
     }
 
-    updateTask(taskId, taskData) {
-        const index = this.tasks.findIndex(t => t.id === taskId);
-        if (index !== -1) {
-            this.tasks[index] = {
-                ...this.tasks[index],
-                taskNumber: taskData.taskNumber,
-                title: taskData.title,
-                description: taskData.description,
-                category: taskData.category,
-                priorityStatus: taskData.priorityStatus,
-                progressStatus: taskData.progressStatus,
-                assignees: taskData.assignees,
-                subtasks: taskData.subtasks,
-                updatedAt: new Date().toISOString()
-            };
-            this.saveTasks();
+    async updateTask(taskId, taskData) {
+        try {
+            const index = this.tasks.findIndex(t => String(t.id) === String(taskId));
+            if (index !== -1) {
+                // Сохраняем старые значения для сравнения
+                const oldTask = this.tasks[index];
+                
+                // Обновляем задачу
+                this.tasks[index] = {
+                    ...oldTask,
+                    title: taskData.title,
+                    taskNumber: taskData.taskNumber,
+                    description: taskData.description,
+                    category: taskData.category,
+                    priorityStatus: taskData.priorityStatus,
+                    progressStatus: taskData.progressStatus,
+                    assignees: taskData.assignees,
+                    subtasks: taskData.subtasks,
+                    updatedAt: new Date().toISOString()
+                };
+
+                // Сохраняем изменения
+                await this.saveTasks();
+                
+                // Перерисовываем задачи и переинициализируем drag and drop
+                this.renderTasks();
+                this.setupDragAndDrop();
+                
+                console.log('Task updated successfully:', this.tasks[index]);
+            } else {
+                console.error('Task not found:', taskId);
+            }
+        } catch (error) {
+            console.error('Error updating task:', error);
+            throw error;
         }
     }
 
@@ -515,52 +563,68 @@ class TaskManager {
     setupDragAndDrop() {
         console.log('Setting up drag and drop');
         
-        document.addEventListener('dragstart', (e) => {
-            console.log('Drag started:', e.target);
+        // Удаляем старые обработчики
+        document.removeEventListener('dragstart', this.handleDragStart);
+        document.removeEventListener('dragend', this.handleDragEnd);
+        
+        this.handleDragStart = (e) => {
             if (e.target.classList.contains('task-card')) {
                 e.target.classList.add('dragging');
                 e.dataTransfer.setData('text/plain', e.target.dataset.taskId);
             }
-        });
+        };
 
-        document.addEventListener('dragend', (e) => {
+        this.handleDragEnd = (e) => {
             if (e.target.classList.contains('task-card')) {
                 e.target.classList.remove('dragging');
             }
-        });
+        };
+
+        document.addEventListener('dragstart', this.handleDragStart);
+        document.addEventListener('dragend', this.handleDragEnd);
 
         const dropZones = document.querySelectorAll('.drop-zone');
         dropZones.forEach(zone => {
-            zone.addEventListener('dragover', (e) => {
+            zone.removeEventListener('dragover', this.handleDragOver);
+            zone.removeEventListener('dragleave', this.handleDragLeave);
+            zone.removeEventListener('drop', this.handleDrop);
+
+            this.handleDragOver = (e) => {
                 e.preventDefault();
                 zone.classList.add('dragover');
-            });
+            };
 
-            zone.addEventListener('dragleave', (e) => {
+            this.handleDragLeave = () => {
                 zone.classList.remove('dragover');
-            });
+            };
 
-            zone.addEventListener('drop', (e) => {
+            this.handleDrop = async (e) => {
                 e.preventDefault();
                 zone.classList.remove('dragover');
                 
                 const taskId = e.dataTransfer.getData('text/plain');
-                const task = this.tasks.find(t => t.id === taskId);
+                const task = this.tasks.find(t => String(t.id) === String(taskId));
                 
                 if (task) {
-                    // Проверяем и конвертируем старый формат в новый
-                    if (!task.assignees && task.assignee) {
-                        task.assignees = [task.assignee];
-                        delete task.assignee;
+                    const taskElement = document.querySelector(`[data-task-id="${taskId}"]`);
+                    if (taskElement) {
+                        zone.appendChild(taskElement);
                     }
-                    
+
                     task.priorityStatus = zone.dataset.priority;
                     task.progressStatus = zone.dataset.status;
                     task.updatedAt = new Date().toISOString();
-                    this.saveTasks();
-                    this.renderTasks();
+                    
+                    this.saveTasks().catch(error => {
+                        console.error('Error saving task:', error);
+                        this.renderTasks();
+                    });
                 }
-            });
+            };
+
+            zone.addEventListener('dragover', this.handleDragOver);
+            zone.addEventListener('dragleave', this.handleDragLeave);
+            zone.addEventListener('drop', this.handleDrop);
         });
     }
 

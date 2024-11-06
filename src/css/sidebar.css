@@ -1,0 +1,105 @@
+/* прибрати виккористовую в цілях тестування*/
+.categories-wrap-test {
+  visibility: hidden;
+}
+/* прибрати виккористовую в цілях тестування*/
+
+.sidebar-container {
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.sidebar-quote-container {
+  background: #242424;
+  border-radius: 20px;
+  padding: 20px;
+}
+
+.sidebar-quote {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 129%;
+  color: rgba(244, 244, 244, 0.6);
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+}
+
+.sidebar-quote-of-day {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 100%;
+  color: #f4f4f4;
+  padding-bottom: 8px;
+}
+
+.sidebar-quote-image {
+  border-radius: 20px;
+}
+
+.sidebar-quote-author,
+.static-info {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 129%;
+  color: #f4f4f4;
+  padding-top: 16px;
+}
+
+.static-info {
+  display: none;
+}
+
+.sidebar-sports-info {
+  border-radius: 20px;
+  background: #fff;
+  padding: 50px 20px 20px;
+}
+
+.sidebar-norm-sport,
+.static-info {
+  color: rgba(36, 36, 36, 0.6);
+}
+
+.sidebar-quote-container {
+  order: 1;
+}
+
+.sidebar-sports-info {
+  order: 2;
+}
+
+picture {
+  order: 3;
+}
+
+@media screen and (min-width: 768px) {
+  .sidebar-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .sidebar-container {
+    flex-basis: calc((100% - 800px) / 2);
+    flex-direction: column;
+  }
+  p.static-info {
+    display: block;
+  }
+  .sidebar-quote-container {
+    order: 1;
+  }
+
+  .sidebar-sports-info {
+    order: 3;
+  }
+
+  picture {
+    order: 2;
+  }
+}

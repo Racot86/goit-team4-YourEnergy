@@ -10,10 +10,56 @@
   width: 405px;
   height: 141px;
   background: white;
+  padding: 16px;
+  cursor: pointer;
+  position: relative;
 }
 
 .workouts-container-list {
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
+  max-width: 325px;
+  margin: 20px auto;
+}
+
+.workouts-items-list {
+  display: flex;
+  gap: 20px;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 150%;
+  color: rgba(36, 36, 36, 0.4);
+}
+
+.workouts-item-title {
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 100%;
+  color: #242424;
+  margin: 18px 0;
+}
+
+.workouts-item-start {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 129%;
+  color: #242424;
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 16px;
+}
+
+.workout-btn {
+  border: 1px solid #242424;
+  border-radius: 15px;
+  padding: 5px 8px;
+  width: 75px;
+  height: 26px;
+  font-weight: 500;
+  font-size: 12px;
+  color: #242424;
+  text-align: center;
+  line-height: 214%;
 }

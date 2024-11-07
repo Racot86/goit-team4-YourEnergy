@@ -4,8 +4,8 @@ export default function createWorkoutsMarkup(cards) {
     .map(
       ({ _id, name, burnedCalories, bodyPart, target, gifUrl }) => `
         <li class='workouts-item' data-name='${name}' ' data-id='${_id}'> 
-          <button class="workout-btn">workout</button>
-          <p class="workouts-item-start">Start</p>        
+          <h4 class="workout-btn">workout</h4>
+          <button class="workouts-item-start">Start</button>        
           <h3 class="workouts-item-title">${name}</h3>
           <ul class='workouts-items-list'>
               <li class="workouts-items-calories">Calories: ${burnedCalories}</li>

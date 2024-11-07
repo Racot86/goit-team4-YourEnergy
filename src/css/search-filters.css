@@ -53,6 +53,7 @@ body {
 .filters-buttons {
   display: flex;
   gap: 20px;
+  margin-bottom: 20px;
 }
 
 .filter-button {
@@ -115,6 +116,7 @@ body {
 
   .filters-buttons {
     flex-basis: 100%;
+    margin-bottom: 32px;
   }
 
   .filter-button {
@@ -142,6 +144,7 @@ body {
     color: #242424;
     padding: 0;
     margin: 0;
+    margin-bottom: 32px;
   }
 
   .search-form {
@@ -150,6 +153,8 @@ body {
 
   .filters-buttons {
     gap: 1rem;
+    margin-bottom: 32px;
+
   }
 
   .filter-button {

@@ -20,4 +20,5 @@
 @import url('./sidebar.css');
 @import url('./categories.css');
 @import url('../partials/components/pagination/PaginationStyles.css');
+@import url('./modal-window.css');
 

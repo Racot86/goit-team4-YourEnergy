@@ -171,9 +171,9 @@ h2 {
 /* Tablet */
 @media screen and (min-width: 768px) {
 
-  .container{
+  /* .container{
     width: 768px;
-  }
+  } */
 
   .footer-container {
     max-width: 734px;
@@ -223,9 +223,9 @@ h2 {
 }
 
 @media screen and (min-width: 1440px){
-  .container{
+  /* .container{
     width: 1440px;
-  }
+  } */
  
   .footer-content{
     display: flex;

@@ -9,10 +9,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
   border-radius: 50%;
 }
-.selected {
+.selected{
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 50%;
   border: 1px solid rgba(0, 0, 0, 1);
   transition: 0.2s ease-in-out;

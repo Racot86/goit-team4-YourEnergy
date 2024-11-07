@@ -1,8 +1,20 @@
 export class ModalWindow {
+  static instance = null;
+
   constructor() {
+    if (ModalWindow.instance) {
+      return ModalWindow.instance;
+    }
+
+    console.log('ModalWindow constructor called');
     this.backdrop = document.querySelector('[data-modal]');
     this.closeBtn = document.querySelector('[data-modal-close]');
+    this.modalBtn = document.querySelector('.modal-btn');
     this.isOpen = false;
+
+    console.log('Backdrop element:', this.backdrop);
+    console.log('Close button element:', this.closeBtn);
+    console.log('Modal button element:', this.modalBtn);
 
     if (!this.backdrop) {
       console.error('Modal backdrop not found');
@@ -10,23 +22,59 @@ export class ModalWindow {
     if (!this.closeBtn) {
       console.error('Modal close button not found');
     }
+    if (!this.modalBtn) {
+      console.error('Modal button not found');
+    }
 
     this.bindEvents();
+    this.init();
+
+    ModalWindow.instance = this;
+  }
+
+  init() {
+    if (this.modalBtn) {
+      console.log('Adding click listener to modal button');
+      this.modalBtn.addEventListener('click', () => {
+        console.log('Modal button clicked');
+        const testData = {
+          _id: '64f389465ae26083f39b17a4',
+          bodyPart: 'waist',
+          equipment: 'body weight',
+          gifUrl: 'https://ftp.goit.study/img/power-pulse/gifs/0003.gif',
+          name: 'air bike',
+          target: 'abs',
+          description:
+            "This refers to your core muscles, which include the rectus abdominis, obliques, and transverse abdominis. They're essential for maintaining posture, stability, and generating force in many movements. Exercises that target the abs include crunches, leg raises, and planks.",
+          rating: 3,
+          burnedCalories: 312,
+          time: 3,
+          popularity: 1,
+        };
+        this.open(testData);
+      });
+    }
   }
 
   bindEvents() {
+    console.log('Binding events');
     if (this.closeBtn) {
-      this.closeBtn.addEventListener('click', () => this.close());
+      this.closeBtn.addEventListener('click', () => {
+        console.log('Close button clicked');
+        this.close();
+      });
     }
     if (this.backdrop) {
       this.backdrop.addEventListener('click', e => {
         if (e.target === this.backdrop) {
+          console.log('Backdrop clicked');
           this.close();
         }
       });
     }
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape' && this.isOpen) {
+        console.log('Escape pressed');
         this.close();
       }
     });
@@ -37,17 +85,19 @@ export class ModalWindow {
     this.isOpen = true;
     if (this.backdrop) {
       this.backdrop.classList.remove('is-hidden');
+      console.log('Removed is-hidden class');
     }
     document.body.style.overflow = 'hidden';
 
-    // Оновлюємо контент модального вікна
     await this.updateContent(exerciseData);
   }
 
   close() {
+    console.log('Closing modal');
     this.isOpen = false;
     if (this.backdrop) {
       this.backdrop.classList.add('is-hidden');
+      console.log('Added is-hidden class');
     }
     document.body.style.overflow = '';
   }
@@ -121,3 +171,16 @@ export class ModalWindow {
     }
   }
 }
+
+// Ініціалізуємо модальне вікно після завантаження DOM
+let modalWindowInstance = null;
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('Initializing modal window');
+  if (!modalWindowInstance) {
+    try {
+      modalWindowInstance = new ModalWindow();
+    } catch (error) {
+      console.error('Error initializing modal:', error);
+    }
+  }
+});

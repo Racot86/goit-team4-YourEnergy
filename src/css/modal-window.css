@@ -2,20 +2,25 @@
   box-sizing: border-box;
 }
 
-.backdrop {
+.modal-backdrop {
   position: fixed;
   top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   background-color: rgba(4, 4, 4, 0.4);
   transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1);
   overflow-y: scroll;
   z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.backdrop.is-hidden {
+.modal-backdrop.is-hidden {
   opacity: 0;
   pointer-events: none;
+  visibility: hidden;
 }
 
 .modal {
@@ -42,9 +47,33 @@
   width: 24px;
   height: 24px;
   padding: 0;
-  background-color: black;
   border: none;
+  border-radius: 50%;
+  background-color: black;
   cursor: pointer;
+  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1),
+              background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modal-close-btn:hover {
+  transform: rotate(90deg) scale(1.2);
+  background-color: #333333;
+}
+
+.modal-close-btn:active {
+  transform: rotate(90deg) scale(0.9);
+}
+
+.modal-close-icon {
+  width: 12px;
+  height: 12px;
+  stroke-width: 1.5px;
+  stroke: #f4f4f4;
+  transition: stroke 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modal-close-btn:hover .modal-close-icon {
+  stroke: #f8f8f8;
 }
 
 .modal-content {
@@ -188,6 +217,21 @@
   background-color: transparent;
 }
 
+.modal-icon-heart {
+  width: 18px;
+  height: 16px;
+  fill: none;
+  stroke-width: 1.5px;
+  stroke: #242424;
+  transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition-property: stroke;
+}
+
+.modal-icon-heart:hover,
+.modal-icon-heart:focus {
+  stroke: #f4f4f4;
+}
+
 .modal-rating-btn {
   border: 1px solid #f4f4f4;
   color: #f4f4f4;
@@ -209,6 +253,19 @@
     transform: translate(-50%, -50%);
     width: 704px;
     padding: 32px;
+  }
+
+  .modal-close-btn {
+    top: 16px;
+    right: 16px;
+    width: 28px;
+    height: 28px;
+  }
+
+  .modal-close-icon {
+    width: 14px;
+    height: 14px;
+    stroke-width: 2px;
   }
   
   .modal-content {
@@ -264,6 +321,11 @@
 
   .modal-favorites-btn {
     width: 194px;
+  }
+
+  .modal-icon-heart {
+    width: 20px;
+    height: 18px;
   }
 
   .modal-rating-btn {

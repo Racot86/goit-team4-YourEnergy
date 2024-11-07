@@ -71,6 +71,69 @@ export default defineConfig(({ command }) => {
     server: {
       open: true,
       host: true,
+      middlewares: {
+        handle: async (req, res, next) => {
+          if (req.url === '/api/upload-image' && req.method === 'POST') {
+            try {
+              const chunks = [];
+              req.on('data', chunk => chunks.push(chunk));
+              req.on('end', async () => {
+                const data = JSON.parse(Buffer.concat(chunks).toString());
+                const base64Data = data.image.replace(/^data:image\/\w+;base64,/, '');
+                const buffer = Buffer.from(base64Data, 'base64');
+                
+                // Создаем уникальное имя файла
+                const fileName = `image-${Date.now()}-${Math.random().toString(36).substr(2, 9)}.png`;
+                const filePath = path.resolve(__dirname, 'src/img/editor-images', fileName);
+                
+                // Создаем папку, если её нет
+                await fs.mkdir(path.resolve(__dirname, 'src/img/editor-images'), { recursive: true });
+                
+                // Сохраняем файл
+                await fs.writeFile(filePath, buffer);
+                
+                res.statusCode = 200;
+                res.setHeader('Content-Type', 'application/json');
+                res.end(JSON.stringify({ 
+                  success: true,
+                  filePath: `/img/editor-images/${fileName}`
+                }));
+              });
+            } catch (error) {
+              console.error('Error saving image:', error);
+              res.statusCode = 500;
+              res.end(JSON.stringify({ error: 'Failed to save image' }));
+            }
+          } else if (req.url === '/api/get-images') {
+            try {
+              const imagesDir = path.join(process.cwd(), 'src', 'img', 'editor-images');
+              const files = await fs.readdir(imagesDir);
+              
+              // Формируем список изображений
+              const images = files
+                .filter(file => /\.(jpg|jpeg|png|gif|jfif)$/i.test(file))
+                .map(file => ({
+                  name: file,
+                  path: `./img/editor-images/${file}`
+                }));
+
+              // Отправляем только JSON
+              res.writeHead(200, {
+                'Content-Type': 'application/json',
+                'Cache-Control': 'no-cache',
+                'Access-Control-Allow-Origin': '*'
+              });
+              res.end(JSON.stringify({ images }));
+            } catch (error) {
+              console.error('Error reading images directory:', error);
+              res.writeHead(500, { 'Content-Type': 'application/json' });
+              res.end(JSON.stringify({ error: error.message }));
+            }
+          } else {
+            next();
+          }
+        }
+      }
     },
     css: {
       devSourcemap: true,

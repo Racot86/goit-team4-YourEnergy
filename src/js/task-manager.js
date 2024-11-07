@@ -1,3 +1,95 @@
+const IMGBB_API_KEY = '1aad3d84ed2ee332d869dd74a8b19d64'; // Замените на ваш API ключ
+
+class Notification {
+    static show(message, type = 'success', actions = null) {
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 4px;
+            background: ${type === 'success' ? '#4CAF50' : '#f44336'};
+            color: white;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            animation: slideIn 0.3s ease;
+            min-width: 200px;
+            max-width: 400px;
+        `;
+
+        notification.innerHTML = `
+            <div class="notification-content" style="margin-bottom: ${actions ? '10px' : '0'}">
+                ${message}
+            </div>
+        `;
+
+        if (actions) {
+            const actionsDiv = document.createElement('div');
+            actionsDiv.style.cssText = `
+                display: flex;
+                gap: 10px;
+                margin-top: 10px;
+            `;
+
+            actions.forEach(action => {
+                const button = document.createElement('button');
+                button.textContent = action.text;
+                button.style.cssText = `
+                    padding: 5px 10px;
+                    border: none;
+                    border-radius: 3px;
+                    background: rgba(255,255,255,0.2);
+                    color: white;
+                    cursor: pointer;
+                    transition: background 0.2s;
+                `;
+                button.onmouseover = () => {
+                    button.style.background = 'rgba(255,255,255,0.3)';
+                };
+                button.onmouseout = () => {
+                    button.style.background = 'rgba(255,255,255,0.2)';
+                };
+                button.onclick = () => {
+                    action.callback();
+                    notification.remove();
+                };
+                actionsDiv.appendChild(button);
+            });
+
+            notification.appendChild(actionsDiv);
+        } else {
+            // Для успешных уведомлений автоматическое скрытие через 5 секунд
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 7000);
+        }
+
+        document.body.appendChild(notification);
+
+        // Добавляем стили для анимаций, если их еще нет
+        if (!document.getElementById('notification-styles')) {
+            const style = document.createElement('style');
+            style.id = 'notification-styles';
+            style.textContent = `
+                @keyframes slideIn {
+                    from { transform: translateX(120%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+                @keyframes slideOut {
+                    from { transform: translateX(0); opacity: 1; }
+                    to { transform: translateX(120%); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        return notification;
+    }
+}
+
 class TaskManager {
     constructor() {
         this.tasks = [];
@@ -7,47 +99,72 @@ class TaskManager {
         this.loadTasks().then(() => {
             this.init();
         });
+        this.setupImageHandling();
     }
 
     async loadTasks() {
         try {
-            const response = await fetch('https://script.google.com/macros/s/AKfycbwMbiYIzsnP07ciF6zVwV3jiajZT6_fNFBnYxN1vRJJbuQ2VVaS12a6RwYiRV3IxTjP/exec');
+            const response = await fetch('https://script.google.com/macros/s/AKfycby-Fn7_OyTn4iv_LMUwO79-WoDiJoP457UvSrEh5UzlRwW9nKGfRGKkbnXNE3oorLvq/exec');
             const data = await response.json();
-            this.tasks = data.tasks || [];
+            
+            // Обрабатываем каждую задачу для получения URL изображения
+            this.tasks = await Promise.all((data.tasks || []).map(async task => {
+                // Если у задачи есть imageId, получаем URL изображения
+                if (task.imageId) {
+                    try {
+                        // Используем прямой URL для изображения
+                        task.imageUrl = `https://i.ibb.co/${task.imageId}/image.jpg`;
+                        console.log(`Image URL set for task ${task.id}:`, task.imageUrl);
+                    } catch (imgError) {
+                        console.error(`Error setting image URL for task ${task.id}:`, imgError);
+                    }
+                }
+                return task;
+            }));
+
+            console.log('Loaded tasks with images:', this.tasks);
             this.renderTasks();
         } catch (error) {
             console.error('Error loading tasks:', error);
-            this.tasks = []; // Если не удалось загрузить, начинаем с пустого массива
+            this.tasks = [];
         }
     }
 
-    async saveTasks() {
+    async saveTasks(task) {
         try {
-            if (this.saveTimeout) {
-                clearTimeout(this.saveTimeout);
-            }
+            console.log('Saving task:', task);
 
-            return new Promise((resolve, reject) => {
-                this.saveTimeout = setTimeout(async () => {
-                    try {
-                        const response = await fetch('https://script.google.com/macros/s/AKfycbwMbiYIzsnP07ciF6zVwV3jiajZT6_fNFBnYxN1vRJJbuQ2VVaS12a6RwYiRV3IxTjP/exec', {
-                            method: 'POST',
-                            body: JSON.stringify({ tasks: this.tasks })
-                        });
-                        
-                        if (!response.ok) {
-                            throw new Error('Failed to save tasks');
-                        }
-                        
-                        resolve();
-                    } catch (error) {
-                        console.error('Error saving tasks:', error);
-                        reject(error);
-                    }
-                }, 300);
+            // Подготавливаем данные задачи
+            const taskToSave = {
+                ...task,
+                assignees: task.assignees || ['empty'],
+                subtasks: task.subtasks || [],
+                updatedAt: new Date().toISOString()
+            };
+
+            // Создаем данные для отправки
+            const payload = {
+                tasks: [taskToSave]
+            };
+
+            console.log('Sending payload:', payload);
+
+            // Отправляем запрос
+            const response = await fetch('https://script.google.com/macros/s/AKfycby-Fn7_OyTn4iv_LMUwO79-WoDiJoP457UvSrEh5UzlRwW9nKGfRGKkbnXNE3oorLvq/exec', {
+                method: 'POST',
+                mode: 'no-cors', // Важно для работы с Google Apps Script
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload)
             });
+
+            // В режиме no-cors мы не можем прочитать ответ
+            // Поэтому просто возвращаем успех
+            return { success: true };
+
         } catch (error) {
-            console.error('Error in saveTasks:', error);
+            console.error('Error saving task:', error);
             throw error;
         }
     }
@@ -56,6 +173,28 @@ class TaskManager {
         this.setupEventListeners();
         this.renderTasks();
         this.setupDragAndDrop();
+        
+        // Добавляем обработчик для тестовой кнопки
+        const testDriveBtn = document.getElementById('testDriveBtn');
+        if (testDriveBtn) {
+            testDriveBtn.addEventListener('click', () => this.testDriveAccess());
+        }
+
+        // Добавляем обработчик тестовой кнопки загрузки изображения
+        const testImageUploadBtn = document.getElementById('testImageUploadBtn');
+        if (testImageUploadBtn) {
+            testImageUploadBtn.addEventListener('click', () => {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = 'image/*';
+                input.onchange = (e) => {
+                    if (e.target.files.length > 0) {
+                        this.testImageUpload(e.target.files[0]);
+                    }
+                };
+                input.click();
+            });
+        }
     }
 
     setupEventListeners() {
@@ -86,7 +225,7 @@ class TaskManager {
             this.toggleTheme();
         });
 
-        // Добавляем обработчик для поля номера задачи
+        // Добавляем обрабтчик для поля номера задачи
         const taskNumberInput = document.getElementById('taskNumber');
         taskNumberInput.addEventListener('input', (e) => {
             this.handleTaskNumberInput(e.target.value);
@@ -104,7 +243,7 @@ class TaskManager {
             this.addAssigneeField();
         });
 
-        // Добавляем делегирование событий для кнопок удаления исполнителя
+        // Добавлям делегирование событий для кнопок удаления исполнителя
         document.getElementById('assigneesList').addEventListener('click', (e) => {
             if (e.target.classList.contains('remove-assignee-btn')) {
                 const assigneeItem = e.target.closest('.assignee-item');
@@ -119,7 +258,7 @@ class TaskManager {
             this.addSubtaskField();
         });
 
-        // Добавляем делегирование событий для кнопок удаления подзадачи
+        // Добавляем делегирование событий для кнопок  подзаа
         document.getElementById('subtasksList').addEventListener('click', (e) => {
             if (e.target.classList.contains('remove-subtask-btn')) {
                 e.target.closest('.subtask-item').remove();
@@ -148,7 +287,7 @@ class TaskManager {
         const suggestionsContainer = document.getElementById('taskNumberSuggestions');
         const input = document.getElementById('taskNumber');
 
-        // Очищаем стили и подсказки если поле пустое
+        // Очищаем стили и подсказки если поле путое
         if (!value) {
             input.classList.remove('exists', 'available');
             suggestionsContainer.style.display = 'none';
@@ -202,6 +341,10 @@ class TaskManager {
         const form = document.getElementById('taskForm');
         const assigneesList = document.getElementById('assigneesList');
         const deleteBtn = modal.querySelector('.delete-task-btn');
+        const imagePreview = document.getElementById('taskImagePreview');
+        
+        // Очищаем превью изображения
+        imagePreview.innerHTML = '';
         
         // Показываем кнопку удаления только при редактировании
         deleteBtn.style.display = taskId ? 'block' : 'none';
@@ -213,7 +356,6 @@ class TaskManager {
         subtasksList.innerHTML = '';
         
         if (taskId) {
-            // Ищем задачу по ID и добавляем проверку на строковое значение
             const task = this.tasks.find(t => String(t.id) === String(taskId));
             console.log('Found task:', task);
             
@@ -225,6 +367,42 @@ class TaskManager {
                 form.taskCategory.value = task.category || 'Must_Have';
                 form.taskPriority.value = task.priorityStatus || 'normal';
                 form.taskStatus.value = task.progressStatus || 'who-take';
+                
+                // Отображаем существующее изображение с ImgBB
+                if (task.imageUrl) {
+                    console.log('Rendering image preview:', task.imageUrl);
+                    const container = document.createElement('div');
+                    container.className = 'preview-container';
+                    container.style.cssText = `
+                        width: 100%;
+                        max-height: 200px;
+                        overflow: hidden;
+                        border-radius: 4px;
+                        position: relative;
+                        margin-top: 10px;
+                    `;
+                    
+                    const img = document.createElement('img');
+                    img.src = task.imageUrl;
+                    img.style.cssText = `
+                        width: 100%;
+                        height: auto;
+                        object-fit: contain;
+                    `;
+                    
+                    const removeBtn = document.createElement('button');
+                    removeBtn.className = 'remove-image-btn';
+                    removeBtn.textContent = '×';
+                    removeBtn.onclick = () => {
+                        task.imageUrl = null;
+                        task.imageId = null;
+                        container.remove();
+                    };
+                    
+                    container.appendChild(img);
+                    container.appendChild(removeBtn);
+                    imagePreview.appendChild(container);
+                }
                 
                 // Обработка исполнителей
                 const assignees = Array.isArray(task.assignees) ? task.assignees : [task.assignee || 'empty'];
@@ -255,10 +433,10 @@ class TaskManager {
             form.taskCategory.value = 'Must_Have';
             assigneesList.appendChild(this.createAssigneeItem('empty'));
         }
-        
+
         modal.style.display = 'block';
         
-        // Добавляем обработчик для кнопки удаления
+        // Добавляем обработчик дя кнопки удаления
         deleteBtn.onclick = () => this.showDeleteConfirmation(taskId);
         
         // Добавляем обработчик Escape
@@ -337,121 +515,237 @@ class TaskManager {
         }
     }
 
-    handleFormSubmit() {
-        const form = document.getElementById('taskForm');
-        
-        // Собираем подзадачи
-        const subtasks = Array.from(form.querySelectorAll('.subtask-item')).map(item => ({
-            id: Date.now() + Math.random().toString(36).substr(2, 9),
-            text: item.querySelector('.subtask-text').value,
-            completed: item.querySelector('.subtask-checkbox').checked
-        }));
+    async handleFormSubmit() {
+        try {
+            const form = document.getElementById('taskForm');
+            
+            // Собираем данные формы
+            const taskData = {
+                title: form.taskTitle.value,
+                taskNumber: form.taskNumber.value || null,
+                description: form.taskDescription.value,
+                category: form.taskCategory.value,
+                priorityStatus: form.taskPriority.value,
+                progressStatus: form.taskStatus.value,
+                assignees: Array.from(form.querySelectorAll('.taskAssignee'))
+                    .map(select => select.value)
+                    .filter(value => value) || ['empty'],
+                subtasks: Array.from(form.querySelectorAll('.subtask-item')).map(item => ({
+                    id: Date.now() + Math.random().toString(36).substr(2, 9),
+                    text: item.querySelector('.subtask-text').value,
+                    completed: item.querySelector('.subtask-checkbox').checked
+                }))
+            };
 
-        // Собираем исполнителей, включая 'empty'
-        const assignees = Array.from(form.querySelectorAll('.taskAssignee'))
-            .map(select => select.value)
-            .filter(value => value); // Убираем пустые значения, но оставляем 'empty'
-
-        // Если нт исполнителей или все исполнители были удалены, добавляем 'empty'
-        if (assignees.length === 0) {
-            assignees.push('empty');
-        }
-
-        const taskData = {
-            title: form.taskTitle.value,
-            taskNumber: form.taskNumber.value || null,
-            description: form.taskDescription.value,
-            category: form.taskCategory.value,
-            priorityStatus: form.taskPriority.value,
-            progressStatus: form.taskStatus.value,
-            assignees: assignees,
-            subtasks: subtasks
-        };
-
-        // Проверяем уникальность номера задачи
-        if (taskData.taskNumber) {
-            const exists = this.tasks.some(task => 
-                task.taskNumber === taskData.taskNumber && 
-                task.id !== this.currentTaskId
-            );
-            if (exists) {
-                alert('Задача с таким номером уже существует!');
-                return;
+            // Если есть новое изображение, загружаем его на ImgBB
+            if (this.currentImage) {
+                try {
+                    const imageResult = await this.uploadImage(this.currentImage);
+                    if (imageResult && imageResult.success) {
+                        taskData.imageUrl = imageResult.url;
+                        taskData.imageId = imageResult.id;
+                    }
+                } catch (error) {
+                    console.error('Error uploading image:', error);
+                    Notification.show('Ошибка при загрузке изображения', 'error');
+                }
             }
-        }
 
-        if (this.currentTaskId) {
-            this.updateTask(this.currentTaskId, taskData);
-        } else {
-            this.addTask(taskData);
-        }
+            // Сразу закрываем модальное окно
+            this.hideModal();
 
-        this.hideModal();
-        this.renderTasks();
+            if (this.currentTaskId) {
+                await this.updateTask(this.currentTaskId, taskData);
+            } else {
+                await this.addTask(taskData);
+            }
+
+            // Очищаем текущее изображение
+            this.currentImage = null;
+            document.getElementById('taskImagePreview').innerHTML = '';
+
+        } catch (error) {
+            console.error('Error in handleFormSubmit:', error);
+            Notification.show('Произошла ошибка', 'error');
+        }
     }
 
-    addTask(taskData) {
-        const generateUniqueId = () => {
-            const timestamp = Date.now();
-            const random = Math.floor(Math.random() * 10000);
-            return `${timestamp}-${random}`;
-        };
+    async uploadImage(file) {
+        try {
+            console.log('Starting image upload to ImgBB...');
+            
+            const formData = new FormData();
+            formData.append('image', file);
+            formData.append('key', IMGBB_API_KEY);
 
-        // Генерируем ID и проверяем его уникальность
-        let taskId;
-        do {
-            taskId = generateUniqueId();
-        } while (this.tasks.some(task => task.id === taskId));
+            const response = await fetch('https://api.imgbb.com/1/upload', {
+                method: 'POST',
+                body: formData
+            });
 
-        const task = {
-            id: taskId,
-            taskNumber: taskData.taskNumber || null,
-            title: taskData.title,
-            description: taskData.description,
-            category: taskData.category || 'Must_Have',
-            priorityStatus: taskData.priorityStatus,
-            progressStatus: taskData.progressStatus,
-            assignees: taskData.assignees,
-            subtasks: taskData.subtasks || [],
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString()
-        };
-        
-        this.tasks.push(task);
-        this.saveTasks();
+            if (!response.ok) {
+                throw new Error(`Upload failed: ${response.statusText}`);
+            }
+
+            const result = await response.json();
+            console.log('ImgBB response:', result);
+
+            if (result.success) {
+                return {
+                    success: true,
+                    id: result.data.id,
+                    url: result.data.url,
+                    delete_url: result.data.delete_url,
+                    thumbnail: result.data.thumb.url
+                };
+            } else {
+                throw new Error(result.error?.message || 'Upload failed');
+            }
+        } catch (error) {
+            console.error('Error uploading to ImgBB:', error);
+            throw error;
+        }
+    }
+
+    // Добавим тестовый метод
+    async testImageUpload(file) {
+        try {
+            console.log('Starting test image upload...');
+            const result = await this.uploadImage(file);
+            console.log('Test upload result:', result);
+            Notification.show(`
+                Изображение успешно загружено!<br>
+                ID: ${result.id}<br>
+                URL: <a href="${result.url}" target="_blank">Открыть изображение</a>
+            `);
+            return result;
+        } catch (error) {
+            console.error('Test image upload failed:', error);
+            Notification.show(`❌ Ошибка зарузки: ${error.message}`, 'error');
+            throw error;
+        }
+    }
+
+    // Вспомогательный метод для конвертации файла в base64
+    fileToBase64(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+            reader.readAsDataURL(file);
+        });
+    }
+
+    async addTask(taskData) {
+        try {
+            const generateUniqueId = () => {
+                const timestamp = Date.now();
+                const random = Math.floor(Math.random() * 10000);
+                return `${timestamp}-${random}`;
+            };
+
+            let taskId;
+            do {
+                taskId = generateUniqueId();
+            } while (this.tasks.some(task => task.id === taskId));
+
+            const task = {
+                id: taskId,
+                taskNumber: taskData.taskNumber || null,
+                title: taskData.title,
+                description: taskData.description,
+                category: taskData.category || 'Must_Have',
+                priorityStatus: taskData.priorityStatus,
+                progressStatus: taskData.progressStatus,
+                assignees: taskData.assignees,
+                subtasks: taskData.subtasks || [],
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString()
+            };
+
+            // Сначала сохраняем задачу без изображения
+            await this.saveTasks(task);
+            
+            // Если есть изображение, загружаем его отдельно
+            if (this.currentImage) {
+                try {
+                    const imageResult = await this.uploadImage(this.currentImage);
+                    if (imageResult && imageResult.success) {
+                        task.imageId = imageResult.id;
+                        task.imageUrl = imageResult.url;
+                        task.imageThumbnail = imageResult.thumbnail;
+                    }
+                } catch (error) {
+                    console.error('Error uploading image:', error);
+                    Notification.show('Ошибка при загрузке изображения', 'error');
+                    // Продолжаем выполнение даже если загрузка изображения не удалась
+                }
+            }
+
+            this.tasks.push(task);
+            this.renderTasks();
+            this.hideModal();
+            
+            // Очищаем текущее изображение
+            this.currentImage = null;
+            document.getElementById('taskImagePreview').innerHTML = '';
+            
+            Notification.show('Задача успешно создана');
+            
+        } catch (error) {
+            console.error('Error in addTask:', error);
+            Notification.show('Ошибка при создании задачи', 'error');
+            throw error;
+        }
     }
 
     async updateTask(taskId, taskData) {
         try {
             const index = this.tasks.findIndex(t => String(t.id) === String(taskId));
             if (index !== -1) {
-                // Сохраняем старые значения для сравнения
                 const oldTask = this.tasks[index];
                 
-                // Обновляем задачу
-                this.tasks[index] = {
+                const updatedTask = {
                     ...oldTask,
-                    title: taskData.title,
-                    taskNumber: taskData.taskNumber,
-                    description: taskData.description,
-                    category: taskData.category,
-                    priorityStatus: taskData.priorityStatus,
-                    progressStatus: taskData.progressStatus,
-                    assignees: taskData.assignees,
-                    subtasks: taskData.subtasks,
+                    ...taskData,
                     updatedAt: new Date().toISOString()
                 };
 
-                // Сохраняем изменения
-                await this.saveTasks();
-                
-                // Перерисовываем задачи и переинициализируем drag and drop
+                // Если есть новое изображение
+                if (this.currentImage) {
+                    try {
+                        const imageResult = await this.uploadImage(this.currentImage);
+                        if (imageResult && imageResult.id) {
+                            updatedTask.imageId = imageResult.id;
+                        }
+                    } catch (error) {
+                        console.error('Error uploading image:', error);
+                        Notification.show('Ошибка при загрузке изображения', 'error');
+                    }
+                }
+
+                // Отправляем запрос на обновление
+                const response = await fetch('https://script.google.com/macros/s/AKfycby-Fn7_OyTn4iv_LMUwO79-WoDiJoP457UvSrEh5UzlRwW9nKGfRGKkbnXNE3oorLvq/exec', {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ tasks: [updatedTask] })
+                });
+
+                // Обновляем локальное состояние
+                this.tasks[index] = updatedTask;
                 this.renderTasks();
-                this.setupDragAndDrop();
                 
-                console.log('Task updated successfully:', this.tasks[index]);
+                // Очищаем екущее изображение
+                this.currentImage = null;
+                document.getElementById('taskImagePreview').innerHTML = '';
+                
+                Notification.show('Задача успешно обновлена');
+
             } else {
-                console.error('Task not found:', taskId);
+                throw new Error('Task not found: ' + taskId);
             }
         } catch (error) {
             console.error('Error updating task:', error);
@@ -459,13 +753,66 @@ class TaskManager {
         }
     }
 
-    deleteTask(taskId) {
-        this.tasks = this.tasks.filter(t => t.id !== taskId);
-        this.saveTasks();
-        this.renderTasks();
+    async deleteTaskOnServer(taskId) {
+        try {
+            const response = await fetch('https://script.google.com/macros/s/AKfycby-Fn7_OyTn4iv_LMUwO79-WoDiJoP457UvSrEh5UzlRwW9nKGfRGKkbnXNE3oorLvq/exec', {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ 
+                    tasks: [],
+                    action: 'delete',
+                    taskId: taskId 
+                })
+            });
+            
+            // В режиме no-cors мы не можем прочитать ответ
+            // Поэтому просто возвращаем успешный результат
+            return { success: true };
+        } catch (error) {
+            console.error('Error in deleteTaskOnServer:', error);
+            throw error;
+        }
+    }
+
+    async deleteTask(taskId) {
+        try {
+            const task = this.tasks.find(t => t.id === taskId);
+            if (!task) {
+                throw new Error('Task not found');
+            }
+
+            // Сначала удаляем локально
+            this.tasks = this.tasks.filter(t => t.id !== taskId);
+            this.renderTasks();
+            
+            // Затем отправляем запрос на сервер
+            await this.deleteTaskOnServer(taskId);
+            
+            const truncatedTitle = task.title.length > 15 ? 
+                task.title.substring(0, 15) + '...' : 
+                task.title;
+            Notification.show(`Задача "${truncatedTitle}" удалена`);
+            
+            // Закрываем модальное окно
+            this.hideModal();
+        } catch (error) {
+            console.error('Error deleting task:', error);
+            Notification.show('Ошибка при удалении задачи', 'error');
+            
+            // В случае ошибки восстанавливаем задачу локально
+            if (task) {
+                this.tasks.push(task);
+                this.renderTasks();
+            }
+        }
     }
 
     renderTasks() {
+        this.renderImagesGallery();
+        this.renderCompactGrid();
         // Очищаем все зоны
         document.querySelectorAll('.drop-zone').forEach(zone => {
             zone.innerHTML = '';
@@ -484,6 +831,7 @@ class TaskManager {
             
             // Создаем элемент задачи только если есть не-Empty исполнитель
             if (hasNonEmptyAssignee) {
+                console.log('Rendering task with image:', task.imageUrl);
                 const taskElement = this.createTaskElement(task);
                 const dropZone = document.querySelector(
                     `.drop-zone[data-priority="${task.priorityStatus}"][data-status="${task.progressStatus}"]`
@@ -523,8 +871,21 @@ class TaskManager {
         const nonEmptyAssignees = (task.assignees || [task.assignee || 'empty'])
             .filter(assignee => assignee !== 'empty');
         
-        // Форматируем номер задачи: № 7 или № ###
+        // Форматируем номер задачи
         const taskNumber = task.taskNumber ? `№ ${task.taskNumber}` : '№ ***';
+        
+        // Добавляем разметку для изображения, если оно есть
+        const imageHtml = task.imageUrl ? `
+            <div class="task-image">
+                <img src="${task.imageUrl}" alt="Task image" style="
+                    max-width: 100%;
+                    max-height: 150px;
+                    object-fit: contain;
+                    border-radius: 4px;
+                    margin-top: 8px;
+                ">
+            </div>
+        ` : '';
         
         div.innerHTML = `
             <div class="task-card-header">
@@ -532,6 +893,7 @@ class TaskManager {
                     <h4 class="task-title">${task.title}</h4>
                     <div class="task-number">${taskNumber}</div>
                     <p class="task-description">${task.description}</p>
+                    ${imageHtml}
                 </div>
                 <div class="task-right">
                     <div class="assignees-list">
@@ -563,68 +925,77 @@ class TaskManager {
     setupDragAndDrop() {
         console.log('Setting up drag and drop');
         
-        // Удаляем старые обработчики
-        document.removeEventListener('dragstart', this.handleDragStart);
-        document.removeEventListener('dragend', this.handleDragEnd);
-        
-        this.handleDragStart = (e) => {
+        document.addEventListener('dragstart', (e) => {
             if (e.target.classList.contains('task-card')) {
                 e.target.classList.add('dragging');
                 e.dataTransfer.setData('text/plain', e.target.dataset.taskId);
             }
-        };
+        });
 
-        this.handleDragEnd = (e) => {
+        document.addEventListener('dragend', (e) => {
             if (e.target.classList.contains('task-card')) {
                 e.target.classList.remove('dragging');
             }
-        };
-
-        document.addEventListener('dragstart', this.handleDragStart);
-        document.addEventListener('dragend', this.handleDragEnd);
+        });
 
         const dropZones = document.querySelectorAll('.drop-zone');
         dropZones.forEach(zone => {
-            zone.removeEventListener('dragover', this.handleDragOver);
-            zone.removeEventListener('dragleave', this.handleDragLeave);
-            zone.removeEventListener('drop', this.handleDrop);
-
-            this.handleDragOver = (e) => {
+            zone.addEventListener('dragover', (e) => {
                 e.preventDefault();
                 zone.classList.add('dragover');
-            };
+            });
 
-            this.handleDragLeave = () => {
+            zone.addEventListener('dragleave', () => {
                 zone.classList.remove('dragover');
-            };
+            });
 
-            this.handleDrop = async (e) => {
+            zone.addEventListener('drop', async (e) => {
                 e.preventDefault();
                 zone.classList.remove('dragover');
                 
                 const taskId = e.dataTransfer.getData('text/plain');
-                const task = this.tasks.find(t => String(t.id) === String(taskId));
+                const taskIndex = this.tasks.findIndex(t => String(t.id) === String(taskId));
                 
-                if (task) {
+                if (taskIndex !== -1) {
                     const taskElement = document.querySelector(`[data-task-id="${taskId}"]`);
                     if (taskElement) {
                         zone.appendChild(taskElement);
                     }
 
-                    task.priorityStatus = zone.dataset.priority;
-                    task.progressStatus = zone.dataset.status;
-                    task.updatedAt = new Date().toISOString();
-                    
-                    this.saveTasks().catch(error => {
-                        console.error('Error saving task:', error);
-                        this.renderTasks();
-                    });
-                }
-            };
+                    const updatedTask = {
+                        ...this.tasks[taskIndex],
+                        priorityStatus: zone.dataset.priority,
+                        progressStatus: zone.dataset.status,
+                        updatedAt: new Date().toISOString()
+                    };
 
-            zone.addEventListener('dragover', this.handleDragOver);
-            zone.addEventListener('dragleave', this.handleDragLeave);
-            zone.addEventListener('drop', this.handleDrop);
+                    try {
+                        // Обновляем UI сразу
+                        this.tasks[taskIndex] = updatedTask;
+                        
+                        // Сохраняем изменения
+                        await this.saveTasks(updatedTask);
+                        
+                        // Показываем уведомление об успехе
+                        const truncatedTitle = updatedTask.title.length > 15 ? 
+                            updatedTask.title.substring(0, 15) + '...' : 
+                            updatedTask.title;
+                        const assignee = updatedTask.assignees.filter(a => a !== 'empty')[0] || 'не назначен';
+                        
+                        Notification.show(
+                            `Задача "${truncatedTitle}" перемещена\n` +
+                            `Исполнитель: ${assignee}\n` +
+                            `Номер: ${updatedTask.taskNumber || 'не присвоен'}`
+                        );
+                    } catch (error) {
+                        console.error('Error saving task:', error);
+                        // Возвращаем предыдущее состояние при ошибке
+                        this.tasks[taskIndex] = { ...this.tasks[taskIndex] };
+                        this.renderTasks();
+                        Notification.show('Ошибка при сохранении позиции', 'error');
+                    }
+                }
+            });
         });
     }
 
@@ -695,6 +1066,17 @@ class TaskManager {
                         `).join('')}
                     </div>
                     <p>${task.description}</p>
+                    ${task.imageUrl ? `
+                        <div class="task-image">
+                            <img src="${task.imageUrl}" alt="Task image" style="
+                                max-width: 100%;
+                                max-height: 150px;
+                                object-fit: contain;
+                                border-radius: 4px;
+                                margin-top: 8px;
+                            ">
+                        </div>
+                    ` : ''}
                 </div>
             `).join('');
 
@@ -738,9 +1120,306 @@ class TaskManager {
         div.querySelector('select').value = selectedValue;
         return div;
     }
+
+    setupImageHandling() {
+        const addImageBtn = document.getElementById('addImageBtn');
+        const imageInput = document.getElementById('taskImageInput');
+        const imagePreview = document.getElementById('taskImagePreview');
+
+        addImageBtn.addEventListener('click', () => {
+            imageInput.click();
+        });
+
+        imageInput.addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                try {
+                    const preview = await this.previewImage(file);
+                    imagePreview.innerHTML = `
+                        <div class="preview-container">
+                            <img src="${preview}" alt="Preview">
+                            <button class="remove-image-btn" onclick="taskManager.removeImage()">×</button>
+                        </div>
+                    `;
+                    this.currentImage = file;
+                } catch (error) {
+                    console.error('Error previewing image:', error);
+                    Notification.show('Ошибка при загрузке изображения', 'error');
+                }
+            }
+        });
+    }
+
+    previewImage(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = (e) => resolve(e.target.result);
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+        });
+    }
+
+    removeImage() {
+        const imagePreview = document.getElementById('taskImagePreview');
+        imagePreview.innerHTML = '';
+        this.currentImage = null;
+        document.getElementById('taskImageInput').value = '';
+    }
+
+    renderImagesGallery() {
+        const galleryContainer = document.getElementById('taskImagesGrid');
+        if (!galleryContainer) return;
+
+        galleryContainer.innerHTML = '';
+        
+        // Устанавливаем стили для контейнера галереи
+        galleryContainer.style.cssText = `
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 20px;
+            width: 100%;
+            max-width: calc(100% - 40px);
+            margin: 0 auto 20px;
+            background: var(--secondary-background);
+            border-radius: 8px;
+            overflow-x: auto;
+        `;
+        
+        const images = this.tasks
+            .filter(task => task.imageUrl)
+            .map(task => ({
+                url: task.imageUrl,
+                taskId: task.id,
+                taskTitle: task.title,
+                assignees: task.assignees?.filter(a => a !== 'empty') || []
+            }));
+
+        images.forEach(image => {
+            const container = document.createElement('div');
+            container.className = 'gallery-image-container';
+            container.style.cssText = `
+                flex: 0 0 120px;
+                height: 160px;
+                border-radius: 4px;
+                cursor: pointer;
+                position: relative;
+                transition: transform 0.2s;
+                background: rgba(0, 0, 0, 0.05);
+                padding: 8px;
+                display: flex;
+                flex-direction: column;
+            `;
+            
+            // Обрезаем заголовок до 15 символов
+            const truncatedTitle = image.taskTitle.length > 15 
+                ? image.taskTitle.substring(0, 15) + '...' 
+                : image.taskTitle;
+            
+            // Добавляем заголовок
+            const title = document.createElement('div');
+            title.style.cssText = `
+                text-align: center;
+                font-size: 12px;
+                font-weight: bold;
+                margin-bottom: 4px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            `;
+            title.textContent = truncatedTitle;
+            title.title = image.taskTitle; // Полный текст в подсказке
+            
+            // Контейнер для изображения
+            const imgContainer = document.createElement('div');
+            imgContainer.style.cssText = `
+                flex: 1;
+                overflow: hidden;
+                border-radius: 4px;
+                margin: 4px 0;
+            `;
+            
+            const img = document.createElement('img');
+            img.src = image.url;
+            img.style.cssText = `
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            `;
+            
+            // Обрезаем список исполнителей до 25 символов
+            const assigneesText = image.assignees.join(', ');
+            const truncatedAssignees = assigneesText.length > 25 
+                ? assigneesText.substring(0, 25) + '...' 
+                : assigneesText;
+            
+            // Добавляем имена исполнителей
+            const assignees = document.createElement('div');
+            assignees.style.cssText = `
+                text-align: right;
+                font-size: 11px;
+                color: var(--text-secondary);
+                margin-top: 4px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            `;
+            assignees.textContent = truncatedAssignees || 'Нет исполнителя';
+            assignees.title = assigneesText; // Полный текст в подсказке
+            
+            // Эффекты при наведении
+            container.onmouseover = () => {
+                container.style.transform = 'scale(1.05)';
+            };
+            container.onmouseout = () => {
+                container.style.transform = 'scale(1)';
+            };
+            
+            container.onclick = () => this.showModal(image.taskId);
+            
+            imgContainer.appendChild(img);
+            container.appendChild(title);
+            container.appendChild(imgContainer);
+            container.appendChild(assignees);
+            galleryContainer.appendChild(container);
+        });
+
+        // Если нет изображений, скрываем галерею
+        galleryContainer.style.display = images.length ? 'flex' : 'none';
+    }
+
+    // Добавим метод для тестирования доступа к Drive
+    async testDriveAccess() {
+        try {
+            const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+                method: 'GET'
+            });
+            
+            if (response.ok) {
+                console.log('ImgBB connection OK');
+                return true;
+            } else {
+                throw new Error('ImgBB connection failed');
+            }
+        } catch (error) {
+            console.error('ImgBB test error:', error);
+            throw error;
+        }
+    }
+
+    renderCompactGrid() {
+        const gridContainer = document.getElementById('tasksCompactGrid');
+        if (!gridContainer) return;
+
+        gridContainer.innerHTML = '';
+        
+        // Получаем все задачи и раз��еляем их на активные и пустые
+        const sortedTasks = [...this.tasks].sort((a, b) => {
+            const numA = parseInt(a.taskNumber) || 0;
+            const numB = parseInt(b.taskNumber) || 0;
+            return numA - numB;
+        });
+
+        // Разделяем задачи на две группы
+        const activeTasks = sortedTasks.filter(task => 
+            task.assignees?.some(assignee => assignee !== 'empty')
+        );
+        
+        const emptyTasks = sortedTasks.filter(task => 
+            !task.assignees?.some(assignee => assignee !== 'empty')
+        );
+
+        // Сначала добавляем активные задачи
+        activeTasks.forEach(task => {
+            const taskElement = document.createElement('div');
+            taskElement.className = 'compact-task-item';
+            
+            // Номер задачи
+            const number = document.createElement('span');
+            number.className = 'compact-task-number';
+            number.textContent = task.taskNumber ? `№${task.taskNumber}` : '№***';
+            
+            // Иконка изображения
+            const imageIcon = document.createElement('span');
+            imageIcon.className = 'compact-task-image-icon';
+            imageIcon.textContent = task.imageUrl ? '🖼️' : '👽';
+            
+            // Заголовок задачи
+            const title = document.createElement('span');
+            title.className = 'compact-task-title';
+            title.textContent = task.title.length > 15 
+                ? task.title.substring(0, 15) + '...' 
+                : task.title;
+            title.title = task.title;
+            
+            // Статус
+            const status = document.createElement('span');
+            status.className = 'compact-task-status';
+            if (task.progressStatus === 'done') {
+                status.textContent = '✅';
+            } else {
+                status.textContent = '🔨';
+            }
+            
+            taskElement.appendChild(number);
+            taskElement.appendChild(imageIcon);
+            taskElement.appendChild(title);
+            taskElement.appendChild(status);
+            
+            taskElement.addEventListener('click', () => this.showModal(task.id));
+            
+            gridContainer.appendChild(taskElement);
+        });
+
+        // Затем добавляем пустые задачи
+        emptyTasks.forEach(task => {
+            const taskElement = document.createElement('div');
+            taskElement.className = 'compact-task-item empty-task';
+            
+            const number = document.createElement('span');
+            number.className = 'compact-task-number';
+            number.textContent = task.taskNumber ? `№${task.taskNumber}` : '№***';
+            
+            // Иконка изображения
+            const imageIcon = document.createElement('span');
+            imageIcon.className = 'compact-task-image-icon';
+            imageIcon.textContent = task.imageUrl ? '🖼️' : '👽';
+            
+            const title = document.createElement('span');
+            title.className = 'compact-task-title';
+            title.textContent = task.title.length > 15 
+                ? task.title.substring(0, 15) + '...' 
+                : task.title;
+            title.title = task.title;
+            
+            taskElement.appendChild(number);
+            taskElement.appendChild(imageIcon);
+            taskElement.appendChild(title);
+            
+            taskElement.addEventListener('click', () => this.showModal(task.id));
+            
+            gridContainer.appendChild(taskElement);
+        });
+    }
 }
 
-// Исправим инициализацию
+document.addEventListener('DOMContentLoaded', () => {
+    const imagePreview = document.getElementById('taskImagePreview');
+    const fullscreenContainer = document.getElementById('fullscreenImageContainer');
+    const fullscreenImage = document.getElementById('fullscreenImage');
+
+    imagePreview.addEventListener('click', (e) => {
+        if (e.target.tagName === 'IMG') {
+            fullscreenImage.src = e.target.src;
+            fullscreenContainer.style.display = 'flex';
+        }
+    });
+
+    fullscreenContainer.addEventListener('click', () => {
+        fullscreenContainer.style.display = 'none';
+    });
+});
+// Испрви инициализацию
 document.addEventListener('DOMContentLoaded', () => {
     window.taskManager = new TaskManager();
 }); 

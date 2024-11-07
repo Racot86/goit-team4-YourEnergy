@@ -1,0 +1,92 @@
+.sidebar-container {
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: 0 auto;
+  max-width: 325px;
+  order: 3;
+}
+
+.sidebar-quote-container {
+  background: #242424;
+  border-radius: 20px;
+  padding: 20px;
+}
+
+.sidebar-quote {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 129%;
+  color: rgba(244, 244, 244, 0.6);
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+}
+
+.sidebar-quote-of-day {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 100%;
+  color: #f4f4f4;
+  padding-bottom: 8px;
+}
+
+.sidebar-quote-image {
+  border-radius: 20px;
+}
+
+.sidebar-quote-author,
+.static-info {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 129%;
+  color: #f4f4f4;
+  padding-top: 16px;
+}
+
+.static-info {
+  display: none;
+}
+
+.sidebar-sports-info {
+  border-radius: 20px;
+  background: #fff;
+  padding: 50px 20px 20px;
+}
+
+.sidebar-norm-sport,
+.static-info {
+  color: rgba(36, 36, 36, 0.6);
+}
+
+@media screen and (min-width: 768px) {
+  .sidebar-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: left;
+    max-width: 705px;
+    margin: 20px auto;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .sidebar-container {
+    flex-basis: calc((100% - 780px) / 2);
+    flex-direction: column;
+    order: 1;
+  }
+  p.static-info {
+    display: block;
+  }
+
+  .categories-wrap {
+    order: 2;
+  }
+
+  picture,
+  .sidebar-quote-image {
+    width: 100%;
+  }
+}

@@ -1,8 +1,13 @@
 // Импортируем общие стили
 
-import './css/styles.css'
+import './css/styles.css';
+import './js/sidebar-quote.js'
 import './js/categories.js'
 import './partials/components/pagination/PaginationComponent.js'
+import './js/footer-subscribe.js'
+import './js/menu.js';
+
+
 
 
 // Если мы на странице task-management, загружаем дополнительные стили

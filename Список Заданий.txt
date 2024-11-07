@@ -1,0 +1,118 @@
+├── JavaScript/
+│   ├── Code 
+│   │   └── goit-js-hw-01/
+│   │        ├── console.log  ▢ ☑ 
+│   │   │    └──    web.html  ▢ ☑
+│   │   └── goit-js-hw-02/
+│   │        ├── console.log  ▢ ☑ 
+│   │   │    └──    web.html  ▢ ☑ 
+│   │   └── goit-js-hw-03/
+│   │        ├── console.log  ▢ ☑ 
+│   │   │    └──    web.html  ▢ ☑ 
+│   │   └── goit-js-hw-04/
+│   │        ├── console.log  ▢ ☑
+│   │   │    └──    web.html  ▢ ☑
+│   │   └── goit-js-hw-05/
+│   │        ├── console.log  ▢ ☑
+│   │   │    └──    web.html  ▢ ☑
+│   │   └── goit-js-hw-06/
+│   │        ├── console.log  ▢ ☑
+│   │   │    └──    web.html  ▢ ☑
+│   │   └── goit-js-hw-07/
+│   │        ├── console.log  ▢▢
+│   │   │    └──    web.html  ▢▢
+│   │   └── goit-js-hw-08/
+│   │        ├── console.log  ▢▢
+│   │        └──    web.html  ▢▢
+│   ├── REVIEW`s 
+│           ├── 1
+│           └── 2
+│         
+│          
+├── Advanced JavaScript/
+│   ├── Code 
+│   │   └── goit-js-hw-01/
+│   │        ├── console.log
+│   │   │    └── web.html
+│   │   └── goit-js-hw-02/
+│   │        ├── console.log
+│   │   │    └── web.html
+│   │   └── goit-js-hw-03/
+│   │        ├── console.log
+│   │   │    └── web.html
+│   │   └── goit-js-hw-04/
+│   │        ├── console.log
+│   │   │    └── web.html
+│   │   └── goit-js-hw-05/
+│   │        ├── console.log
+│   │   │    └── web.html
+│   │   └── goit-js-hw-06/
+│   │        ├── console.log
+│   │   │    └── web.html
+│   │   └── goit-js-hw-07/
+│   │        ├── console.log
+│   │   │    └── web.html
+│   │   └── goit-js-hw-08/
+│   │        ├── console.log
+│   │        └── web.html
+│   ├── REVIEW`s 
+│           ├── 1
+│           └── 2
+│         
+│         
+├── Algoritms 
+│   ├── Code 
+│   │   └── goit-js-hw-01/
+│   │        ├── console.log
+│   │   │    └── web.html
+│   │   └── goit-js-hw-02/
+│   │        ├── console.log
+│   │   │    └── web.html
+│   │   └── goit-js-hw-03/
+│   │        ├── console.log
+│   │   │    └── web.html
+│   │   └── goit-js-hw-04/
+│   │        ├── console.log
+│   │   │    └── web.html
+│   │   └── goit-js-hw-05/
+│   │        ├── console.log
+│   │   │    └── web.html
+│   │   └── goit-js-hw-06/
+│   │        ├── console.log
+│   │   │    └── web.html
+│   │   └── goit-js-hw-07/
+│   │        ├── console.log
+│   │   │    └── web.html
+│   │   └── goit-js-hw-08/
+│   │        ├── console.log
+│   │        └── web.html
+│   ├── REVIEW`s 
+│   │        ├── 1
+│   │        └── 2
+
+
+
+Да, в текстовых файлах можно использовать Unicode-символы для создания визуальных чекбоксов. Вот несколько вариантов:
+☐ - пустой квадрат (U+2610)
+☑ - отмеченный квадрат (U+2611)
+☒ - квадрат с крестиком (U+2612)
+Или можно использовать более простые символы:
+□ - пустой квадрат (U+25A1)
+▢ - другой вариант пустого квадрата (U+25A2)
+■ - заполненный квадрат (U+25A0)
+▪ - маленький заполненный квадрат (U+25AA)
+Также часто используются:
+○ - пустой круг
+● - заполненный круг
+◯ - другой вариант пустого круга
+◉ - другой вариант заполненного круга
+Для вашего случая можно использовать, например:
+
+
+☐ Задача 1. Генератор slug
+☐ Задача 2. Композиція масивів
+☐ Задача 3. Фільтрація масиву чисел
+
+□ Задача 1. Генератор slug
+□ Задача 2. Композиція масивів
+□ Задача 3. Фільтрація масиву чисел

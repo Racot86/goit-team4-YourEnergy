@@ -3,6 +3,8 @@ import { getCategories } from './api-requests';
 import { generatePages } from '../partials/components/pagination/PaginationComponent';
 
 const categoriesList = document.querySelector('.categories-list');
+const activeFilter = document.querySelector('.filter-button.active');
+// console.log(activeFilter)
 
 const paginationCatList = document.querySelector('.categories-pagination');
 
@@ -10,6 +12,8 @@ async function loadCategories(currentCategoryName) {
   //завантаження категорій
   try {
     const data = await getCategories();
+    console.log(data);
+
     paginationCatList.innerHTML = '';
     if (data.totalPages > 1) {
       paginationCatList.appendChild(generatePages(data.totalPages, 0));
@@ -35,9 +39,9 @@ async function handlePagination(e) {
   const pageIndex = Number(e.target.dataset.index);
   const page = pageIndex + 1;
   // console.log(page); //получаем индекс нажатой страницы
-
+  const filter = activeFilter.dataset.filter;
   try {
-    const data = await getCategories(page);
+    const data = await getCategories(filter, page);
     categoriesList.innerHTML = createCategoriesMarkup(data.results);
   } catch (err) {
     console.log(err);
@@ -53,4 +57,4 @@ function openCategory(e) {
   //виклик ф-ії відмалювання вправ по картегорії
 }
 
-loadCategories();
+loadCategories('Musculs');

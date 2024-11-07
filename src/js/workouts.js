@@ -5,7 +5,7 @@ let workoutsContainer = document.querySelector('.workouts-container-list');
 
 async function renderWorkoutsByCategory(bodypart = '', muscles = '' , equipment = '', keyword = '', page = 1, limit = 10) {
   try {
-    const requestUrl = exerciseRequest(bodypart, muscles,equipment,keyword, page, limit);
+    const requestUrl = exerciseRequest(bodypart,muscles,equipment,keyword, page, limit);
     console.log(requestUrl)
 
     const response = await fetch(requestUrl);
@@ -14,10 +14,7 @@ async function renderWorkoutsByCategory(bodypart = '', muscles = '' , equipment 
     }
     
     const data = await response.json();
-
     workoutsContainer.innerHTML = createWorkoutsMarkup(data.results);
-
-    console.log(workoutsContainer)
 
   } catch (error) {
     console.error('Error loading workouts:', error);

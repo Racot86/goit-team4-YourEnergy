@@ -34,12 +34,21 @@ function openCategory(e) {
   e.target.removeEventListener('click', openCategory);
   categoriesList.style.display = 'none';
   let categoryName = e.target.dataset.name;
-  /*TODO це ще треба буде пофіксити, бо поки це працює тільки на фільтр musсels*/
-  renderWorkoutsByCategory('', encodeURIComponent(categoryName), '', '', 1, 10);
-  workoutsContainer.style.display = 'flex';
-  console.log(encodeURIComponent(categoryName))
-  
-  //виклик ф-ії відмалювання вправ по картегорії
+  let categoryFilter = e.target.dataset.filter;
+
+  switch (categoryFilter) {
+    case 'Muscles':
+      renderWorkoutsByCategory('', encodeURIComponent(categoryName), '', '', 1, 10);
+      break;
+    case 'Body parts':
+      renderWorkoutsByCategory(encodeURIComponent(categoryName), '', '', '', 1, 10);
+      break;
+    case 'Equipment':
+      renderWorkoutsByCategory('', '', encodeURIComponent(categoryName), '', 1, 10);
+      break;
+  } 
+
+  workoutsContainer.style.display = 'flex';  
 }
 
 loadCategories();

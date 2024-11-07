@@ -1,25 +1,47 @@
 <header class="header">
   <div class="container">
     <nav class="nav">
-      <a class="nav-logo" href="./index.html">
-        <img 
-          src="./img/logo_YOUR_ENERGY.svg" 
-          alt="YOUR ENERGY" 
-          width="132" 
-          height="24"
-          style="padding: 5px 0.47px 5px 0px;"
-        >
+      <a class="logo" href="/" rel="noopener noreferrer" aria-label="YOUR ENERGY">
+        <svg width="132" height="24">
+          <use href="./img/icons.svg#logo"></use>
+        </svg>
       </a>
-      <ul class="nav-list">
-        <!-- Временно закомментировано
-        <li class="nav-item">
-          <a class="nav-link add-task-link" href="#" id="addTaskBtn">+</a>
+      <ul class="menu-items">
+        <li class="menu-item active">
+          <a href="/">Home</a>
         </li>
-        -->
-        <li class="nav-item">
-          <a class="nav-link {=$highlight-curr}" href="./task-management.html">Task Manager</a>
+        <li class="menu-item">
+          <a href="/favorites">Favorites</a>
         </li>
       </ul>
+      <ul class="socials">
+        <li class="social-item">
+          <a href="https://www.facebook.com/goITclub/" rel="noopener noreferrer" target="_blank" aria-label="Link to Facebook">
+            <svg width="28" height="28">
+              <use href="./img/icons.svg#facebook"></use>
+            </svg>
+          </a>
+        </li>
+        <li class="social-item">
+          <a href="https://www.instagram.com/goitclub/" rel="noopener noreferrer" target="_blank" aria-label="Link to Instagram">
+            <svg width="28" height="28">
+              <use href="./img/icons.svg#instagram"></use>
+            </svg>
+          </a>
+        </li>
+        <li class="social-item">
+          <a href="https://www.youtube.com/c/GoIT" rel="noopener noreferrer" target="_blank" aria-label="Link to Youtube">
+            <svg width="28" height="28">
+              <use href="./img/icons.svg#youtube"></use>
+            </svg>
+          </a>
+        </li>
+      </ul>
+      <button type="button" class="menu-btn">
+        <svg width="32" height="32">
+          <use href="./img/icons.svg#menu"></use>
+        </svg>
+      </button>
     </nav>
   </div>
 </header>

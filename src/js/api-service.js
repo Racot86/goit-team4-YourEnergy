@@ -42,3 +42,5 @@ export const exerciseInfoRequest = (id) => {
 export const addRatingRequest = (id) => {
   return `${exerciseUrl()}/${id}/rating`
 }
+
+

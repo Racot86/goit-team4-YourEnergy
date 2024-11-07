@@ -90,6 +90,20 @@ body {
 
 }
 
+.category-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.categories-item-text {
+  z-index: 2;
+}
+
 /* Адаптивні стилі проміжні */
 @media (min-width: 376px) and (max-width: 600px) {
 
@@ -105,6 +119,7 @@ body {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
+    max-width: 768px;
   }
 
   .filters-title {
@@ -134,6 +149,7 @@ body {
     justify-content: space-between;
     padding: 0 32px;
     margin: 0;
+    max-width: 1200px;
   }
 
   .filters-title {

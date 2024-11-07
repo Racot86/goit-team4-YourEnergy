@@ -14,14 +14,22 @@ const searchInput = document.querySelector('#search-input');
 async function loadCategories() {
   try {
     const data = await getCategories();
-    console.log("Отримані категорії з API:", data.results); // Додатковий лог для перевірки
+    console.log("Отримані категорії з API:", data.results);
+
+    // Перевіряємо кожен об'єкт на наявність ключів
+    data.results.forEach(category => {
+      if (!category.name || !category.imgURL || !category.filter) {
+        console.warn("Відсутнє поле у категорії:", category);
+      }
+    });
+
     categoriesList.innerHTML = createCategoriesMarkup(data.results);
     allCategories = data.results.map(category => ({
       name: category.name,
       imgURL: category.imgURL,
       filter: category.filter,
     }));
-    console.log("Збережені категорії в allCategories:", allCategories); // Додатковий лог для перевірки
+    console.log("Збережені категорії в allCategories:", allCategories);
 
     let categoriesItems = document.querySelectorAll('.categories-item');
     categoriesItems.forEach(item => {

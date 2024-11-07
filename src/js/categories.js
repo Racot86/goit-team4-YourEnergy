@@ -1,7 +1,11 @@
 import createCategoriesMarkup from './markup/categoriesMarkup';
+import renderWorkoutsByCategory from './workouts';
+
 import { getCategories } from './api-requests';
 
 let categoriesList = document.querySelector('.categories-list');
+let workoutsContainer = document.querySelector('.workouts-container');
+
 
 async function loadCategories(currentCategoryName) {
   //параметри для фільтру, відображення
@@ -30,7 +34,11 @@ function openCategory(e) {
   e.target.removeEventListener('click', openCategory);
   categoriesList.style.display = 'none';
   let categoryName = e.target.dataset.name;
-  console.log(categoryName); //потім видалити
+  /*TODO це ще треба буде пофіксити, бо поки це працює тільки на фільтр musсels*/
+  renderWorkoutsByCategory('', encodeURIComponent(categoryName), '', '', 1, 10);
+  workoutsContainer.style.display = 'flex';
+  console.log(encodeURIComponent(categoryName))
+  
   //виклик ф-ії відмалювання вправ по картегорії
 }
 

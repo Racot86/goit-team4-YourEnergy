@@ -1,0 +1,49 @@
+├── <html> lang="en"><!DOCTYPE html>
+│   ├── <head>
+│   │   ├── <link rel="stylesheet">
+│   │   │   ├── <link rel="stylesheet" href="./css/styles.css" />                          
+│   │   │   │     
+│   │   │   │
+│   │   │   ├── <link rel="stylesheet" href="./css/content.css" />                                      
+│   │   │   │   
+│   │   │   │
+│   │   │   ├── <link rel="stylesheet" href="./css/styles.css" />                                          
+│   │   │   │   <link rel="stylesheet" href="./css/styles.css" />
+│   │   │   │
+│   │   │   └── <link rel="stylesheet" href="./css/styles.css" />                                     
+│   │   │       
+│   │   │
+│   │   │
+│   │   ├── Header
+
+    ├── <head>
+│   │   ├── Header
+│   │   │   ├── 11. Mobile & Desktop Logo + Navigation                            
+│   │   │   │   Header включає:
+│   │   │   │   - mobile: логотип та бургер-меню з навігацією та переліком посилань на соц. мережі
+│   │   │   │   - tablet&desktop: логотип, навігацію та перелік соц. мереж
+│   │   │   │
+│   │   │   ├── 12. Click Logo/Home Redirect                                      
+│   │   │   │   Click по логотипу або Home переадресовує користувача на головну сторінку
+│   │   │   │
+│   │   │   ├── 13. Favorites Page Link                                           
+│   │   │   │   Click по Favorites відкриває сторінку з переліком вправ, доданих користувачем в улюблені
+│   │   │   │
+│   │   │   └── 14. Burger Menu Full Height                                       
+│   │   │       Click по бургер-меню розгортає його на всю висоту viewport
+│   │   │
+│   │   ├── Home Page
+│   │   ├── Header
+│   │   │   ├── 11. Mobile & Desktop Logo + Navigation                            
+│   │   │   │   Header включає:
+│   │   │   │   - mobile: логотип та бургер-меню з навігацією та переліком посилань на соц. мережі
+│   │   │   │   - tablet&desktop: логотип, навігацію та перелік соц. мереж
+│   │   │   │
+│   │   │   ├── 12. Click Logo/Home Redirect                                      
+│   │   │   │   Click по логотипу або Home переадресовує користувача на головну сторінку
+│   │   │   │
+│   │   │   ├── 13. Favorites Page Link                                           
+│   │   │   │   Click по Favorites відкриває сторінку з переліком вправ, доданих користувачем в улюблені
+│   │   │   │
+│   │   │   └── 14. Burger Menu Full Height                                       
+│   │   │       Click по бургер-меню розгортає його на всю висоту viewport

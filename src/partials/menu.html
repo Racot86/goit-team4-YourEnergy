@@ -1,0 +1,63 @@
+<div id="backdrop" class="backdrop" onclick="closeMenu()">
+  <div class="mobile-menu" onclick="menuLayoutClickHandler(event)">
+    <div class="btn-menu-wrap">
+      <button
+        type="button"
+        onclick="closeMenu()"
+        class="menu-close-button"
+        aria-label="Close mobile menu button"
+      >
+        <svg class="menu-close-icon" width="32" height="32">
+          <use href="./img/icons.svg#icon-x_icon"></use>
+        </svg>
+      </button>
+    </div>
+    <ul class="menu-items">
+      <li class="menu-item" onclick="closeMenu()">
+        <a href="/">Home</a>
+      </li>
+      <li class="menu-item" onclick="closeMenu()">
+        <a href="/favorites">Favorites</a>
+      </li>
+    </ul>
+
+    <ul class="socials">
+      <li class="social-item">
+        <a
+          href="https://www.facebook.com/goITclub/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Link to Facebook"
+        >
+          <svg class="social-icon" width="26" height="26">
+            <use href="./img/icons.svg#facebook"></use>
+          </svg>
+        </a>
+      </li>
+      <li class="social-item">
+        <a
+          href="https://www.instagram.com/goitclub/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Link to Instagram"
+        >
+          <svg class="social-icon" width="26" height="26">
+            <use href="./img/icons.svg#instagram"></use>
+          </svg>
+        </a>
+      </li>
+      <li class="social-item">
+        <a
+          href="https://www.youtube.com/c/GoIT"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Link to Youtube"
+        >
+          <svg class="social-icon" width="26" height="26">
+            <use href="./img/icons.svg#youtube"></use>
+          </svg>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

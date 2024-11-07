@@ -36,8 +36,11 @@
 
   .nav .menu-items {
     display: flex;
+    flex-direction: row;
+    justify-content: center;
     align-items: center;
     gap: 18px;
+    width: fit-content;
     padding: 8px 34px;
     border-radius: 60px;
     background-color: var(--black-color);

@@ -9,11 +9,40 @@
   color: #242424;
   background-color: rgba(255, 255, 255, 0.87);
 
+  --black-color: #242424;
+  --white-color: #F4F4F4;
+  --border-color: rgba(36, 36, 36, 0.10);
+  --shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25), 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  --anim-duration: 250ms;
+  --anim-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+}
+
+@font-face {
+  font-family: 'DM Sans';
+  src: url('../fonts/DM_Sans/DMSans-VariableFont_opsz,wght.ttf') format('truetype');
+  font-weight: 400 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'DM Sans';
+  src: url('../fonts/DM_Sans/DMSans-Italic-VariableFont_opsz,wght.ttf') format('truetype');
+  font-weight: 400 500;
+  font-style: italic;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  display: block;
+  padding: 0;
+  background-color: transparent;
 }
 
 body {

@@ -1,0 +1,124 @@
+.nav .logo {
+  height: 24px;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 80px;
+}
+
+.nav .socials,
+.nav .menu-items {
+  display: none;
+}
+
+.nav .menu-btn {
+  height: 32px;
+}
+
+@media screen and (min-width: 768px) {
+  .nav {
+    margin-top: 24px;
+    margin-bottom: 100px;
+  }
+
+  .nav .menu-btn {
+    display: none;
+  }
+
+  .nav .socials,
+  .nav .menu-items {
+    display: block;
+  }
+
+  .nav .menu-items {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+    width: fit-content;
+    padding: 8px 34px;
+    border-radius: 60px;
+    background-color: var(--black-color);
+    box-shadow: var(--shadow);
+  }
+
+  .nav .menu-item {
+    color: var(--white-color);
+    font-family: "DM Sans", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  .nav .menu-item a {
+    width: auto;
+    height: 100%;
+    padding: 6px 12px;
+  }
+
+  .nav .menu-item.active {
+    display: flex;
+    border-radius: 30px;
+    color: var(--black-color);
+    background: var(--white-color);
+  }
+
+  .nav .socials {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .nav .social-item {
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    transition-duration: var(--anim-duration);
+    transition-timing-function: var(--anim-timing-function);
+    transition-property: background-color;
+  }
+
+  .nav .social-item a {
+    display: flex;
+    height: 100%;
+    width: auto;
+    padding: 8px;
+  }
+
+  .nav .social-item svg {
+    fill: var(--black-color);
+    transition-duration: var(--anim-duration);
+    transition-timing-function: var(--anim-timing-function);
+    transition-property: fill;
+  }
+
+  .nav .social-item:hover {
+    background-color: var(--black-color);
+  }
+
+  .nav .social-item:hover svg {
+    fill: var(--white-color);
+  }
+
+}
+
+/*@media screen and (orientation: landscape) and (min-width: 768px) and (max-height: 550px) {*/
+
+/*}*/
+
+@media screen and (min-width: 1280px) {
+  .nav {
+    margin-top: 28px;
+    margin-bottom: 96px;
+  }
+
+  .nav .menu-items {
+    padding: 8px 50px;
+  }
+}
+

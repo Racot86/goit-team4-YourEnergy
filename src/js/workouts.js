@@ -3,7 +3,7 @@ import { exerciseRequest } from './api-service';
 
 let workoutsContainer = document.querySelector('.workouts-container-list');
 
-async function renderWorkoutsByCategory(bodypart = '', muscles = '' , equipment = '', keyword = '', page = 1, limit = 10) {
+async function renderWorkoutsByCategory(bodypart = '', muscles = '' , equipment = '', keyword = '', page = 1, limit = 1000) {
   try {
     const requestUrl = exerciseRequest(bodypart,muscles,equipment,keyword, page, limit);
 

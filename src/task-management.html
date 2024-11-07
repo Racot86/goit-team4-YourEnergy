@@ -6,11 +6,27 @@
     <title>Task Management System</title>
     <link rel="stylesheet" href="./css/styles.css">
     <link rel="stylesheet" href="./css/task-manager.css">
+    <link rel="stylesheet" href="./css/dev-drive.css">
+    
+
 </head>
 <body>
     <load src="./partials/header.html" icon-path="./img/sprite.svg#logo" />
 
     <div class="container">
+        <!-- Галерея изображений -->
+        <div class="task-images-gallery">
+            <div class="gallery-container" id="taskImagesGrid">
+                <!-- Сюда будут добавляться картинки -->
+            </div>
+        </div>
+
+        <!-- Новый блок с сеткой задач -->
+        <div class="tasks-compact-grid" id="tasksCompactGrid">
+            <!-- Сюда будут добавляться задачи в компактном виде -->
+        </div>
+
+        <!-- Таблица задач -->
         <div class="task-grid">
             <!-- Заголовки -->
             <div class="header-cell"></div>
@@ -18,13 +34,6 @@
             <div class="header-cell">In Progress</div>
             <div class="header-cell">To Verify</div>
             <div class="header-cell">Done</div>
-
-            <!-- Top-priority строка -->
-            <div class="priority-cell">Top-priority</div>
-            <div class="drop-zone" data-priority="top-priority" data-status="who-take"></div>
-            <div class="drop-zone" data-priority="top-priority" data-status="in-progress"></div>
-            <div class="drop-zone" data-priority="top-priority" data-status="to-verify"></div>
-            <div class="drop-zone" data-priority="top-priority" data-status="done"></div>
 
             <!-- Important строка -->
             <div class="priority-cell">Important</div>
@@ -97,7 +106,8 @@
 
     <!-- Модальные окна -->
     <load src="./partials/task-modal.html" />
-
+    
+    <script src="./js/task-manager.js"></script>
     <!-- Модальное окно подтверждения удаления -->
     <div id="deleteConfirmModal" class="modal">
         <div class="modal-content delete-confirm">
@@ -112,6 +122,8 @@
 
     <load src="./partials/footer.html" />
 
-    <script type="module" src="./js/task-manager.js"></script>
+    <!-- Скрипты в конце body
+    <script src="./js/dev-drive.js"></script> -->
+
 </body>
 </html> 

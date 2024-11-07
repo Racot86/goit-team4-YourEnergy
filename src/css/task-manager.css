@@ -38,7 +38,7 @@
     padding: 12px;
     margin-bottom: 10px;
     border-radius: 6px;
-    border: 1px solid var(--border-color);
+    border: 1px solid #398b8b;
     cursor: move;
     transition: all 0.2s ease;
 }
@@ -242,7 +242,7 @@
 }
 
 .drop-zone {
-    background-color: white;
+    background-color: #398b8b;
     min-height: 100px;
     max-height: 500px;
     max-width: 450px;
@@ -301,12 +301,12 @@ body {
 
 .drop-zone {
     background-color: var(--card-bg);
-    border: 1px solid var(--border-color);
+    
 }
 
 .task-card {
     background-color: var(--card-bg);
-    border-color: var(--border-color);
+    border-color: #398b8b;
     color: var(--text-color);
 }
 
@@ -526,7 +526,7 @@ body {
     background-color: var(--card-bg);
     padding: 15px;
     border-radius: 6px;
-    border: 1px solid var(--border-color);
+    border: 1px solid #6c757d;
     text-align: right;
 }
 
@@ -551,14 +551,14 @@ body {
 /* Стили для колонки с задачами */
 .task-content {
     background-color: var(--card-bg);
-    border: 1px solid var(--border-color);
+    border: 1px solid #6c757d;
     border-radius: 6px;
     padding: 15px;
 }
 
 .task-item {
     padding: 10px;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid #398b8b;
 }
 
 .task-item:last-child {
@@ -853,7 +853,7 @@ body {
     justify-content: center;
 }
 
-/* Стили для отображения прогресса подзадач в карточке */
+/* Стили для отображения пргреса подзадч в каточке */
 .subtasks-progress {
     font-size: 0.9em;
     color: var(--text-color);
@@ -862,4 +862,417 @@ body {
     background-color: var(--header-bg);
     border-radius: 4px;
     display: inline-block;
+}
+
+.task-image-section {
+    margin: 15px 0;
+}
+
+.add-image-btn {
+    padding: 8px 15px;
+    background: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.add-image-btn:hover {
+    background: #e0e0e0;
+}
+
+.task-image-preview {
+    margin-top: 10px;
+    max-width: 300px;
+    position: relative;
+}
+
+.task-image-preview img {
+    width: 100%;
+    border-radius: 4px;
+}
+
+.remove-image-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: rgba(0,0,0,0.5);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+
+.task-images-gallery {
+    max-width: 1900px;
+    margin: 20px auto;
+    padding: 0;
+}
+
+.gallery-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 120px);
+    gap: 10px;
+    padding: 15px;
+    background: var(--card-bg);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.gallery-image-container {
+    position: relative;
+    transition: transform 0.2s;
+}
+
+.gallery-image-container:hover {
+    transform: scale(1.05);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.gallery-image {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.gallery-image:hover {
+    transform: scale(1.05);
+}
+
+/* Стили для компактной сетки задач */
+.tasks-compact-grid {
+    display: grid;
+    grid-template-rows: repeat(3, 40px);
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    gap: 5px 15px;
+    padding: 20px;
+    margin: 20px 0;
+    background: var(--card-bg);
+    width: fit-content;
+    border-radius: 8px;
+    border-bottom: 1px solid var(--border-color);
+    overflow-x: auto;
+}
+
+.compact-task-item {
+    display: flex;
+    align-items: flex-end;
+    gap: 5px;
+    height: 40px;
+    padding-bottom: 3px;
+    background: var(--card-bg);
+    border-bottom: 1px solid #398b8b;
+    width: max-content;
+    cursor: pointer;
+}
+
+.compact-task-number {
+    font-size: 0.9em;
+    color: var(--text-color);
+    min-width: 40px;
+    max-height: 25px;
+}
+
+.compact-task-title {
+    flex: 1;
+    font-size: 0.9em;
+    color: var(--text-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 25px;
+    min-width: 100px;
+}
+
+.compact-task-status {
+    font-size: 1.2em;
+    min-width: 24px;
+    text-align: center;
+    max-height: 25px;
+    line-height: 25px;
+}
+
+/* Стили для пустых задач */
+.compact-task-item.empty-task {
+    opacity: 0.6;
+    border-bottom: 1px solid #3e51af;
+    background-color: rgba(62, 81, 175, 0.1);
+}
+
+.empty-task .compact-task-number,
+.empty-task .compact-task-title {
+    color: var(--text-color);
+}
+
+/* Обновляем стили для компактной сетки */
+.tasks-compact-grid {
+    display: grid;
+    grid-template-rows: repeat(3, 40px);
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    gap: 5px 10px;
+    padding: 20px;
+    margin: 20px 0;
+    background: var(--card-bg);
+    width: fit-content;
+    border-radius: 8px;
+    border-bottom: 1px solid var(--border-color);
+    overflow-x: auto;
+}
+
+.compact-task-image-icon {
+    font-size: 1.2em;
+    min-width: 24px;
+    text-align: center;
+    max-height: 25px;
+    line-height: 25px;
+    margin: 0 3px 0 0px;
+}
+
+/* Обновляем стили для пустых задач */
+.compact-task-item.empty-task .compact-task-image-icon {
+    opacity: 0.6;
+}
+
+/* Обновленные стили для модального окна */
+.modal-content {
+    max-width: 900px;
+    max-height: 90vh;
+    overflow-y: auto;
+    background: var(--card-bg);
+    border-radius: 8px;
+    padding: 0;
+    margin: 20px auto;
+}
+
+.modal-row {
+    padding: 20px;
+    border-bottom: 1px solid #398b8b;
+}
+
+/* Row 1: Title and Delete button */
+.title-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    position: relative;
+}
+
+.title-row #taskTitle {
+    flex: 1;
+    font-size: 1.5em;
+    padding: 10px;
+    border: none;
+    background: transparent;
+    color: var(--text-color);
+}
+
+.title-row .delete-task-btn {
+    padding: 8px 15px;
+    height: auto;
+    white-space: pre-line;
+    line-height: 1.2;
+    text-align: center;
+}
+
+/* Row 2: Image section */
+.image-row {
+    display: flex;
+    flex-direction: column;
+}
+
+.task-image-preview {
+    width: 100%;
+    margin-top: 15px;
+}
+
+.task-image-preview img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+/* Row 3: Assignees */
+.assignees-row .assignees-container {
+    margin: 0;
+}
+
+/* Row 4: Task details */
+.details-row {
+    display: grid;
+    grid-template-columns: 100px repeat(3, 1fr);
+    gap: 15px;
+    align-items: center;
+}
+
+.task-number-container {
+    position: relative;
+}
+
+#taskNumber {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+}
+
+/* Row 5: Description */
+.description-row textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background: var(--card-bg);
+    color: var(--text-color);
+}
+
+/* Row 6: Subtasks */
+.subtasks-row .subtasks-container {
+    margin: 0;
+}
+
+/* Save button */
+.save-btn {
+    width: calc(100% - 40px);
+    margin: 20px;
+    padding: 12px;
+    background: var(--button-bg);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.1em;
+}
+
+/* Общие стили для select */
+select {
+    padding: 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background: var(--card-bg);
+    color: var(--text-color);
+    width: 100%;
+}
+
+/* Стили для скролла */
+.modal-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+    background-color: var(--border-color);
+    border-radius: 4px;
+}
+
+/* Адаптивность для маленьких экранов */
+@media (max-width: 768px) {
+    .details-row {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+    
+    .title-row {
+        flex-direction: column;
+    }
+    
+    .title-row .delete-task-btn {
+        align-self: flex-end;
+    }
+}
+
+.modal-grid {
+    display: grid;
+    grid-template-rows: auto;
+    gap: 20px;
+}
+
+.title-row,
+.image-row,
+.assignees-row,
+.details-row,
+.description-row,
+.subtasks-row {
+    display: grid;
+    gap: 10px;
+    border-bottom: 1px solid #398b8b;
+    padding: 20px;
+}
+
+.title-row {
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+}
+
+.image-row {
+    grid-template-columns: 1fr;
+}
+
+.assignees-row {
+    grid-template-columns: 1fr;
+}
+
+.details-row {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.description-row {
+    grid-template-columns: 1fr;
+}
+
+.subtasks-row {
+    grid-template-columns: 1fr;
+}
+
+.save-btn {
+    grid-column: 1 / -1;
+    margin: 20px;
+    padding: 12px;
+    background: var(--button-bg);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.1em;
+}
+
+.modal-content {
+    max-width: 900px;
+    max-height: 90vh;
+    overflow-y: auto;
+    background: var(--card-bg);
+    border-radius: 8px;
+    padding: 0;
+    margin: 20px auto;
+}
+
+.fullscreen-image-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.fullscreen-image-container img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 8px;
 }

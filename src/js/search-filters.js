@@ -1,5 +1,4 @@
-import { getCategories} from './api-requests';
-//import {getExercises} from '';
+import { getCategories } from './api-requests';
 import createCategoriesMarkup from './markup/categoriesMarkup';
 
 

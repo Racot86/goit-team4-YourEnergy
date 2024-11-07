@@ -1,0 +1,22 @@
+.pagination{
+  display: flex;
+  font-size: 24px;
+  gap: 20px;
+  color: lightgray;
+}
+.pagination p{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+}
+.selected{
+  border-radius: 50%;
+  border: 1px solid rgba(0,0,0,1);;
+  transition: 0.2s ease-in-out;
+  color: black;
+  width: 32px;
+  height: 32px;
+}

@@ -12,6 +12,7 @@
 
 /* Sections style */
 @import url('./header.css');
+@import url('./menu.css');
 @import url('./vite-promo.css');
 @import url('./badges.css');
 @import url('./back-link.css');

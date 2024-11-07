@@ -1,7 +1,7 @@
 import createWorkoutsMarkup from './markup/workoutsMarkup';
 import { exerciseRequest } from './api-service';
 
-let workoutsContainer = document.querySelector('.workouts-container');
+let workoutsContainer = document.querySelector('.workouts-container-list');
 
 async function renderWorkoutsByCategory(bodypart = '', muscles = '' , equipment = '', keyword = '', page = 1, limit = 10) {
   try {

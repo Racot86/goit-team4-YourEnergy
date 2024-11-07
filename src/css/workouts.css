@@ -63,3 +63,17 @@
   text-align: center;
   line-height: 214%;
 }
+
+@media screen and (min-width: 768px) {
+  .workouts-container-list {
+    max-width: 900px;
+    justify-content: center;
+  }
+
+  Element {
+    display: flex;
+  }
+  .workouts-container {
+    margin: 0 auto;
+  }
+}

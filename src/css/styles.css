@@ -17,3 +17,5 @@
 @import url('./back-link.css');
 @import url('./footer.css');
 @import url('./categories.css');
+@import url('../partials/components/pagination/PaginationStyles.css');
+

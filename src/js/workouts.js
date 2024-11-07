@@ -17,7 +17,6 @@ async function renderWorkoutsByCategory(bodypart = '', muscles = '' , equipment 
     workoutsContainer.innerHTML = createWorkoutsMarkup(data.results);
 
     const workoutsItem = document.querySelectorAll('.workouts-item');
-    console.log(workoutsItem)
       
     workoutsItem.forEach((item) => {
       item.addEventListener('click', openModalWindow);
@@ -35,7 +34,7 @@ function openModalWindow(e) {
   const name = clickedItem.dataset.name;
   const id = clickedItem.dataset.id;
 
-  console.log('name: ', name, 'id: ', id,);
+  console.log('name: ', name, '; id: ', id,);
 
 }
 

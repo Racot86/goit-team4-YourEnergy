@@ -10,6 +10,8 @@ const filterButtons = document.querySelectorAll('.filter-button');
 const searchForm = document.querySelector('.search-form');
 const searchInput = document.querySelector('#search-input');
 const workoutsContainer = document.querySelector('.workouts-container');
+let activeFilter = 'Muscles'; // встановимо початкове значення за замовчуванням
+
 
 // Функція для початкового завантаження категорій
 async function loadCategories() {
@@ -39,17 +41,21 @@ async function loadCategories() {
 }
 
 // Функція для фільтрації категорій за вибраним типом
-function loadAndFilterCategories(filterType = 'all') {
+async function loadAndFilterCategories(filterType) {
   console.log("Значення фільтра:", filterType);
 
-  const filteredCategories = filterType === 'all'
-    ? allCategories
-    : allCategories.filter(category =>
-        category.filter.toLowerCase() === filterType.toLowerCase()
-      );
+  try {
+    // Запит до API для отримання категорій на основі вибраного фільтра
+    const data = await getCategories(filterType);
 
-  console.log("Категорії після фільтрації:", filteredCategories);
-  displayCategories(filteredCategories);
+    console.log("Категорії після фільтрації:", data.results); // Лог для перевірки результату
+
+    // Оновлюємо інтерфейс відображенням нових категорій
+    displayCategories(data.results);
+
+  } catch (error) {
+    console.error("Error loading filtered categories:", error);
+  }
 }
 
 // Функція для відображення категорій
@@ -71,6 +77,7 @@ filterButtons.forEach(button => {
 
     filterButtons.forEach(btn => btn.classList.remove('active'));
     e.target.classList.add('active');
+    activeFilter = filterType;
   });
 });
 

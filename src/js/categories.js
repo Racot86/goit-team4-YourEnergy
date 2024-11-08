@@ -6,7 +6,6 @@ import { generatePages } from '../partials/components/pagination/PaginationCompo
 
 let categoriesList = document.querySelector('.categories-list');
 let workoutsContainer = document.querySelector('.workouts-container');
-const activeFilter = document.querySelector('.filter-button.active');
 const paginationCatList = document.querySelector('.categories-pagination');
 
 // console.log(activeFilter)
@@ -21,6 +20,7 @@ export async function loadCategories(currentCategoryName) {
     if (data.totalPages > 1) {
       paginationCatList.appendChild(generatePages(data.totalPages, 0));
       const paginationPage = document.querySelectorAll('.pagination-page');
+
       paginationPage.forEach(btn =>
         btn.addEventListener('click', handlePagination)
       );
@@ -29,10 +29,7 @@ export async function loadCategories(currentCategoryName) {
     
     categoriesList.innerHTML = createCategoriesMarkup(data.results); // малюємо сітку без фільтрів
 
-    let categoriesItem = document.querySelectorAll('.categories-item');
-    categoriesItem.forEach(item => {
-      item.addEventListener('click', openCategory); // логіка відкриття вправ по категорії
-    });
+    categoryClickHandler();
   } catch (error) {
     console.error('Error loading categories:', error); //логіка помилок
   }
@@ -41,14 +38,25 @@ export async function loadCategories(currentCategoryName) {
 async function handlePagination(e) {
   const pageIndex = Number(e.target.dataset.index);
   const page = pageIndex + 1;
-  // console.log(page); //получаем индекс нажатой страницы
-  const filter = activeFilter.dataset.filter;
+  
+  const activeFilter = document.querySelector('.filter-button.active');
+  const filter = activeFilter ? activeFilter.dataset.filter : '';
+
   try {
     const data = await getCategories(filter, page);
+    
     categoriesList.innerHTML = createCategoriesMarkup(data.results);
+    categoryClickHandler(); 
   } catch (err) {
     console.log(err);
   }
+}
+
+function categoryClickHandler() {
+  let categoriesItem = document.querySelectorAll('.categories-item');
+  categoriesItem.forEach(item => {
+    item.addEventListener('click', openCategory);
+  });
 }
 
 // логіка відкриття вправ по категорії

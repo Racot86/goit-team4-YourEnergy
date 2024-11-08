@@ -175,7 +175,7 @@ export class ModalWindow {
       favBtn.innerHTML = `
         Remove from favorites
         <svg class="modal-icon-heart">
-          <use href="./img/sprite.svg#icon-delete"></use>
+          <use href="./img/icons.svg#icon-trash"></use>
         </svg>
       `;
       favBtn.classList.add('is-favorite');
@@ -188,7 +188,7 @@ export class ModalWindow {
       favBtn.innerHTML = `
         Add to favorites
         <svg class="modal-icon-heart">
-          <use href="./img/sprite.svg#icon-heart"></use>
+          <use href="./img/icons.svg#icon-heart"></use>
         </svg>
       `;
       favBtn.classList.remove('is-favorite');

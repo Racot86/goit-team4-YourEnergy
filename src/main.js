@@ -5,8 +5,11 @@ import './js/sidebar-quote.js'
 import './js/categories.js'
 import './partials/components/pagination/PaginationComponent.js'
 import './js/footer-subscribe.js'
+import './js/favorites.js'
 import './js/menu.js';
-
+//utilities
+import './js/router.js'
+import './js/sticky-header.js'
 
 
 

@@ -11,6 +11,7 @@ export class ModalWindow {
     this.closeBtn = document.querySelector('[data-modal-close]');
     this.modalBtn = document.querySelector('.modal-btn');
     this.isOpen = false;
+    this.isFavorite = false;
 
     console.log('Backdrop element:', this.backdrop);
     console.log('Close button element:', this.closeBtn);
@@ -78,6 +79,13 @@ export class ModalWindow {
         this.close();
       }
     });
+
+    if (this.backdrop) {
+      const favBtn = this.backdrop.querySelector('.modal-favorites-btn');
+      if (favBtn) {
+        favBtn.addEventListener('click', () => this.toggleFavorite());
+      }
+    }
   }
 
   async open(exerciseData) {
@@ -169,6 +177,50 @@ export class ModalWindow {
     if (ratingElement) {
       ratingElement.textContent = rating;
     }
+  }
+
+  toggleFavorite() {
+    this.isFavorite = !this.isFavorite;
+    const favBtn = this.backdrop.querySelector('.modal-favorites-btn');
+    const ratingElement = this.backdrop.querySelector('.rating-value');
+
+    if (this.isFavorite) {
+      favBtn.innerHTML = `
+        Remove from favorites
+        <svg class="modal-icon-heart">
+          <use href="./img/sprite.svg#icon-delete"></use>
+        </svg>
+      `;
+      favBtn.classList.add('is-favorite');
+
+      if (ratingElement) {
+        const currentRating = parseFloat(ratingElement.textContent);
+        ratingElement.textContent = (currentRating + 0.1).toFixed(1);
+      }
+    } else {
+      favBtn.innerHTML = `
+        Add to favorites
+        <svg class="modal-icon-heart">
+          <use href="./img/sprite.svg#icon-heart"></use>
+        </svg>
+      `;
+      favBtn.classList.remove('is-favorite');
+
+      if (ratingElement) {
+        const currentRating = parseFloat(ratingElement.textContent);
+        ratingElement.textContent = (currentRating - 0.1).toFixed(1);
+      }
+    }
+
+    const newIcon = favBtn.querySelector('.modal-icon-heart');
+    if (newIcon) {
+      newIcon.style.stroke = this.isFavorite ? '#f4f4f4' : '#242424';
+    }
+
+    favBtn.style.transform = 'scale(0.95)';
+    setTimeout(() => {
+      favBtn.style.transform = 'scale(1)';
+    }, 200);
   }
 }
 

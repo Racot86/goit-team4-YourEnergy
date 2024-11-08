@@ -6,7 +6,6 @@ import './partials/components/pagination/PaginationComponent.js';
 import './js/footer-subscribe.js';
 import './js/menu.js';
 import './js/modal-window.js';
-
 // Если мы на странице task-management, загружаем дополнительные стили
 if (window.location.pathname.includes('task-management')) {
   import('./css/task-manager.css');

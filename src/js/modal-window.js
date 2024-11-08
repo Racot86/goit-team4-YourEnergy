@@ -6,16 +6,10 @@ export class ModalWindow {
       return ModalWindow.instance;
     }
 
-    console.log('ModalWindow constructor called');
     this.backdrop = document.querySelector('[data-modal]');
     this.closeBtn = document.querySelector('[data-modal-close]');
-    this.modalBtn = document.querySelector('.modal-btn');
     this.isOpen = false;
     this.isFavorite = false;
-
-    console.log('Backdrop element:', this.backdrop);
-    console.log('Close button element:', this.closeBtn);
-    console.log('Modal button element:', this.modalBtn);
 
     if (!this.backdrop) {
       console.error('Modal backdrop not found');
@@ -23,63 +17,28 @@ export class ModalWindow {
     if (!this.closeBtn) {
       console.error('Modal close button not found');
     }
-    if (!this.modalBtn) {
-      console.error('Modal button not found');
-    }
 
     this.ratingBackdrop = document.querySelector('[data-rating-modal]');
     this.ratingCloseBtn = document.querySelector('[data-rating-close]');
     this.ratingForm = document.querySelector('.rating-form');
 
     this.bindEvents();
-    this.init();
-
     ModalWindow.instance = this;
   }
 
-  init() {
-    if (this.modalBtn) {
-      console.log('Adding click listener to modal button');
-      this.modalBtn.addEventListener('click', () => {
-        console.log('Modal button clicked');
-        const testData = {
-          _id: '64f389465ae26083f39b17a4',
-          bodyPart: 'waist',
-          equipment: 'body weight',
-          gifUrl: 'https://ftp.goit.study/img/power-pulse/gifs/0003.gif',
-          name: 'air bike',
-          target: 'abs',
-          description:
-            "This refers to your core muscles, which include the rectus abdominis, obliques, and transverse abdominis. They're essential for maintaining posture, stability, and generating force in many movements. Exercises that target the abs include crunches, leg raises, and planks.",
-          rating: 3,
-          burnedCalories: 312,
-          time: 3,
-          popularity: 1,
-        };
-        this.open(testData);
-      });
-    }
-  }
-
   bindEvents() {
-    console.log('Binding events');
     if (this.closeBtn) {
-      this.closeBtn.addEventListener('click', () => {
-        console.log('Close button clicked');
-        this.close();
-      });
+      this.closeBtn.addEventListener('click', () => this.close());
     }
     if (this.backdrop) {
       this.backdrop.addEventListener('click', e => {
         if (e.target === this.backdrop) {
-          console.log('Backdrop clicked');
           this.close();
         }
       });
     }
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape' && this.isOpen) {
-        console.log('Escape pressed');
         this.close();
       }
     });
@@ -91,7 +50,6 @@ export class ModalWindow {
       }
     }
 
-    // Додаємо обробники для вікна рейтингу
     const ratingBtn = this.backdrop.querySelector('.modal-rating-btn');
     if (ratingBtn) {
       ratingBtn.addEventListener('click', () => this.openRatingModal());
@@ -119,11 +77,9 @@ export class ModalWindow {
   }
 
   async open(exerciseData) {
-    console.log('Opening modal with data:', exerciseData);
     this.isOpen = true;
     if (this.backdrop) {
       this.backdrop.classList.remove('is-hidden');
-      console.log('Removed is-hidden class');
     }
     document.body.style.overflow = 'hidden';
 
@@ -131,10 +87,8 @@ export class ModalWindow {
   }
 
   close() {
-    console.log('Closing modal');
     this.isOpen = false;
 
-    // Закриваємо обидва вікна
     if (this.backdrop) {
       this.backdrop.classList.add('is-hidden');
     }
@@ -145,7 +99,6 @@ export class ModalWindow {
       }
     }
 
-    // Відновлюємо оригінальний обробник Escape
     document.onkeydown = this.originalEscapeHandler;
 
     document.body.style.overflow = '';
@@ -165,13 +118,11 @@ export class ModalWindow {
       time = 3,
     } = data;
 
-    // Оновлюємо заголовок
     const titleElement = this.backdrop.querySelector('.modal-title');
     if (titleElement) {
       titleElement.textContent = name;
     }
 
-    // Оновлюємо медіа контент
     const mediaContainer = this.backdrop.querySelector(
       '.modal-media-container'
     );
@@ -179,7 +130,6 @@ export class ModalWindow {
       mediaContainer.innerHTML = `<img src="${gifUrl}" alt="${name}" />`;
     }
 
-    // Створюємо об'єкт з параметрами відповідно до API
     const parameters = {
       Target: target,
       'Body Part': bodyPart,
@@ -188,13 +138,11 @@ export class ModalWindow {
       'Burned Calories': `${burnedCalories} / ${time} min`,
     };
 
-    // Оновлюємо параметри
     const parametersContainer =
       this.backdrop.querySelector('.modal-parameters');
     if (parametersContainer) {
-      parametersContainer.innerHTML = ''; // Очищаємо контейнер
+      parametersContainer.innerHTML = '';
 
-      // Створюємо новий елемент для кожного параметра
       Object.entries(parameters).forEach(([label, value]) => {
         const parameterItem = document.createElement('li');
         parameterItem.className = 'parameter-item';
@@ -206,14 +154,12 @@ export class ModalWindow {
       });
     }
 
-    // Оновлюємо опис
     const descriptionElement =
       this.backdrop.querySelector('.modal-description');
     if (descriptionElement) {
       descriptionElement.textContent = description;
     }
 
-    // Оновлюємо рейтинг
     const ratingElement = this.backdrop.querySelector('.rating-value');
     if (ratingElement) {
       ratingElement.textContent = rating;
@@ -266,16 +212,9 @@ export class ModalWindow {
 
   openRatingModal() {
     if (this.ratingBackdrop && this.backdrop) {
-      // Ховаємо перше модальне вікно
       this.backdrop.classList.add('is-hidden');
-
-      // Показуємо вікно рейтингу
       this.ratingBackdrop.classList.remove('is-hidden');
-
-      // Зберігаємо поточний обробник Escape для першого вікна
       this.originalEscapeHandler = document.onkeydown;
-
-      // Встановлюємо новий обробник Escape для вікна рейтингу
       document.onkeydown = e => {
         if (e.key === 'Escape') {
           this.closeRatingModal();
@@ -286,18 +225,11 @@ export class ModalWindow {
 
   closeRatingModal() {
     if (this.ratingBackdrop && this.backdrop) {
-      // Ховаємо вікно рейтингу
       this.ratingBackdrop.classList.add('is-hidden');
-
-      // Показуємо знову перше модальне вікно
       this.backdrop.classList.remove('is-hidden');
-
-      // Очищаємо форму
       if (this.ratingForm) {
         this.ratingForm.reset();
       }
-
-      // Відновлюємо оригінальний обробник Escape
       document.onkeydown = this.originalEscapeHandler;
     }
   }
@@ -315,18 +247,12 @@ export class ModalWindow {
       return;
     }
 
-    // Тут буде логіка відправки рейтингу на сервер
-    console.log('Rating submitted:', { email, comment });
-
-    // Закриваємо модальне вікно рейтингу і показуємо попереднє
     this.closeRatingModal();
   }
 }
 
-// Ініціалізуємо модальне вікно після завантаження DOM
 let modalWindowInstance = null;
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('Initializing modal window');
   if (!modalWindowInstance) {
     try {
       modalWindowInstance = new ModalWindow();

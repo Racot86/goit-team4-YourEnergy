@@ -20,26 +20,33 @@ body {
 
 }
 
-.search-form {
-  display: none;
+/* Стилі для пошукового рядка */
+
+.search-form.hidden {
+    display: none;
 }
 
-/* Стилі для пошукового рядка
-.search-form {
+.search-form.visible {
     display: flex;
     align-items: center;
     gap: 0.5rem;
     margin-bottom: 0;
     flex: 1;
-    max-width: 400px;
+    max-width: 335px;
 }
 
 .search-input {
     flex: 1;
-    padding: 0.5rem 1rem;
-    border: 1px solid #ddd;
-    border-radius: 20px;
-    font-size: 1rem;
+    padding: 12px 208px 12px 14px;
+    border: 1px solid #242424;
+    border-radius: 30px;
+    width: 100%;
+    height: 20px;
+    font-size: 14px;
+    line-height: 1.43;
+    color: #242424;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .search-button {
@@ -47,8 +54,7 @@ body {
     border: none;
     cursor: pointer;
     font-size: 1.2rem;
-} */
-/* Стилі для кнопок фільтрів */
+}
 
 .filters-buttons {
   display: flex;
@@ -90,43 +96,21 @@ body {
 
 }
 
-.category-image {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 12px;
-}
-
-.categories-item-text {
-  z-index: 2;
-}
-
-/* Адаптивні стилі проміжні
+/* Адаптивні стилі проміжні */
 @media (min-width: 376px) and (max-width: 600px) {
 
   .filters-buttons {
     flex-basis: 100%;
   }
 }
-*/
 
 /* Адаптивні стилі для планшетів */
-@media screen and (min-width: 768px) {
-
-  .container {
-    margin: 0;
-  }
-
+@media (min-width: 601px) and (max-width: 1024px) {
 
   .filters-panel {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-
-
   }
 
   .filters-title {
@@ -145,17 +129,34 @@ body {
     font-size: 14px;
     line-height: 1.43;
   }
+
+    .search-form.visible {
+      max-width: 335px;
+    }
+
+    .search-input {
+      height: 20px;
+      margin-top: 0;
+      margin-bottom: 32px;
+    }
+
+  /* Коли пошук активний, переносимо фільтри всередину пошукової області */
+    .filters-panel.search-active {
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .filters-buttons.search-active {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      margin-top: 10px;
+    }
 }
 
 /* Адаптивні стилі для десктопів */
-@media screen and (min-width: 1280px) {
-
-  .container {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 1280px;
-  }
+@media (min-width: 1025px) {
 
   .filters-panel {
     display: flex;
@@ -163,7 +164,6 @@ body {
     justify-content: space-between;
     padding: 0 32px;
     margin: 0;
-
   }
 
   .filters-title {
@@ -174,7 +174,6 @@ body {
     color: #242424;
     padding: 0;
     margin: 0;
-    margin-right: auto;
     margin-bottom: 32px;
   }
 
@@ -183,9 +182,7 @@ body {
   }
 
   .filters-buttons {
-    display: flex;
-    gap: 20px;
-    margin: 0;
+    gap: 1rem;
     margin-bottom: 32px;
 
   }

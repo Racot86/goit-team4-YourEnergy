@@ -14,9 +14,10 @@ let activeFilter = 'Muscles'; // встановимо початкове зна�
 
 
 // Функція для початкового завантаження категорій
-async function loadCategories() {
+// Функція для початкового завантаження категорій
+async function loadCategories(filterType = activeFilter) {
   try {
-    const data = await getCategories();
+    const data = await getCategories(filterType);
     console.log("Отримані категорії з API:", data.results);
 
     // Перевіряємо кожен об'єкт на наявність ключів
@@ -26,31 +27,29 @@ async function loadCategories() {
       }
     });
 
-    categoriesList.innerHTML = createCategoriesMarkup(data.results);
     allCategories = data.results.map(category => ({
       name: category.name,
       imgURL: category.imgURL,
       filter: category.filter,
     }));
-    console.log("Збережені категорії в allCategories:", allCategories);
+    displayCategories(allCategories); // Викликаємо displayCategories для оновлення інтерфейсу
 
-    attachCategoryListeners();
   } catch (error) {
     console.error('Error loading categories:', error);
   }
 }
+
 
 // Функція для фільтрації категорій за вибраним типом
 async function loadAndFilterCategories(filterType) {
   console.log("Значення фільтра:", filterType);
 
   try {
-    // Запит до API для отримання категорій на основі вибраного фільтра
+    console.log("Виконуємо запит до API з фільтром:", filterType); // Додаємо логування
     const data = await getCategories(filterType);
 
     console.log("Категорії після фільтрації:", data.results); // Лог для перевірки результату
 
-    // Оновлюємо інтерфейс відображенням нових категорій
     displayCategories(data.results);
 
   } catch (error) {
@@ -58,9 +57,14 @@ async function loadAndFilterCategories(filterType) {
   }
 }
 
+
 // Функція для відображення категорій
 function displayCategories(categories) {
-  console.log("Категорії для відображення:", categories);
+  if (!categories || categories.length === 0) {
+    console.warn("Категорії відсутні для відображення.");
+    categoriesList.innerHTML = '<p>Категорії не знайдено.</p>';
+    return;
+  }
 
   const markup = createCategoriesMarkup(categories);
   console.log("Згенерований HTML для категорій:", markup);
@@ -68,6 +72,7 @@ function displayCategories(categories) {
   categoriesList.innerHTML = markup;
   attachCategoryListeners();
 }
+
 
 // Додаємо обробники подій до кнопок фільтрів
 filterButtons.forEach(button => {

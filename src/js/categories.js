@@ -11,10 +11,10 @@ const paginationCatList = document.querySelector('.categories-pagination');
 
 // console.log(activeFilter)
 
-async function loadCategories(currentCategoryName) {
+export async function loadCategories(currentCategoryName) {
   //завантаження категорій
   try {
-    const data = await getCategories();
+    const data = await getCategories(currentCategoryName);
     console.log(data);
 
     paginationCatList.innerHTML = '';

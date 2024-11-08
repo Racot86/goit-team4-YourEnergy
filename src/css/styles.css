@@ -21,4 +21,5 @@
 @import url('./categories.css');
 @import url('../partials/components/pagination/PaginationStyles.css');
 @import url('./search-filters.css');
+@import url('./favorites.css');
 

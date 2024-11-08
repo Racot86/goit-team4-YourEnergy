@@ -1,32 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Team4 Your Energy</title>
-    <link rel="stylesheet" href="./css/styles.css" />
-    <link rel="stylesheet" href="./css/search-filters.css" />
-  </head>
-  <body>
-    <load src="./partials/header.html" icon-path="img/sprite.svg#logo" />
-    <h1 style="text-align: center">Team4 Your Energy</h1>
-  
-      <load src="./partials/search-filters.html" />
-      
-    <main>
-      <load src="./partials/categories.html" />
-    
-      <load src="./partials/sidebar.html" />
-    
-      <load src="./partials/pagination-test.html" />
-    
-    </main>
-    <load src="./partials/footer.html" />
-    <load src="./partials/menu.html" />
+<head>
+  <meta charset="UTF-8"/>
+  <link href="/favicon.svg" rel="icon" type="image/svg+xml"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Team4 Your Energy</title>
+  <link href="./css/styles.css" rel="stylesheet"/>
+  <link href="./css/search-filters.css" rel="stylesheet"/>
+</head>
+<body>
 
-    <script type="module" src="./main.js"></script>
-    <script type="module" src="./js/search-filters.js"></script>
-  </body>
+<load icon-path="img/sprite.svg#logo" src="./partials/header.html"/>
+<div class="home-page">
+  <h1 style="text-align: center">Team4 Your Energy</h1>
+
+  <load src="./partials/search-filters.html"/>
+
+  <main>
+    <load src="./partials/categories.html"/>
+
+    <load src="./partials/sidebar.html"/>
+
+  </main>
+  <load src="./partials/footer.html"/>
+</div>
+<div class="favorites-page hidden">
+  <load src="./partials/favorites.html"/>
+</div>
+<load src="./partials/menu.html"/>
+<script src="./main.js" type="module"></script>
+<script src="./js/search-filters.js" type="module"></script>
+</body>
 </html>
 

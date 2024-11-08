@@ -27,6 +27,10 @@ export class ModalWindow {
       console.error('Modal button not found');
     }
 
+    this.ratingBackdrop = document.querySelector('[data-rating-modal]');
+    this.ratingCloseBtn = document.querySelector('[data-rating-close]');
+    this.ratingForm = document.querySelector('.rating-form');
+
     this.bindEvents();
     this.init();
 
@@ -86,6 +90,32 @@ export class ModalWindow {
         favBtn.addEventListener('click', () => this.toggleFavorite());
       }
     }
+
+    // Додаємо обробники для вікна рейтингу
+    const ratingBtn = this.backdrop.querySelector('.modal-rating-btn');
+    if (ratingBtn) {
+      ratingBtn.addEventListener('click', () => this.openRatingModal());
+    }
+
+    if (this.ratingCloseBtn) {
+      this.ratingCloseBtn.addEventListener('click', () =>
+        this.closeRatingModal()
+      );
+    }
+
+    if (this.ratingBackdrop) {
+      this.ratingBackdrop.addEventListener('click', e => {
+        if (e.target === this.ratingBackdrop) {
+          this.closeRatingModal();
+        }
+      });
+    }
+
+    if (this.ratingForm) {
+      this.ratingForm.addEventListener('submit', e =>
+        this.handleRatingSubmit(e)
+      );
+    }
   }
 
   async open(exerciseData) {
@@ -103,10 +133,21 @@ export class ModalWindow {
   close() {
     console.log('Closing modal');
     this.isOpen = false;
+
+    // Закриваємо обидва вікна
     if (this.backdrop) {
       this.backdrop.classList.add('is-hidden');
-      console.log('Added is-hidden class');
     }
+    if (this.ratingBackdrop) {
+      this.ratingBackdrop.classList.add('is-hidden');
+      if (this.ratingForm) {
+        this.ratingForm.reset();
+      }
+    }
+
+    // Відновлюємо оригінальний обробник Escape
+    document.onkeydown = this.originalEscapeHandler;
+
     document.body.style.overflow = '';
   }
 
@@ -221,6 +262,64 @@ export class ModalWindow {
     setTimeout(() => {
       favBtn.style.transform = 'scale(1)';
     }, 200);
+  }
+
+  openRatingModal() {
+    if (this.ratingBackdrop && this.backdrop) {
+      // Ховаємо перше модальне вікно
+      this.backdrop.classList.add('is-hidden');
+
+      // Показуємо вікно рейтингу
+      this.ratingBackdrop.classList.remove('is-hidden');
+
+      // Зберігаємо поточний обробник Escape для першого вікна
+      this.originalEscapeHandler = document.onkeydown;
+
+      // Встановлюємо новий обробник Escape для вікна рейтингу
+      document.onkeydown = e => {
+        if (e.key === 'Escape') {
+          this.closeRatingModal();
+        }
+      };
+    }
+  }
+
+  closeRatingModal() {
+    if (this.ratingBackdrop && this.backdrop) {
+      // Ховаємо вікно рейтингу
+      this.ratingBackdrop.classList.add('is-hidden');
+
+      // Показуємо знову перше модальне вікно
+      this.backdrop.classList.remove('is-hidden');
+
+      // Очищаємо форму
+      if (this.ratingForm) {
+        this.ratingForm.reset();
+      }
+
+      // Відновлюємо оригінальний обробник Escape
+      document.onkeydown = this.originalEscapeHandler;
+    }
+  }
+
+  async handleRatingSubmit(e) {
+    e.preventDefault();
+
+    const email = this.ratingForm.querySelector('#rating-email').value.trim();
+    const comment = this.ratingForm
+      .querySelector('#rating-comment')
+      .value.trim();
+
+    if (!email || !comment) {
+      console.log('Please fill in all fields');
+      return;
+    }
+
+    // Тут буде логіка відправки рейтингу на сервер
+    console.log('Rating submitted:', { email, comment });
+
+    // Закриваємо модальне вікно рейтингу і показуємо попереднє
+    this.closeRatingModal();
   }
 }
 

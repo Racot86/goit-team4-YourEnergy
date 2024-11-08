@@ -56,3 +56,54 @@
     </div>
   </div>
 </div>
+
+<!-- Додаємо нове модальне вікно для рейтингу після основного -->
+<div class="modal-backdrop is-hidden" data-rating-modal>
+  <div class="modal rating-modal">
+    <button type="button" class="modal-close-btn" data-rating-close>
+      <svg class="modal-close-icon" width="24" height="24">
+        <use href="./img/sprite.svg#icon-close"></use>
+      </svg>
+    </button>
+    
+    <form class="rating-form">
+
+      <div class="rating-form-stars-container">
+        <p class="rating-form-stars-title">Rating</p>
+        <div class="rating-form-value-stars">
+          <p class="rating-form-value">
+            <!-- Значення рейтингу буде додано через JavaScript -->
+          </p>
+          <div class="rating-form-stars">
+            <!-- Зірки рейтингу будуть додані через JavaScript -->
+          </div>
+        </div>
+      </div>
+      
+      <div class="rating-form-group-container">
+          <div class="rating-form-group">
+            <input 
+            type="email" 
+            id="rating-email" 
+            class="rating-form-input" 
+            placeholder="Email"
+            required
+          >
+          </div>
+      
+        <div class="rating-form-group">
+          <textarea 
+            id="rating-comment" 
+            class="rating-form-textarea"
+            placeholder="Your comment"
+            required
+          ></textarea>
+        </div>
+      </div>
+      
+      <button type="submit" class="modal-btn rating-form-btn">
+        Send
+      </button>
+    </form>
+  </div>
+</div>

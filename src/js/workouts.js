@@ -43,10 +43,32 @@ async function renderWorkoutsByCategory(
     workoutsContainer.innerHTML = createWorkoutsMarkup(data.results);
     setupPagination(data.totalPages, page);
 
-    // Додаємо обробники для кнопок Start
-    const startButtons = document.querySelectorAll('.workouts-item-start');
+    // Добавляем обработчики для кнопок Start
+    const startButtons = document.querySelectorAll('.workout-start-btn');
+    console.log('Found start buttons:', startButtons.length); // Для отладки
+
     startButtons.forEach(button => {
-      button.addEventListener('click', openModalWindow);
+      button.addEventListener('click', async e => {
+        e.preventDefault();
+        const workoutCard = button.closest('.workouts-card');
+        const exerciseId = workoutCard.dataset.id;
+
+        console.log('Button clicked, exercise ID:', exerciseId); // Для отладки
+
+        try {
+          const response = await fetch(`${exerciseUrl()}/${exerciseId}`);
+          if (!response.ok) throw new Error('Failed to fetch exercise details');
+
+          const exerciseData = await response.json();
+
+          if (!window.modalWindow) {
+            window.modalWindow = new ModalWindow();
+          }
+          window.modalWindow.open(exerciseData);
+        } catch (error) {
+          console.error('Error opening modal:', error);
+        }
+      });
     });
   } catch (error) {
     console.error('Error loading workouts:', error);
@@ -80,34 +102,6 @@ function setupPagination(totalPages, currentPage) {
         );
       });
     });
-}
-
-async function openModalWindow(e) {
-  e.preventDefault(); // Запобігаємо стандартній поведінці кнопки
-
-  try {
-    // Отримуємо ID вправи з батьківського елемента
-    const workoutItem = e.target.closest('.workouts-item');
-    const exerciseId = workoutItem.dataset.id;
-
-    // Отримуємо дані про вправу з API
-    const response = await fetch(`${exerciseUrl()}/${exerciseId}`);
-    if (!response.ok) {
-      throw new Error('Failed to fetch exercise details');
-    }
-
-    const exerciseData = await response.json();
-
-    // Створюємо екземпляр модального вікна, якщо він ще не створений
-    if (!window.modalWindow) {
-      window.modalWindow = new ModalWindow();
-    }
-
-    // Відкриваємо модальне вікно з отриманими даними
-    window.modalWindow.open(exerciseData);
-  } catch (error) {
-    console.error('Error opening modal window:', error);
-  }
 }
 
 export default renderWorkoutsByCategory;

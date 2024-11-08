@@ -1,0 +1,14 @@
+.favorites-title{
+  font-size: 44px;
+  font-weight: 400;
+  color: var(--black-color);
+  margin-bottom: 32px;
+}
+.bars-wrapper{
+  display: flex;
+  gap: 32px;
+}
+.left-bar{
+  max-width: 494px;
+  width: 100%;
+}

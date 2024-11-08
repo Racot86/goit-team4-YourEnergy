@@ -1,12 +1,15 @@
 import createCategoriesMarkup from './markup/categoriesMarkup';
+import renderWorkoutsByCategory from './workouts';
 import { getCategories } from './api-requests';
 import { generatePages } from '../partials/components/pagination/PaginationComponent';
 
-const categoriesList = document.querySelector('.categories-list');
-const activeFilter = document.querySelector('.filter-button.active');
-// console.log(activeFilter)
 
+let categoriesList = document.querySelector('.categories-list');
+let workoutsContainer = document.querySelector('.workouts-container');
+const activeFilter = document.querySelector('.filter-button.active');
 const paginationCatList = document.querySelector('.categories-pagination');
+
+// console.log(activeFilter)
 
 async function loadCategories(currentCategoryName) {
   //завантаження категорій
@@ -53,8 +56,21 @@ function openCategory(e) {
   e.target.removeEventListener('click', openCategory);
   categoriesList.style.display = 'none';
   let categoryName = e.target.dataset.name;
-  console.log(categoryName); //потім видалити
-  //виклик ф-ії відмалювання вправ по картегорії
+  let categoryFilter = e.target.dataset.filter;
+
+  switch (categoryFilter) {
+    case 'Muscles':
+      renderWorkoutsByCategory('', encodeURIComponent(categoryName), '', '', 1, 10);
+      break;
+    case 'Body parts':
+      renderWorkoutsByCategory(encodeURIComponent(categoryName), '', '', '', 1, 10);
+      break;
+    case 'Equipment':
+      renderWorkoutsByCategory('', '', encodeURIComponent(categoryName), '', 1, 10);
+      break;
+  } 
+
+  workoutsContainer.style.display = 'flex';  
 }
 
 loadCategories('Musculs');

@@ -1,5 +1,6 @@
 import { getCategories } from './api-requests';
 import createCategoriesMarkup from './markup/categoriesMarkup';
+import {loadCategories} from './categories'
 
 
 // Ініціалізація основних змінних
@@ -10,67 +11,70 @@ const filterButtons = document.querySelectorAll('.filter-button');
 const searchForm = document.querySelector('#search-form');
 const searchInput = document.querySelector('#search-input');
 
-// Функція для початкового завантаження категорій
-async function loadCategories() {
-  try {
-    const data = await getCategories();
-    console.log("Отримані категорії з API:", data.results); // Додатковий лог для перевірки
-    categoriesList.innerHTML = createCategoriesMarkup(data.results);
-    allCategories = data.results.map(category => ({
-      name: category.name,
-      imgURL: category.imgURL,
-      filter: category.filter,
-    }));
-    console.log("Збережені категорії в allCategories:", allCategories); // Додатковий лог для перевірки
+// // Функція для початкового завантаження категорій
+// async function loadCategories() {
+//   try {
+//     const data = await getCategories();
+//     console.log("Отримані категорії з API:", data.results); // Додатковий лог для перевірки
+//     categoriesList.innerHTML = createCategoriesMarkup(data.results);
+//     allCategories = data.results.map(category => ({
+//       name: category.name,
+//       imgURL: category.imgURL,
+//       filter: category.filter,
+//     }));
+//     console.log("Збережені категорії в allCategories:", allCategories); // Додатковий лог для перевірки
 
-    let categoriesItems = document.querySelectorAll('.categories-item');
-    categoriesItems.forEach(item => {
-      item.addEventListener('click', openCategory);
-    });
-  } catch (error) {
-    console.error('Error loading categories:', error);
-  }
-}
+//     let categoriesItems = document.querySelectorAll('.categories-item');
+//     categoriesItems.forEach(item => {
+//       item.addEventListener('click', openCategory);
+//     });
+//   } catch (error) {
+//     console.error('Error loading categories:', error);
+//   }
+// }
 
 
 // Функція для фільтрації категорій за вибраним типом
-function loadAndFilterCategories(filterType = 'all') {
-  console.log("Значення фільтра:", filterType); // Додаємо логування для перевірки значення фільтра
+// function loadAndFilterCategories(filterType = 'all') {
+//   console.log("Значення фільтра:", filterType); // Додаємо логування для перевірки значення фільтра
 
-  const filteredCategories = filterType === 'all'
-    ? allCategories
-    : allCategories.filter(category =>
-        category.filter.toLowerCase() === filterType.toLowerCase()
-      );
+//   const filteredCategories = filterType === 'all'
+//     ? allCategories
+//     : allCategories.filter(category =>
+//         category.filter.toLowerCase() === filterType.toLowerCase()
+//       );
 
-  console.log("Категорії після фільтрації:", filteredCategories); // Додаємо логування для перевірки результату фільтрації
-  displayCategories(filteredCategories);
-}
+//   console.log("Категорії після фільтрації:", filteredCategories); // Додаємо логування для перевірки результату фільтрації
+//   displayCategories(filteredCategories);
+// }
 
 
 
  // Функція для відображення категорій
-function displayCategories(categories) {
-  console.log("Категорії для відображення:", categories); // Лог для діагностики
+// function displayCategories(categories) {
+//   console.log("Категорії для відображення:", categories); // Лог для діагностики
 
-  const markup = createCategoriesMarkup(categories);
-  console.log("Згенерований HTML для категорій:", markup); // Лог для діагностики
+//   const markup = createCategoriesMarkup(categories);
+//   console.log("Згенерований HTML для категорій:", markup); // Лог для діагностики
 
-  categoriesList.innerHTML = markup;
+//   categoriesList.innerHTML = markup;
 
-  const categoriesItems = document.querySelectorAll('.categories-item');
-  categoriesItems.forEach(item => {
-    item.addEventListener('click', openCategory);
-  });
-}
+//   const categoriesItems = document.querySelectorAll('.categories-item');
+//   categoriesItems.forEach(item => {
+//     item.addEventListener('click', openCategory);
+//   });
+// }
 
 
 // Додаємо обробники подій до кнопок фільтрів
 filterButtons.forEach(button => {
     button.addEventListener('click', (e) => {
-        const filterType = e.target.getAttribute('data-filter');
-        loadAndFilterCategories(filterType);
-
+        let filterType = e.target.getAttribute('data-filter');
+        if (filterType === 'Body-parts') {
+          filterType = 'Body parts';
+        }
+        // loadAndFilterCategories(filterType);==========================Видалити
+        loadCategories(filterType)
         // Робимо кнопку активною
         filterButtons.forEach(btn => btn.classList.remove('active'));
         e.target.classList.add('active');

@@ -46,22 +46,21 @@ async function renderWorkoutsByCategory(
     // Добавляем обработчики для кнопок Start
     const startButtons = document.querySelectorAll('.workout-start-btn');
     console.log('Found start buttons:', startButtons.length); // Для отладки
-
-
+    
     startButtons.forEach(button => {
-      button.addEventListener('click', async e => {
+      button.addEventListener('click', async (e) => {
         e.preventDefault();
         const workoutCard = button.closest('.workouts-card');
         const exerciseId = workoutCard.dataset.id;
-
+        
         console.log('Button clicked, exercise ID:', exerciseId); // Для отладки
-
+        
         try {
           const response = await fetch(`${exerciseUrl()}/${exerciseId}`);
           if (!response.ok) throw new Error('Failed to fetch exercise details');
-
+          
           const exerciseData = await response.json();
-
+          
           if (!window.modalWindow) {
             window.modalWindow = new ModalWindow();
           }

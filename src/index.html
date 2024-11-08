@@ -9,18 +9,29 @@
   <link rel="stylesheet" href="./css/styles.css" />
 </head>
 <body>
-  <load icon-path="img/sprite.svg#logo" src="./partials/header.html"/>
-  
-  <!-- <h1 style="text-align: center">Team4 Your Energy</h1> -->
-  <load src="./partials/body_content.html"/>
-  
+
+  <load src="./partials/header.html" icon-path="img/sprite.svg#logo" />
+
   <div class="home-page">
     <load src="./partials/hero.html"/>
-    <load src="./partials/search-filters.html"/>
+
+    
+    <div class="main-fitnes-content"> 
+      <div class="m-filters">
+        <load src="./partials/search-filters.html"/>
+      </div>
+      <div class="m-sidebar">
+        <load src="./partials/sidebar.html"/>
+      </div>
+      <div class="m-categories">
+        <load src="./partials/categories.html"/>
+      </div>
+      <div class="m-workouts">
+        <load src="./partials/workouts.html" />
+      </div>
+    </div>
+
     <main>
-      <load src="./partials/sidebar.html"/>
-      <load src="./partials/categories.html"/>
-      <load src="./partials/workouts.html" />
     </main>
 
     <load src="./partials/footer.html"/>
@@ -31,8 +42,10 @@
   </div>
 
   <load src="./partials/modal-window.html" />
+
   <load src="./partials/menu.html"/>
 
   <script src="./main.js" type="module"></script>
+
 </body>
 </html>

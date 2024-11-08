@@ -56,6 +56,93 @@ body {
   margin: 0;
 }
 
+
+.main-fitnes-content{
+  display: grid;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  height: fit-content;
+}
+  .main-fitnes-content .m-filters{
+    grid-area: search;
+    width: 100%;
+  }
+  .main-fitnes-content .m-sidebar{
+    grid-area: sidebar;
+    width: 100%;
+  }
+  .main-fitnes-content .m-categories{
+    grid-area: categories;
+    width: 100%;
+  }
+  .main-fitnes-content .m-workouts{
+    grid-area: workouts;
+    width: 100%;
+  }
+
+@media screen and (min-width: 375px) and (max-height: 768px){
+  .main-fitnes-content{
+    grid-template-areas: 
+      "search"
+      "categories"
+      "workouts"
+      "sidebar";
+  }
+}
+
+@media screen and (orientation: landscape) and (min-width: 768px) and (max-height: 550px) {
+  .main-fitnes-content{
+    grid-template-areas: 
+      "search search"
+      "sidebar categories"
+      "sidebar workouts";
+  }
+}
+@media screen and (min-width: 768px) and (max-height: 1280px){
+  .main-fitnes-content{
+    grid-template-areas: 
+      "search"
+      "categories"
+      "workouts"
+      "sidebar";
+  }
+}
+@media screen and (min-width: 1280px) {
+  .main-fitnes-content{
+    grid-template-areas: 
+      "search search"
+      "sidebar categories"
+      "sidebar workouts";
+    grid-template-columns: 350px 1fr;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .main-fitnes-content{
+    grid-template-areas: 
+      "search search"
+      "sidebar categories"
+      "sidebar workouts";
+    max-width: 1440px;
+    margin: 0 auto;
+    grid-template-columns: 444px 1fr;
+  }
+  .main-fitnes-content .m-sidebar{
+    grid-area: sidebar;
+    width: 100%;
+    max-width: 444px;
+    margin-left: 32px;
+    margin-right: 32px;
+  }
+    body {
+        max-width: 1440px;
+        margin: 0 auto;
+        background-color: "треба підбрати з тінями краів для боді"
+    } 
+}
+
+
 main {
   flex-grow: 1;
 }
@@ -70,6 +157,9 @@ main {
   background-color: #f4f4f4;
   flex-direction: column;
 }
+
+
+
 
 .hidden{
   display: none;

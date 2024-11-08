@@ -1,6 +1,6 @@
 import { getCategories } from './api-requests';
 import createCategoriesMarkup from './markup/categoriesMarkup';
-// import renderWorkoutsByCategory from './workouts';
+import renderWorkoutsByCategory from './workouts';
 
 // Ініціалізація основних змінних
 let allCategories = [];
@@ -115,7 +115,7 @@ function toggleSearchForm(show) {
   } else {
     searchForm.classList.remove('visible');
     searchForm.classList.add('hidden');
-    document.querySelector('.filters-panel').classList.remove('search-active'); 
+    document.querySelector('.filters-panel').classList.remove('search-active');
   }
 }
 

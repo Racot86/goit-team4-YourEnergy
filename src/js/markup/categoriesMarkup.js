@@ -11,7 +11,3 @@ export default function createCategoriesMarkup(cards) {
       )
       .join('');
   }
-
-    )
-    .join('');
-}

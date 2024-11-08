@@ -19,6 +19,7 @@ const useRouter = ()=>{
       break;
 
   }
+  window.scrollTo(0, 0);
 }
 
 // Set up a MutationObserver to watch for changes to the document's title or body

@@ -74,6 +74,13 @@ main {
 .hidden{
   display: none;
 }
+.sticky{
+  position: fixed;
+  top: 28px;
+  left: 50%;
+  z-index: 10;
+  transform: translateX(-64%);
+}
 @media screen and (min-width: 768px) {
   main {
     flex-direction: column;

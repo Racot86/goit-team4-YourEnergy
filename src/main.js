@@ -7,8 +7,9 @@ import './partials/components/pagination/PaginationComponent.js'
 import './js/footer-subscribe.js'
 import './js/favorites.js'
 import './js/menu.js';
+//utilities
 import './js/router.js'
-
+import './js/sticky-header.js'
 
 
 

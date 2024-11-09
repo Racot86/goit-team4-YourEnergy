@@ -95,17 +95,17 @@
 
 /* Адаптивні стилі проміжні */
 @media (min-width: 376px) and (max-width: 600px) {
-
+  .main-fitnes-content {
+    padding-top: 32px;
+  }
   .filters-buttons {
     flex-basis: 100%;
   }
 }
 
 /* Адаптивні стилі для планшетів */
-@media (min-width: 601px) and (max-width: 1024px) {
-  .main-fitnes-content {
-    padding-top: 32px;
-  }
+@media (min-width: 601px) and (max-width: 1440px) {
+ 
   .filters-panel {
     display: flex;
     align-items: center;
@@ -155,8 +155,12 @@
 }
 
 /* Адаптивні стилі для десктопів */
-@media (min-width: 1025px) {
+@media (min-width: 1440px) {
+  .main-fitnes-content {
+    padding-top: 32px;
+    padding-bottom: 132px;
 
+  }
   .filters-panel {
     display: flex;
     align-items: flex-end;

@@ -2,6 +2,13 @@
   padding-top: 80px;
   padding-bottom: 20px;
 }
+.hidden-photo {
+  display: none;
+}
+
+.hero-photo-small {
+ display: none;
+}
 
 .hero .hero__media-content {
   width: 100%;
@@ -193,6 +200,10 @@
   }
 }
 @media screen and (min-width: 1440px) {
+  .hero {
+    padding-top: 96px;
+    padding-bottom: 32px;
+  }
   .hero__media-content {
     position: relative;
   }
@@ -303,6 +314,7 @@
 
   .hero-photo-small {
     border-radius: 20px;
+    display: block;
     position: absolute;
     top: 0px;
     right: 0;

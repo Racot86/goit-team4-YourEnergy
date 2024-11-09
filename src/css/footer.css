@@ -9,7 +9,7 @@
 .footer-container {
   display: flex;
   flex-direction: column;
-  
+  margin: 0 auto;
 }
 
 .footer-logo-and-social{
@@ -242,10 +242,6 @@ margin-bottom: 40px;
     gap: 115px;
   }
 
-  .footer-container{
-    max-width: 1200px;
-  }
-
   .footer-form{
     display: flex;
     gap: 135px;
@@ -259,7 +255,7 @@ margin-bottom: 40px;
 }
 
 @media screen and (min-width: 1440px){
- 
+  
   .footer-content{
     gap: 158px;
   }
@@ -268,21 +264,14 @@ margin-bottom: 40px;
     display: flex;
     gap: 115px;
   }
-  .footer-container{
-    margin: 0;
-    flex-grow: 1;
-    max-width: 1440px;
-  }
   
-  h2{
-    margin-top: 0;
-    width: 595px;
-  
+ .footer h2{
+    margin-bottom: 0;
+    width: 595px;  
   }
   
   .bottom{
     display: flex;
-    margin-top: 70px;
     flex-direction: row;
     gap: 122px;
   }
@@ -293,6 +282,10 @@ margin-bottom: 40px;
     flex-direction: row;
     gap: 498px;
     
+  }
+  .subscribe-form {
+    margin-bottom: 70px;
+    width: 352px;
   }
 }
 

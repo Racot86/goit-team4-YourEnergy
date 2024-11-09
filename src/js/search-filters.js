@@ -38,8 +38,9 @@ searchForm?.addEventListener('submit', async (e) => {
   const searchKeyword = searchInput.value.trim();
   const category = selectedCategoryElement.textContent.trim().split(' / ')[1]; // Беремо поточну категорію
   try {
-    const exercises = await renderWorkoutsByCategory(category, searchKeyword);
-    displayExercises(exercises); // Виклик функції для відображення знайдених вправ
+    //закоментувала бо робить ще раз запит і ламає картки
+    //const exercises = await renderWorkoutsByCategory(category, searchKeyword);
+    //displayExercises(exercises); // Виклик функції для відображення знайдених вправ
   } catch (error) {
     console.error('Error loading exercises:', error);
   }
@@ -88,8 +89,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 // Функція для завантаження вправ на основі категорії та ключового слова
 async function loadExercises(categoryName, keyword = '') {
   try {
-    const exercises = await renderWorkoutsByCategory(categoryName, keyword);
-    displayExercises(exercises); // Викликаємо функцію відображення знайдених вправ
+    //закоментувала бо робить ще раз запит і ламає картки
+    //const exercises = await renderWorkoutsByCategory(categoryName, keyword);
+    //displayExercises(exercises); // Викликаємо функцію відображення знайдених вправ
   } catch (error) {
     console.error('Error loading exercises:', error);
   }

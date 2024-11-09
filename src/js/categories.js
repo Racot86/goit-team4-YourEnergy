@@ -93,21 +93,23 @@ function openCategory(e) {
     const categoryItem = e.target.closest('.categories-item');
     if (!categoryItem) return;
     
-    const categoryName = categoryItem.dataset.name;
+    const categoryName = encodeURIComponent(categoryItem.dataset.name);
     const categoryFilter = categoryItem.dataset.filter;
+    console.log(categoryName)
 
     switch (categoryFilter) {
       case 'Muscles':
-        renderWorkoutsByCategory('', encodeURIComponent(categoryName), '', '', 1, 10);
+        renderWorkoutsByCategory('', categoryName, '', '', 1, 10);
         break;
       case 'Body parts':
-        renderWorkoutsByCategory(encodeURIComponent(categoryName), '', '', '', 1, 10);
+        renderWorkoutsByCategory(categoryName, '', '', '', 1, 10);
         break;
       case 'Equipment':
-        renderWorkoutsByCategory('', '', encodeURIComponent(categoryName), '', 1, 10);
+        renderWorkoutsByCategory('', '', categoryName, '', 1, 10);
         break;
     }
   }
+
 }
 
 // Инициализация при загрузке страницы

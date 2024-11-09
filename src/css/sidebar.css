@@ -9,7 +9,7 @@
 }
 
 .sidebar-quote-container {
-  background: #242424;
+  background: var(--black-color);
   border-radius: 20px;
   padding: 20px;
 }
@@ -23,14 +23,24 @@
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 5;
+  font-family: 'DM Sans', sans-serif;
 }
 
 .sidebar-quote-of-day {
+  font-family: 'DM Sans', sans-serif;
   font-weight: 500;
   font-size: 20px;
   line-height: 100%;
-  color: #f4f4f4;
+  color: var(--white-color);
   padding-bottom: 8px;
+}
+
+.sidebar-norm-sport {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 129%;
+  color: rgba(36, 36, 36, 0.6);
 }
 
 .sidebar-quote-image {
@@ -42,23 +52,72 @@
   font-weight: 400;
   font-size: 14px;
   line-height: 129%;
-  color: #f4f4f4;
+  color: var(--white-color);
   padding-top: 16px;
-}
-
-.static-info {
-  display: none;
+  font-family: 'DM Sans', sans-serif;
 }
 
 .sidebar-sports-info {
   border-radius: 20px;
-  background: #fff;
-  padding: 50px 20px 20px;
+  background: white;
+  padding: 20px 20px 20px 72px;
+  display: flex;
+  position: relative;
 }
 
 .sidebar-norm-sport,
 .static-info {
   color: rgba(36, 36, 36, 0.6);
+}
+
+.sidebar-quote-container {
+  background: var(--black-color);
+  border-radius: 20px;
+  padding: 20px 20px 20px 72px;
+  position: relative;
+  display: flex;
+}
+
+.sidebar-quote-commas-svg,
+.sidebar-quote-ranner-svg {
+  fill: var(--white-color);
+  position: absolute;
+}
+
+.sidebar-quote-dumbbell-svg {
+  background-color: var(--black-color);
+  padding: 0px 4px;
+  border-radius: 50%;
+  position: absolute;
+  left: 20px;
+}
+
+.sidebar-quote-ranner-svg {
+  left: 20px;
+  background-color: rgba(244, 244, 244, 0.2);
+  padding: 0px 4px;
+  border-radius: 50%;
+}
+
+.sidebar-quote-commas-svg {
+  right: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.sidebar-time {
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 133%;
+  color: var(--black-color);
+  font-family: 'DM Sans', sans-serif;
+}
+
+.static-info {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
 }
 
 @media screen and (min-width: 768px) {
@@ -68,17 +127,59 @@
     justify-content: left;
     max-width: 705px;
     margin: 20px auto;
+    gap: 16px;
+  }
+
+  .sidebar-quote-ranner-svg,
+  .sidebar-quote-dumbbell-svg {
+    left: 40px;
+  }
+
+  .sidebar-quote-commas-svg {
+    right: 40px;
+    width: 24px;
+    height: 24px;
+  }
+
+  .sidebar-sports-info,
+  .sidebar-quote-container {
+    padding: 40px 40px 40px 90px;
+  }
+
+  .sidebar-quote-author,
+  .static-info {
+    padding-top: 18px;
+  }
+
+  .sidebar-quote-container,
+  .sidebar-sports-info {
+    max-width: 400px;
   }
 }
 
 @media screen and (min-width: 1280px) {
+  .sidebar-quote-of-day {
+    padding-bottom: 6px;
+  }
+
+  .sidebar-quote-author {
+    padding-top: 8px;
+  }
+
+  .sidebar-quote-container,
+  .sidebar-sports-info {
+    min-width: 401px;
+  }
+
   .sidebar-container {
     flex-basis: calc((100% - 780px) / 2);
     flex-direction: column;
     order: 1;
+    gap: 32px;
   }
-  p.static-info {
+  div.static-info {
     display: block;
+    padding-top: 20px;
   }
 
   .categories-wrap {

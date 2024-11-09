@@ -22,6 +22,7 @@
   background: white;
   padding: 16px;
   position: relative;
+  max-height: 152px;
 }
 
 .card-header {

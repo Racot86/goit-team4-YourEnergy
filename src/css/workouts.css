@@ -111,6 +111,7 @@
   display: flex;
   justify-content: left;
   gap: 16px;
+  white-space: nowrap;
 }
 
 .card-footer_item {

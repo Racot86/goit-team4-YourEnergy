@@ -22,15 +22,15 @@
 }
 
 .categories-list {
-  display: grid;
-  grid-template-columns: 1fr;
+  width: 335px;
+  max-width: 100%;
+  display: flex;
+  flex-wrap: wrap;
   gap: 20px;
-  margin: 20px auto;
-  max-width: 335px;
-  width: 100%;
+  margin-bottom: 20px;
 }
-
 .categories-item {
+  width: 100%;
   height: 225px;
   background-color: rgb(181, 179, 183);
   border-radius: 12px;
@@ -42,7 +42,6 @@
   position: relative;
   overflow: hidden;
   cursor: pointer;
-  text-align: center;
 }
 
 .categories-item:after {
@@ -91,24 +90,26 @@
 
 .categories-pagination {
   margin-top: auto;
-  padding-top: 20px;
   width: 100%;
 }
 
 @media (min-width: 768px) {
   .categories-list {
-    grid-template-columns: repeat(3, 1fr);
-    max-width: 705px;
+    width: 705px;
     gap: 32px 15px;
+    margin-bottom: 32px;
   }
 
   .categories-item {
-    width: 100%;
+    width: calc((100% - 2 * 15px) / 3);
   }
 }
 
-@media (min-width: 1280px) {
+@media (min-width: 1440px) {
   .categories-list {
-    max-width: 900px;
+    width: 900px;
+  }
+  .categories-item {
+    height: 242px;
   }
 }

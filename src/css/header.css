@@ -117,7 +117,7 @@
 
 /*}*/
 
-@media screen and (min-width: 1280px) {
+@media screen and (min-width: 1440px) {
   .header {
     padding-top: 28px;
   }
@@ -125,5 +125,6 @@
   .nav .menu-items {
     padding: 8px 50px;
   }
+  
 }
 

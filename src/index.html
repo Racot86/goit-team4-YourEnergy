@@ -9,28 +9,36 @@
   </head>
   <body>
     <load src="./partials/header.html" icon-path="img/sprite.svg#logo" />
-    <main>
+
+    <main class="home-page">
       <load src="./partials/hero.html" />
-      <div class="container">
-        
-        <div class="exercises-wrap">
+      <section class="main-fitnes-content">
+        <div class="container">
           <load src="./partials/search-filters.html" />
-          <load src="./partials/sidebar.html" />
-          <load src="./partials/categories.html" />
-          <load src="./partials/pagination.html" />
-        </div>
-        <div class="m-workouts" style="display: none">
-          <div class="workouts-container">
-            <load src="./partials/workouts.html" />
+          <div class="main-wrap">
+            <div class="m-content">
+              <div class="m-categories">
+                <load src="./partials/categories.html" />
+
+                <div class="categories-pagination m-pagination">
+                  <load src="./partials/pagination.html" />
+                </div>
+              </div>
+              <div class="m-workouts" style="display: none">
+                <div class="workouts-container">
+                  <load src="./partials/workouts.html" />
+                </div>
+                <div class="workouts-pagination m-pagination">
+                  <load src="./partials/pagination.html" />
+                </div>
+              </div>
+            </div>
+            <load src="./partials/sidebar.html" />
           </div>
-          <div class="workouts-pagination m-pagination">
-            <load src="./partials/pagination.html" />
-          </div>
         </div>
-      </div>
+      </section>
     </main>
     <load src="./partials/footer.html" />
-
     <div class="favorites-page hidden">
       <load src="./partials/favorites.html" />
     </div>

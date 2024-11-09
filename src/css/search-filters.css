@@ -1,12 +1,9 @@
 /* Базові стилі для всіх пристроїв */
-body {
-  font-family: "DM Sans", sans-serif;
-  margin: 0;
+.main-fitnes-content {
+  padding-top: 20px;
 }
-
 .filters-panel {
   display: flex;
-  padding: 0 20px;
   flex-wrap: wrap;
 }
 
@@ -106,7 +103,9 @@ body {
 
 /* Адаптивні стилі для планшетів */
 @media (min-width: 601px) and (max-width: 1024px) {
-
+  .main-fitnes-content {
+    padding-top: 32px;
+  }
   .filters-panel {
     display: flex;
     align-items: center;

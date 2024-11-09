@@ -20,7 +20,7 @@ export const subscriptionURL = () => {
 }
 
 export const  exerciseRequest = (bodypart,muscles,equipment,keyword,page,limit) => {
-  return `${exerciseUrl()}?bodypart=${bodypart}&muscles=${muscles}&equipment=${equipment}&${keyword}=2&page=${page}&limit=${limit}`
+  return `${exerciseUrl()}?bodypart=${bodypart}&muscles=${muscles}&equipment=${equipment}&keyword=${keyword}&page=${page}&limit=${limit}`
 }
 
 export const filtersRequest = (filter, page, limit) => {

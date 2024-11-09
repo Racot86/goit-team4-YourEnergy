@@ -107,7 +107,7 @@
   }
 }
 
-@media (min-width: 1440px) {
+@media (min-width: 1280px) {
   .categories-list {
     max-width: 900px;
   }

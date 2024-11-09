@@ -1,3 +1,6 @@
+.header {
+  padding-top: 20px;
+}
 .nav .logo {
   height: 24px;
 }
@@ -6,8 +9,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 20px;
-  margin-bottom: 80px;
+  
 }
 
 .nav .socials,
@@ -20,9 +22,8 @@
 }
 
 @media screen and (min-width: 768px) {
-  .nav {
-    margin-top: 24px;
-    margin-bottom: 100px;
+  .header {
+    padding-top: 24px;
   }
 
   .nav .menu-btn {
@@ -77,6 +78,7 @@
     display: flex;
     align-items: center;
     gap: 12px;
+    padding: 0;
   }
 
   .nav .social-item {
@@ -116,9 +118,8 @@
 /*}*/
 
 @media screen and (min-width: 1280px) {
-  .nav {
-    margin-top: 28px;
-    margin-bottom: 96px;
+  .header {
+    padding-top: 28px;
   }
 
   .nav .menu-items {

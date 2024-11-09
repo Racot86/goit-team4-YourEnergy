@@ -50,7 +50,7 @@ async function handlePagination(e) {
   const page = pageIndex + 1;
   
   const activeFilter = document.querySelector('.filter-button.active');
-  const filter = activeFilter ? activeFilter.dataset.filter : '';
+  const filter = activeFilter ? activeFilter.dataset.filter.replace('-', ' ') : '';
 
   try {
     const data = await getCategories(filter, page);

@@ -2,14 +2,12 @@
   width: 100%;
   background-color: var(--black-color);
   font-family:'DM Sans', sans-serif;
+  padding-top: 40px;
 }
 
 .footer-container {
   display: flex;
   flex-direction: column;
-  padding-left: 20px;
-  padding-top: 40px;
-  max-width: 100%;
   
 }
 
@@ -91,7 +89,7 @@ h2 {
 }
 
 .subscribe-form input[type="email"] {
-  width: 335px;
+  width: 100%;
   margin-top: 20px;
   padding: 12px 0 12px 14px;
   border: 1px solid rgba(255, 255, 255, 0.6); 
@@ -111,7 +109,7 @@ h2 {
 }
 
 .subscribe-form button {
-  width: 335px;
+  width: 100%;
   padding: 12px;
   margin-top: 20px;
   background-color: var(--white-color);
@@ -165,7 +163,14 @@ h2 {
   margin: 0;
   color: #b3b3b3;
 }
-
+@media screen and (min-width: 375px) {
+.subscribe-form input[type="email"] {
+  width: 335px;
+}
+.subscribe-form button {
+  width: 335px;
+}
+}
 /* Tablet */
 @media screen and (min-width: 768px) {
 

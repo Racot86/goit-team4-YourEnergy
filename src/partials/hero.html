@@ -1,4 +1,4 @@
-<div class="hero">
+<div class="hero container">
 
   <div class="hero__text-content">
     <div class="hero__title-wrapper">
@@ -20,8 +20,7 @@
   </div>
 
   <div class="hero__media-content">
-    <div class="hero__images">
-      <picture>
+      <!-- <picture>
         <source
           srcset="
             /img/hero_images/image_mobile_1x_webp.webp 1x,
@@ -86,8 +85,66 @@
           alt="Young women giving a high-five"
           loading="lazy"
         />
+      </picture> -->
+      <picture>
+        <source
+          srcset="
+            /img/hero_images/image_mobile_1x_webp.webp 1x,
+            /img/hero_images/image_mobile_2x_webp.webp 2x
+          "
+          type="image/webp"
+          media="(max-width: 767px)"
+        />
+        <source
+          srcset="
+            /img/hero_images/image_mobile_1x_jpg.jpg 1x,
+            /img/hero_images/image_mobile_2x_jpg.jpg 2x
+          "
+          type="image/jpeg"
+          media="(max-width: 767px)"
+        />
+      
+        <source
+          srcset="
+            /img/hero_images/image_tablet_1x_webp.webp 1x,
+            /img/hero_images/image_tablet_2x_webp.webp 2x
+          "
+          type="image/webp"
+          media="(min-width: 768px) and (max-width: 1023px)"
+        />
+        <source
+          srcset="
+            /img/hero_images/image_tablet_1x_jpg.jpg 1x,
+            /img/hero_images/image_tablet_2x_jpg.jpg 2x
+          "
+          type="image/jpeg"
+          media="(min-width: 768px) and (max-width: 1023px)"
+        />
+      
+        <source
+          srcset="
+            /img/hero_images/image_desktop_1x_webp.webp 1x,
+            /img/hero_images/image_desktop_2x_webp.webp 2x
+          "
+          type="image/webp"
+          media="(min-width: 1024px)"
+        />
+        <source
+          srcset="
+            /img/hero_images/image_desktop_1x_jpg.jpg 1x,
+            /img/hero_images/image_desktop_2x_jpg.jpg 2x
+          "
+          type="image/jpeg"
+          media="(min-width: 1024px)"
+        />
+      
+        <img
+          class="hero__image"
+          src="/img/hero_images/image_mobile_1x_jpg.jpg"
+          alt="Young women giving a high-five"
+          loading="lazy"
+        />
       </picture>
-    </div>
     <div class="hero__tags">
       <p class="hero__tag">#Sport</p>
       <p class="hero__tag">#Healthy</p>
@@ -96,7 +153,7 @@
     </div>
   </div>
 
-  <div class="hero__wide-image">
+  <!-- <div class="hero__wide-image">
     <picture>
       <source
         srcset="
@@ -119,5 +176,5 @@
         loading="lazy"
       />
     </picture>
-  </div>
+  </div> -->
 </div>

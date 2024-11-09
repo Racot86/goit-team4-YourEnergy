@@ -16,10 +16,7 @@ let activeFilter = 'Muscles';
 // Додаємо обробники подій до кнопок фільтрів
 filterButtons.forEach(button => {
     button.addEventListener('click', async (e) => {
-        let filterType = e.target.getAttribute('data-filter');
-        if (filterType === 'Body-parts') {
-          filterType = 'Body parts';
-        }
+        let filterType = e.target.getAttribute('data-filter').replace('-', ' ');
         activeFilter = filterType;
 
       await loadCategories(filterType);

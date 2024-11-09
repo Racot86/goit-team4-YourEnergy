@@ -12,16 +12,19 @@ const categoriesList = document.querySelector('.categories-list');
 const filterButtons = document.querySelectorAll('.filter-button');
 const searchForm = document.querySelector('#search-form');
 const searchInput = document.querySelector('#search-input');
+let activeFilter = 'Muscles';
 
 // Додаємо обробники подій до кнопок фільтрів
 filterButtons.forEach(button => {
-    button.addEventListener('click', (e) => {
+    button.addEventListener('click', async (e) => {
         let filterType = e.target.getAttribute('data-filter');
         if (filterType === 'Body-parts') {
           filterType = 'Body parts';
         }
+        activeFilter = filterType;
 
-        loadCategories(filterType)
+      await loadCategories(filterType);
+      attachCategoryListeners();
         // Робимо кнопку активною
         filterButtons.forEach(btn => btn.classList.remove('active'));
         e.target.classList.add('active');
@@ -59,12 +62,14 @@ function updateHeaderTitle(categoryName = '') {
 function attachCategoryListeners() {
   const categoriesItems = document.querySelectorAll('.categories-item');
   categoriesItems.forEach(item => {
+    item.removeEventListener('click', openCategory);
     item.addEventListener('click', openCategory);
   });
 }
 
 // Викликаємо `attachCategoryListeners` після завантаження сторінки
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  await loadCategories(activeFilter);
   attachCategoryListeners(); // Додаємо обробники подій для існуючих категорій
 });
 
@@ -85,4 +90,4 @@ function displayExercises(exercises) {
 }
 
 // Ініціалізація: Завантажуємо всі категорії на старті
-loadCategories();
+loadCategories(activeFilter);

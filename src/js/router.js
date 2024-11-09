@@ -1,4 +1,3 @@
-
 const useRouter = ()=>{
   const homePage = document.querySelector('.home-page');
   const favoritesPage = document.querySelector('.favorites-page');
@@ -17,9 +16,7 @@ const useRouter = ()=>{
       homePage.classList.add('hidden');
       favoritesPage.classList.remove('hidden');
       break;
-
   }
-  window.scrollTo(0, 0);
 }
 
 // Set up a MutationObserver to watch for changes to the document's title or body

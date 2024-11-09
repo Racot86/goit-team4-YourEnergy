@@ -2,7 +2,6 @@ import { getCategories } from './api-requests';
 import createCategoriesMarkup from './markup/categoriesMarkup';
 import {loadCategories} from './categories'
 
-
 // Ініціалізація основних змінних
 let allCategories = [];
 const selectedCategoryElement = document.querySelector('.selected-category');
@@ -69,20 +68,32 @@ const searchInput = document.querySelector('#search-input');
 // Додаємо обробники подій до кнопок фільтрів
 filterButtons.forEach(button => {
     button.addEventListener('click', (e) => {
+        e.preventDefault();
+        
         let filterType = e.target.getAttribute('data-filter');
         if (filterType === 'Body-parts') {
           filterType = 'Body parts';
         }
-        // loadAndFilterCategories(filterType);==========================Видалити
-        loadCategories(filterType)
-        // Робимо кнопку активною
+
+        // Показываем категории и скрываем воркауты при клике на фильтр
+        const categoriesContainer = document.querySelector('.m-categories');
+        const workoutsContainer = document.querySelector('.m-workouts');
+        
+        if (categoriesContainer && workoutsContainer) {
+            categoriesContainer.style.display = 'flex';
+            workoutsContainer.style.display = 'none';
+        }
+
+        loadCategories(filterType);
+        
+        // Делаем кнопку активной
         filterButtons.forEach(btn => btn.classList.remove('active'));
         e.target.classList.add('active');
     });
 });
 
 // Обробник події для форми пошуку
-searchForm.addEventListener('submit', async (e) => {
+searchForm?.addEventListener('submit', async (e) => {
   e.preventDefault();
   const searchKeyword = searchInput.value.trim();
   const category = selectedCategoryElement.textContent.trim().split(' / ')[1]; // Беремо поточну категорію
@@ -101,6 +112,7 @@ function openCategory(e) {
   categoriesList.style.display = 'none';
   loadExercises(categoryName);
 }
+
 // Функція для завантаження вправ на основі категорії та ключового слова
 async function loadExercises(categoryName, keyword = '') {
   try {
@@ -117,6 +129,21 @@ function displayExercises(exercises) {
   console.log('Exercises found:', exercises); // Лог для тестування
 }
 
-// Ініціалізація: Завантажуємо всі категорії на старті
-loadCategories();
+// Инициализация при загрузке страницы
+document.addEventListener('DOMContentLoaded', () => {
+    // Активируем кнопку Muscles по умолчанию
+    const musclesButton = document.querySelector('[data-filter="Muscles"]');
+    if (musclesButton) {
+        musclesButton.classList.add('active');
+    }
+
+    // Показываем контейнер категорий
+    const categoriesContainer = document.querySelector('.m-categories');
+    if (categoriesContainer) {
+        categoriesContainer.style.display = 'flex';
+    }
+
+    // Загружаем категории
+    loadCategories('Muscles');
+});
 

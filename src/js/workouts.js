@@ -1,10 +1,10 @@
 import createWorkoutsMarkup from './markup/workoutsMarkup';
 import { exerciseRequest, exerciseUrl } from './api-service';
-import { generatePages } from '../partials/components/pagination/PaginationComponent';
+import { generatePages } from './pagination';
 import { ModalWindow } from './modal-window';
 
 let workoutsContainer = document.querySelector('.workouts-container-list');
-const paginationCatList = document.querySelector('.workouts-pagination');
+const workoutsPagination = document.querySelector('.m-workouts .workouts-pagination');
 
 let currentFilters = {
   bodypart: '',
@@ -30,7 +30,7 @@ async function renderWorkoutsByCategory(
       equipment,
       keyword,
       page,
-      (limit = 8)
+      limit
     );
     console.log(`Request URL: ${requestUrl}`);
 
@@ -40,21 +40,27 @@ async function renderWorkoutsByCategory(
     }
 
     const data = await response.json();
-    workoutsContainer.innerHTML = createWorkoutsMarkup(data.results);
-    setupPagination(data.totalPages, page);
+    console.log('Received data:', data);
+    
+    if (workoutsContainer) {
+      workoutsContainer.innerHTML = createWorkoutsMarkup(data.results);
+    }
 
-    // Добавляем обработчики для кнопок Start
+    const workoutsSection = document.querySelector('.workouts-container');
+    if (workoutsSection) {
+      workoutsSection.style.display = 'flex';
+    }
+
+    if (data.totalPages && data.totalPages > 0) {
+      setupPagination(data.totalPages, page);
+    }
+
     const startButtons = document.querySelectorAll('.workout-start-btn');
-    console.log('Found start buttons:', startButtons.length); // Для отладки
-
-
     startButtons.forEach(button => {
       button.addEventListener('click', async e => {
         e.preventDefault();
         const workoutCard = button.closest('.workouts-card');
         const exerciseId = workoutCard.dataset.id;
-
-        console.log('Button clicked, exercise ID:', exerciseId); // Для отладки
 
         try {
           const response = await fetch(`${exerciseUrl()}/${exerciseId}`);
@@ -78,32 +84,42 @@ async function renderWorkoutsByCategory(
 }
 
 function setupPagination(totalPages, currentPage) {
-  paginationCatList.innerHTML = '';
+  console.log('Setting up pagination:', { totalPages, currentPage });
+  
+  if (!workoutsPagination) {
+    console.error('Pagination container not found');
+    return;
+  }
 
-  // оновлення атрибутів пагінації
-  paginationCatList.setAttribute('data-total', totalPages);
-  paginationCatList.setAttribute('data-current', currentPage - 1);
+  workoutsPagination.innerHTML = '';
 
-  // створення та додавання елементів пагінації
-  paginationCatList.appendChild(generatePages(totalPages, currentPage - 1));
+  workoutsPagination.style.display = 'flex';
 
-  paginationCatList
-    .querySelectorAll('.pagination-page')
-    .forEach(pageElement => {
+  workoutsPagination.setAttribute('data-total', totalPages);
+  workoutsPagination.setAttribute('data-current', currentPage - 1);
+
+  if (totalPages > 1) {
+    const paginationElement = generatePages(totalPages, currentPage - 1);
+    workoutsPagination.appendChild(paginationElement);
+
+    workoutsPagination.querySelectorAll('.pagination-page').forEach(pageElement => {
       pageElement.addEventListener('click', e => {
-        const selectedPage =
-          parseInt(pageElement.getAttribute('data-index')) + 1;
+        e.preventDefault();
+        
+        const selectedPage = parseInt(pageElement.getAttribute('data-index')) + 1;
+        console.log('Pagination clicked, page:', selectedPage);
 
-        // ререндеринг тренувань для вибраної сторінки, використовуючи збережені фільтри
         renderWorkoutsByCategory(
           currentFilters.bodypart,
           currentFilters.muscles,
           currentFilters.equipment,
           currentFilters.keyword,
-          selectedPage
+          selectedPage,
+          8
         );
       });
     });
+  }
 }
 
 export default renderWorkoutsByCategory;

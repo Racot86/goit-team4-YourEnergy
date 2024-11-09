@@ -120,7 +120,7 @@ export class ModalWindow {
 
     const titleElement = this.backdrop.querySelector('.modal-title');
     if (titleElement) {
-      titleElement.textContent = name;
+      titleElement.textContent = this.capitalizeFirstLetter(name);
     }
 
     const mediaContainer = this.backdrop.querySelector(
@@ -148,7 +148,9 @@ export class ModalWindow {
         parameterItem.className = 'parameter-item';
         parameterItem.innerHTML = `
           <p class="modal-parameter-label">${label}</p>
-          <p class="modal-parameter-value">${value}</p>
+          <p class="modal-parameter-value">${this.capitalizeFirstLetter(
+            value
+          )}</p>
         `;
         parametersContainer.appendChild(parameterItem);
       });
@@ -157,13 +159,20 @@ export class ModalWindow {
     const descriptionElement =
       this.backdrop.querySelector('.modal-description');
     if (descriptionElement) {
-      descriptionElement.textContent = description;
+      descriptionElement.textContent = this.capitalizeFirstLetter(description);
     }
 
     const ratingElement = this.backdrop.querySelector('.rating-value');
     if (ratingElement) {
       ratingElement.textContent = rating;
     }
+  }
+
+  capitalizeFirstLetter(string) {
+    if (typeof string === 'string' && string.length > 0) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+    return string;
   }
 
   toggleFavorite() {
@@ -175,7 +184,7 @@ export class ModalWindow {
       favBtn.innerHTML = `
         Remove from favorites
         <svg class="modal-icon-heart">
-          <use href="./img/sprite.svg#icon-delete"></use>
+          <use href="./img/icons.svg#icon-trash"></use>
         </svg>
       `;
       favBtn.classList.add('is-favorite');
@@ -188,7 +197,7 @@ export class ModalWindow {
       favBtn.innerHTML = `
         Add to favorites
         <svg class="modal-icon-heart">
-          <use href="./img/sprite.svg#icon-heart"></use>
+          <use href="./img/icons.svg#icon-heart"></use>
         </svg>
       `;
       favBtn.classList.remove('is-favorite');
@@ -197,11 +206,6 @@ export class ModalWindow {
         const currentRating = parseFloat(ratingElement.textContent);
         ratingElement.textContent = (currentRating - 0.1).toFixed(1);
       }
-    }
-
-    const newIcon = favBtn.querySelector('.modal-icon-heart');
-    if (newIcon) {
-      newIcon.style.stroke = this.isFavorite ? '#f4f4f4' : '#242424';
     }
 
     favBtn.style.transform = 'scale(0.95)';

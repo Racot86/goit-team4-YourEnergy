@@ -235,6 +235,19 @@
   stroke: #f4f4f4;
 }
 
+.modal-favorites-btn.is-favorite .modal-icon-heart,
+.modal-favorites-btn.is-favorite .modal-icon-delete {
+  stroke: #242424;
+  transition: stroke 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modal-favorites-btn.is-favorite:hover .modal-icon-heart,
+.modal-favorites-btn.is-favorite:hover .modal-icon-delete,
+.modal-favorites-btn.is-favorite:focus .modal-icon-heart,
+.modal-favorites-btn.is-favorite:focus .modal-icon-delete {
+  stroke: #f4f4f4;
+}
+
 .modal-rating-btn {
   border: 1px solid #f4f4f4;
   color: #f4f4f4;

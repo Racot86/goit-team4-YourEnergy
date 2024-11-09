@@ -1,3 +1,5 @@
+import { capitalizeFirstLetter } from './markup/stringUtils';
+
 export class ModalWindow {
   static instance = null;
 
@@ -147,7 +149,7 @@ export class ModalWindow {
 
     const titleElement = this.backdrop.querySelector('.modal-title');
     if (titleElement) {
-      titleElement.textContent = this.capitalizeFirstLetter(name);
+      titleElement.textContent = capitalizeFirstLetter(name);
     }
 
     const mediaContainer = this.backdrop.querySelector(

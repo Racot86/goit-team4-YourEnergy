@@ -1,22 +1,44 @@
-/* Reset and base styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+.hero{
+    display: grid;
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    min-height: 500px;
+    height: fit-content;
+    gap: 0px;
+    padding: 0 32px;
+  }
+    .hero .hero__text-content {
+        grid-area: description;
+        width: 100%;
+        
+    }
+    .hero .hero__media-content {
+        grid-area: tags;
+        width: 100%;
+        
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        justify-self: end;
+        align-self: start;
+    }
+    .hero .hero__wide-image {
+        grid-area: picture;
+        width: 100%;
+        height: 460px;
+        position: relative;
+    }
+  
 
-body {
-    font-family: 'DM Sans', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: #f9f9f9;
-}
 
 
 
-.heading {
+
+
+
+
+.hero__title-wrapper {
     display: flex;
     align-items: flex-start;
     gap: 8px;
@@ -24,13 +46,13 @@ body {
     justify-content: left;
 }
 
-.heading img.sunhero {
+.hero__sun-icon {
     width: 38px;
     height: 38px;
     margin-top: 5px;
 }
 
-.heading h1 {
+.hero__title {
     font-weight: 400;
     font-size: 33px;
     line-height: 1.2;
@@ -40,11 +62,11 @@ body {
     text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
 
-.italic {
+.hero__title--italic {
     font-style: italic;
 }
 
-.subtitle {
+.hero__description {
     font-family: "DM Sans", sans-serif;
     letter-spacing: -0.02em;
     color: #242424;
@@ -56,7 +78,7 @@ body {
     width: 335px;
 }
 
-.hero-image {
+.hero__image {
     width: 335px;
     height: 460px;
     overflow: hidden;
@@ -64,189 +86,310 @@ body {
     margin-bottom: 20px;
 }
 
-.hashtags {
+.hero__tags {
     display: flex;
-    justify-content: flex-end;
+    flex-wrap: nowrap;
     gap: 8px;
-    flex-wrap: wrap;
-    color: #242424;
+    justify-content: flex-end;
+    max-width: 100%;
 }
-
-.hashtags p {
-    border: solid black 1px;
-    padding: 5px 12px;
-    border-radius: 15px;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 1.28571;
-    color: #242424;
-}
+    .hero__tag {
+        border: solid black 1px;
+        padding: 5px 12px;
+        border-radius: 15px;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 1.28571;
+        color: #242424;
+    }
 
 /* Hide images by default */
-.mobile-image,
-.tablet-image,
-.desktop-image {
+.hero__image--mobile,
+.hero__image--tablet,
+.hero__image--desktop {
     display: none;
 }
 
-.long-desktop-image img {
+.hero__image--wide {
     display: none;
 }
 
-.align-stay {
+.hero__title--indented {
     display: inline-block;
     position: relative;
     left: -45px;
-    /* Adjust the indentation as needed */
 }
 
-/* Mobile styles */
-@media screen and (max-width: 767px) {
-    .mobile-image {
+/* Базовые стили для изображений */
+.hero__wide-image {
+    width: 100%;
+    height: auto;
+}
+
+.hero__wide-image img {
+    width: 100%;
+    height: auto;
+    display: block; /* Уберем display: none */
+    border-radius: 15px;
+}
+
+.hero__images {
+    width: 168px;
+    height: 100px;
+}
+
+.hero__images img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
+
+
+
+@media screen and (min-width: 375px) and (max-width: 768px){
+    .hero{
+      grid-template-areas: 
+        "description"
+        "picture"
+        "tags";
+    }
+    .hero .hero__images{
+      display: none;
+    }
+
+    .hero__wide-image {
+        height: 460px;
+    }
+    .hero__wide-image img {
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .hero__image--mobile {
         display: block;
     }
-}
-
-/* Tablet styles */
-@media screen and (min-width: 768px) and (max-width: 1199px) {
     
-    .tablet-image {
+    .hero__tags {
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+        font-size: 16px;
+        margin: 10px 0;
+    }
+
+  }
+  
+  @media screen and (orientation: landscape) and (min-width: 768px) and (max-height: 550px) {
+    .hero{
+      grid-template-areas: 
+        "description"
+        "picture"
+        "tags";
+      }
+    .hero .hero__images{
+        display: none;
+      }
+  }
+  @media screen and (min-width: 768px) and (max-width: 1279px){
+    .hero{
+      grid-template-areas: 
+        "description"
+        "picture"
+        "tags";
+    }
+
+    .hero__image--tablet {
         display: block;
     }
 
     .hero {
-        width: calc(100% - 64px);
-        margin-top: 176px;
-        border-radius: 60px;
+        width: 100%;
+        margin: 0 auto;
     }
 
-    .heading img.sunhero {
+    .hero__sun-icon {
         width: 59px;
         height: 59px;
     }
 
-    .heading h1 {
+    .hero__title {
         font-size: 74px;
         line-height: 1;
         text-shadow: none;
     }
 
-    .subtitle {
+    .hero__description {
         font-size: 18px;
         line-height: 1.3333;
         margin-bottom: 32px;
         width: 528px;
     }
 
-    .image-container {
+    .hero__images {
         width: calc(100% - 64px);
         height: 550px;
-    margin-bottom: 16px;}
+        margin-bottom: 16px;
+    }
 
-    .hero-image {
+    .hero__image {
         width: 736px;
         height: 550px;
         border-radius: 60px;
-        
-      }
-        
+    }
 
-    .hashtags {
+    .hero__title--indented {
+        left: -65px;
+    }
+
+    .hero .hero__images{
+      display: none;
+    }
+
+
+    .hero__tags {
+        display: flex;
         justify-content: flex-end;
+        width: 100%;
         font-size: 16px;
+        margin: 10px 0;
     }
 
-    .long-desktop-image img {
-        display: none;
+    .hero__wide-image {
+        height: 550px;
     }
-
-        .align-stay {
-            display: inline-block;
-            position: relative;
-            left: -65px;
-            /* Adjust the indentation as needed */
-        }
-}
-
-/* Desktop styles */
-@media screen and (min-width: 1200px) {
+    .hero__wide-image img {
+        height: 100%;
+        object-fit: cover;
+    }
+  }
+  @media screen and (min-width: 1280px) {
+    .hero{
+      grid-template-areas: 
+      "description tags"
+      "picture picture";
+      grid-template-columns: 1fr auto;
+    }
 
     .hero {
-            width: calc(100% - 64px);
-            margin-top: 176px;
-            border-radius: 60px;
-        }
 
-    .desktop-image {
+    }
+
+    .hero__image--desktop {
         display: block;
         width: 168px;
         height: 100px;
         align-self: center;
     }
 
-    .long-desktop-image img {
+    .hero__image--wide {
         display: block;
         width: 100%;
         height: auto;
         border-radius: 15px;
     }
 
-    .heading img.sunhero {
+    .hero__sun-icon {
         width: 59px;
         height: 59px;
     }
 
-    .desktop-elements {
+    .hero__content {
         display: grid;
         grid-template-columns: 3fr 1fr;
         gap: 20px;
         align-items: center;
     }
 
-    .desktop-first-column-wrapper {
+    .hero__text-content {
         grid-column: 1 / 2;
     }
 
-    .desktop-second-column-wrapper {
+    .hero__media-content {
         display: flex;
         flex-direction: column;
         align-items: flex-end;
-        justify-content: space-between;
         gap: 15px;
     }
 
-    .image-container {
+    .hero__images {
         display: flex;
         justify-content: flex-end;
         width: 168px;
         height: 100px;
     }
 
-    .hashtags {
+    .hero__tags {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        justify-items: center;
+        max-width: 168px;
         gap: 8px;
-        justify-content: flex-end;
+        justify-content: end;
     }
 
-    .hashtags p {
+    .hero__tag {
         font-size: 16px;
     }
 
-    .subtitle {
+    .hero__description {
         font-size: 18px;
         width: 528px;
         line-height: 1.3333;
     }
 
-    .heading h1 {
+    .hero__title {
         font-size: 74px;
         line-height: 1;
         text-shadow: none;
     }
 
-    .align-stay {
-        display: inline-block;
-        position: relative;
+    .hero__title--indented {
         left: -65px;
-        /* Adjust the indentation as needed */
     }
-}
+
+    .hero .hero__images{
+        display: block;
+      }
+    /* Явно показываем изображения на десктопе */
+    .hero__wide-image img {
+        display: block;
+    }
+    
+    .hero__images {
+        display: block;
+    }
+
+    .hero__media-content {
+        width: 168px;
+    }
+
+    .hero__tags {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        justify-items: center;
+        max-width: 168px;
+        gap: 8px;
+        justify-content: end;
+    }
+
+    .hero__tag {
+        font-size: 16px;
+    }
+  }
+  
+  @media screen and (min-width: 1440px) {
+    .hero{
+      grid-template-areas: 
+        "description tags"
+        "picture picture";
+      max-width: 1440px;
+      margin: 0 auto;
+      grid-template-columns: 1fr auto;
+    }
+    .hero .hero__images{
+        display: block;
+      }
+  }
+

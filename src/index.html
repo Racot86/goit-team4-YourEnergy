@@ -12,36 +12,44 @@
 
   <load src="./partials/header.html" icon-path="img/sprite.svg#logo" />
 
-  <div class="home-page">
-    <load src="./partials/hero.html"/>
+    <div class="home-page">
+      <load src="./partials/hero.html"/>
 
-    
-    <div class="main-fitnes-content"> 
-      <div class="m-filters">
-        <load src="./partials/search-filters.html"/>
+      <div class="main-fitnes-content"> 
+        <div class="m-filters">
+          <load src="./partials/search-filters.html"/>
+        </div>
+        <div class="m-sidebar">
+          <load src="./partials/sidebar.html"/>
+        </div>
+        <div class="m-content">
+          <div class="m-categories">
+            <div class="categories-container">
+              <load src="./partials/categories.html"/>
+            </div>
+            <div class="categories-pagination m-pagination">
+              <load src="./partials/pagination.html" />
+            </div>
+          </div>
+          <div class="m-workouts" style="display: none;">
+            <div class="workouts-container">
+              <load src="./partials/workouts.html" />
+            </div>
+            <div class="workouts-pagination m-pagination">
+              <load src="./partials/pagination.html" />
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="m-sidebar">
-        <load src="./partials/sidebar.html"/>
-      </div>
-      <div class="m-categories">
-        <load src="./partials/categories.html"/>
-      </div>
-      <div class="m-workouts">
-        <load src="./partials/workouts.html" />
-      </div>
+
+      <load src="./partials/footer.html"/>
     </div>
 
-    <main>
-    </main>
+    <div class="favorites-page hidden">
+      <load src="./partials/favorites.html"/>
+    </div>
 
-    <load src="./partials/footer.html"/>
-  </div>
-
-  <div class="favorites-page hidden">
-    <load src="./partials/favorites.html"/>
-  </div>
-
-  <load src="./partials/modal-window.html" />
+   <load src="./partials/modal-window.html" />
 
   <load src="./partials/menu.html"/>
 

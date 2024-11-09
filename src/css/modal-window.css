@@ -233,6 +233,7 @@
 .modal-favorites-btn:focus .modal-icon-heart,
 .modal-favorites-btn:focus .modal-icon-delete {
   stroke: #f4f4f4;
+  transition: stroke 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .modal-favorites-btn.is-favorite .modal-icon-heart,
@@ -246,6 +247,7 @@
 .modal-favorites-btn.is-favorite:focus .modal-icon-heart,
 .modal-favorites-btn.is-favorite:focus .modal-icon-delete {
   stroke: #f4f4f4;
+  transition: stroke 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .modal-rating-btn {

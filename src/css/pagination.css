@@ -1,0 +1,39 @@
+.pagination {
+  display: flex;
+  font-size: 24px;
+  gap: 20px;
+  color: lightgray;
+  justify-content: center;
+  margin-top: auto;
+  padding: 20px 0;
+  width: 100%;
+}
+
+.pagination p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.selected {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 1);
+  transition: 0.2s ease-in-out;
+  color: black;
+  width: 32px;
+  height: 32px;
+}
+
+/* Специфичные стили для категорий */
+.m-categories .pagination {
+  margin-top: auto;
+}
+
+/* Специфичные стили для воркаутов */
+.m-workouts .pagination {
+  margin-top: 20px;
+} 

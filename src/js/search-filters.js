@@ -4,7 +4,6 @@ import { getCategories } from './api-requests';
 import createCategoriesMarkup from './markup/categoriesMarkup';
 import {loadCategories} from './categories'
 
-
 // Ініціалізація основних змінних
 let allCategories = [];
 const selectedCategoryElement = document.querySelector('.selected-category');
@@ -34,7 +33,7 @@ filterButtons.forEach(button => {
 });
 
 // Обробник події для форми пошуку
-searchForm.addEventListener('submit', async (e) => {
+searchForm?.addEventListener('submit', async (e) => {
   e.preventDefault();
   const searchKeyword = searchInput.value.trim();
   const category = selectedCategoryElement.textContent.trim().split(' / ')[1]; // Беремо поточну категорію

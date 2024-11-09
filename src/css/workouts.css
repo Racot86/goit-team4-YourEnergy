@@ -1,16 +1,20 @@
+.m-workouts {
+  width: 100%;
+}
+
 .workouts-container {
-  order: 2;
-  display: none;
-  flex-direction: column;
+  width: 100%;
   max-width: 900px;
+  margin: 0 auto;
 }
 
 .workouts-container-list {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 20px;
-  flex-wrap: wrap;
-  max-width: 325px;
   margin: 20px auto;
+  width: 100%;
+  max-width: 335px;
 }
 
 .workouts-card {
@@ -132,8 +136,9 @@
 
 @media screen and (min-width: 768px) {
   .workouts-container-list {
-    max-width: 900px;
-    justify-content: center;
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 705px;
+    gap: 32px 15px;
   }
 
   .workouts-container {
@@ -168,4 +173,11 @@
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
+}
+
+.workouts-pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  width: 100%;
 }

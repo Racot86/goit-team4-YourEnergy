@@ -28,7 +28,8 @@ filterButtons.forEach(button => {
         // Робимо кнопку активною
         filterButtons.forEach(btn => btn.classList.remove('active'));
         e.target.classList.add('active');
-        updateHeaderTitle();
+      updateHeaderTitle();
+      toggleSearchForm(false);
     });
 });
 
@@ -45,12 +46,23 @@ searchForm.addEventListener('submit', async (e) => {
   }
 });
 
+// Функція для показу або приховування пошукової форми
+function toggleSearchForm(show) {
+  if (show) {
+    searchForm.style.display = 'block'; // Показуємо форму пошуку
+  } else {
+    searchForm.style.display = 'none'; // Приховуємо форму пошуку
+  }
+}
+
+
 // Функція для оновлення заголовка з вибраною категорією
 function openCategory(e) {
   const categoryName = e.currentTarget.dataset.name;
   updateHeaderTitle(categoryName);
   selectedCategoryElement.textContent = ` / ${categoryName}`;
   categoriesList.style.display = 'none';
+  toggleSearchForm(true);
   loadExercises(categoryName);
 }
 
@@ -71,6 +83,7 @@ function attachCategoryListeners() {
 document.addEventListener('DOMContentLoaded', async () => {
   await loadCategories(activeFilter);
   attachCategoryListeners(); // Додаємо обробники подій для існуючих категорій
+  toggleSearchForm(false); // Приховуємо форму пошуку
 });
 
 // Функція для завантаження вправ на основі категорії та ключового слова

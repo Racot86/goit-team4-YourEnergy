@@ -4,7 +4,7 @@
   width: 100%;
   margin: 0 auto;
   gap: 20px;
-  padding: 80px 0;
+  margin: 80px 0;
 }
 
 .sidebar-quote-container {
@@ -22,7 +22,7 @@
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 5;
-  font-family: 'DM Sans', sans-serif;  
+  font-family: 'DM Sans', sans-serif;
   margin-bottom: 16px;
 }
 
@@ -122,9 +122,9 @@
 }
 
 @media screen and (min-width: 335px) {
-.sidebar-container {
-  width: 335px;
-}
+  .sidebar-container {
+    width: 335px;
+  }
 }
 @media screen and (min-width: 768px) {
   .sidebar-container {
@@ -132,7 +132,7 @@
     flex-wrap: wrap;
     width: 705px;
     gap: 32px 16px;
-    padding: 64px 0 100px;
+    margin: 64px 0;
   }
 
   .sidebar-quote-ranner-svg,
@@ -150,7 +150,6 @@
   .sidebar-quote-container {
     padding: 40px 40px 40px 90px;
   }
-
 
   .sidebar-quote-container,
   .sidebar-sports-info {
@@ -200,8 +199,10 @@
     width: 100%;
   }
 
-  .sidebar-container {
+  div.sidebar-container {
     gap: 32px;
     padding-top: 0;
+    margin: 0;
+    flex-direction: column;
   }
 }

@@ -19,7 +19,7 @@ async function renderWorkoutsByCategory(
   equipment = '',
   keyword = '',
   page = 1,
-  limit = 8
+  limit = 10
 ) {
   currentFilters = { bodypart, muscles, equipment, keyword };
 
@@ -30,7 +30,7 @@ async function renderWorkoutsByCategory(
       equipment,
       keyword,
       page,
-      (limit = 8)
+      (limit = 10)
     );
     console.log(`Request URL: ${requestUrl}`);
 

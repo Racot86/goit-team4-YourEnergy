@@ -19,11 +19,10 @@
 
 .workouts-card {
   border-radius: 15px;
-  width: 335px;
   background: white;
   padding: 16px;
-  cursor: pointer;
   position: relative;
+  max-height: 152px;
 }
 
 .card-header {
@@ -47,7 +46,7 @@
 .card-footer_item,
 .card-footer_item .strong {
   color: var(--black-color);
-  font-family: "DM Sans", sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 12px;
   font-weight: 400;
   font-style: normal;
@@ -97,19 +96,29 @@
   height: 24px;
 }
 
+.card-icon {
+  left: 20px;
+  background-color: black;
+  padding: 0px 4px;
+  border-radius: 50%;
+  fill: var(--white-color);
+}
+
 .card-content .title {
   font-size: 20px;
 }
 
 .card-footer_items {
   display: flex;
-  gap: 10px;
+  justify-content: left;
+  gap: 16px;
+  white-space: nowrap;
 }
 
 .card-footer_item {
   display: flex;
   gap: 2px;
-  color: rgba(36, 36, 36, 0.40);
+  color: rgba(36, 36, 36, 0.4);
   line-height: 1.5;
 }
 
@@ -118,16 +127,8 @@
   text-transform: capitalize;
 }
 
-.card-footer_item .item-one {
-  width: 40px;
-}
-
 .card-footer_item .item-two {
   width: 31px;
-}
-
-.card-footer_item .item-three {
-  width: 22px;
 }
 
 .card-header .hide {
@@ -145,26 +146,8 @@
     margin: 0 auto;
   }
 
-  .workouts-card {
-    width: 312px;
-  }
-
   .card-content {
     margin-bottom: 8px;
-  }
-
-  .card-footer_item .item-one {
-    width: 40px;
-  }
-}
-
-@media screen and (min-width: 1280px) {
-  .workouts-card {
-    width: 405px;
-  }
-
-  .card-footer_item .item-one {
-    width: 60px;
   }
 }
 
@@ -180,4 +163,14 @@
   justify-content: center;
   margin-top: 20px;
   width: 100%;
+}
+
+@media screen and (min-width: 1280px) {
+  .workouts-container-list {
+    max-width: 900px;
+  }
+
+  .workouts-container {
+    padding-left: 6px;
+  }
 }

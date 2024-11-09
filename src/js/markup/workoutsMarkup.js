@@ -9,8 +9,14 @@ export default function createWorkoutsMarkup(cards) {
               <span class="label">workout</span>
               <div class="rating-container">
                 <span class="rating">5.0</span>
-                <svg class="star" width="16" height="16">
-                  <use href="./img/icons.svg#icon-Star"></use>
+                <svg
+                  class="star"
+                  viewBox="0 0 16 16"
+                  height="16"
+                  width="16"
+                  aria-hidden="true"
+                >
+                  <use x="0" y="0" href="./img/icons.svg#icon-Star"></use>
                 </svg>
               </div>
               <div class="trash-container hide">
@@ -18,22 +24,34 @@ export default function createWorkoutsMarkup(cards) {
                   <use href="./img/icons.svg#icon-trash"></use>
                 </svg>
               </div>
-
              </div>
             <button type="button" class="workout-start-btn">
               Start
-              <svg width="16" height="16">
-                <use href="./img/icons.svg#icon-arrow"></use>
-              </svg>
+                <svg
+                  viewBox="0 0 16 16"
+                  height="16"
+                  width="16"
+                  aria-hidden="true"
+                >
+                  <use x="0" y="0" href="./img/icons.svg#icon-arrow"></use>
+                </svg>
             </button>
           </div>
           <div class="card-content">
-            <img class="card-icon" src="./img/running.svg" alt="Card icon">
+                <svg
+                  class="card-icon"
+                  viewBox="0 0 24 24"
+                  height="20"
+                  width="24"
+                  aria-hidden="true"
+                >
+                  <use x="0" y="0" href="./img/icons.svg#icon-running"></use>
+                </svg>
             <h3 class="title text-overflow">${name}</h3>
           </div>
           <div class="card-footer">
             <ul class="card-footer_items">
-              <li class="card-footer_item">Calories: <span class="strong text-overflow item-one">${burnedCalories}</span></li>
+              <li class="card-footer_item">Burned calories:: <span class="strong text-overflow item-one">${burnedCalories}</span></li>
               <li class="card-footer_item">Body Part: <span class="strong text-overflow item-two">${bodyPart}</span></li>
               <li class="card-footer_item">Target: <span class="strong text-overflow item-three">${target}</span></li>
             </ul>

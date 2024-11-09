@@ -19,7 +19,7 @@ async function renderWorkoutsByCategory(
   equipment = '',
   keyword = '',
   page = 1,
-  limit = 8
+  limit = 10
 ) {
   currentFilters = { bodypart, muscles, equipment, keyword };
 
@@ -115,7 +115,7 @@ function setupPagination(totalPages, currentPage) {
           currentFilters.equipment,
           currentFilters.keyword,
           selectedPage,
-          8
+          10
         );
       });
     });

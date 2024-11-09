@@ -51,7 +51,7 @@ export default function createWorkoutsMarkup(cards) {
           </div>
           <div class="card-footer">
             <ul class="card-footer_items">
-              <li class="card-footer_item">Calories: <span class="strong text-overflow item-one">${burnedCalories}</span></li>
+              <li class="card-footer_item">Burned calories:: <span class="strong text-overflow item-one">${burnedCalories}</span></li>
               <li class="card-footer_item">Body Part: <span class="strong text-overflow item-two">${bodyPart}</span></li>
               <li class="card-footer_item">Target: <span class="strong text-overflow item-three">${target}</span></li>
             </ul>

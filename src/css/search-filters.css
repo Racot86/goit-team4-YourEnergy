@@ -1,12 +1,9 @@
 /* Базові стилі для всіх пристроїв */
-body {
-  font-family: "DM Sans", sans-serif;
-  margin: 0;
+.main-fitnes-content {
+  padding-top: 20px;
 }
-
 .filters-panel {
   display: flex;
-  padding: 0 20px;
   flex-wrap: wrap;
 }
 
@@ -98,15 +95,17 @@ body {
 
 /* Адаптивні стилі проміжні */
 @media (min-width: 376px) and (max-width: 600px) {
-
+  .main-fitnes-content {
+    padding-top: 32px;
+  }
   .filters-buttons {
     flex-basis: 100%;
   }
 }
 
 /* Адаптивні стилі для планшетів */
-@media (min-width: 601px) and (max-width: 1024px) {
-
+@media (min-width: 601px) and (max-width: 1440px) {
+ 
   .filters-panel {
     display: flex;
     align-items: center;
@@ -156,8 +155,12 @@ body {
 }
 
 /* Адаптивні стилі для десктопів */
-@media (min-width: 1025px) {
+@media (min-width: 1440px) {
+  .main-fitnes-content {
+    padding-top: 32px;
+    padding-bottom: 132px;
 
+  }
   .filters-panel {
     display: flex;
     align-items: flex-end;

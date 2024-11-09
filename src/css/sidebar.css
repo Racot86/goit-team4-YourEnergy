@@ -1,7 +1,7 @@
 .sidebar-container {
   display: flex;
   flex-direction: column;
-  max-width: 325px;
+  width: 100%;
   margin: 0 auto;
   gap: 20px;
   padding: 80px 0;
@@ -22,7 +22,8 @@
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 5;
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'DM Sans', sans-serif;  
+  margin-bottom: 16px;
 }
 
 .sidebar-quote-of-day {
@@ -31,7 +32,7 @@
   font-size: 20px;
   line-height: 100%;
   color: var(--white-color);
-  padding-bottom: 8px;
+  margin-bottom: 8px;
 }
 
 .sidebar-norm-sport {
@@ -40,6 +41,7 @@
   font-size: 14px;
   line-height: 129%;
   color: rgba(36, 36, 36, 0.6);
+  margin-bottom: 16px;
 }
 
 .sidebar-quote-image {
@@ -52,7 +54,6 @@
   font-size: 14px;
   line-height: 129%;
   color: var(--white-color);
-  padding-top: 16px;
   font-family: 'DM Sans', sans-serif;
 }
 
@@ -110,6 +111,7 @@
   line-height: 133%;
   color: var(--black-color);
   font-family: 'DM Sans', sans-serif;
+  margin-bottom: 2px;
 }
 
 .static-info {
@@ -119,13 +121,18 @@
   -webkit-line-clamp: 5;
 }
 
+@media screen and (min-width: 335px) {
+.sidebar-container {
+  width: 335px;
+}
+}
 @media screen and (min-width: 768px) {
   .sidebar-container {
     flex-direction: row;
     flex-wrap: wrap;
-    max-width: 705px;
-    gap: 16px;
-    padding: 64px 0;
+    width: 705px;
+    gap: 32px 16px;
+    padding: 64px 0 100px;
   }
 
   .sidebar-quote-ranner-svg,
@@ -144,20 +151,20 @@
     padding: 40px 40px 40px 90px;
   }
 
-  .sidebar-quote-author,
-  .static-info {
-    padding-top: 18px;
-  }
 
   .sidebar-quote-container,
   .sidebar-sports-info {
     max-width: 400px;
   }
+  .sidebar-quote-image {
+    width: 288px;
+    height: 249px;
+  }
 }
 
-@media screen and (min-width: 1280px) {
+@media screen and (min-width: 1440px) {
   .sidebar-quote-of-day {
-    padding-bottom: 6px;
+    margin-bottom: 6px;
   }
 
   .sidebar-quote-author {
@@ -170,7 +177,8 @@
   }
 
   .sidebar-quote-container {
-    min-height: 225px;
+    height: 242px;
+    width: 444px;
   }
 
   .sidebar-quote-image {
@@ -194,6 +202,6 @@
 
   .sidebar-container {
     gap: 32px;
-    padding-top: 20px;
+    padding-top: 0;
   }
 }

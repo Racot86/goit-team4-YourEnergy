@@ -1,4 +1,5 @@
 import { capitalizeFirstLetter } from './markup/stringUtils';
+import { removeFromFavorites } from './markup/favoritesUtils';
 
 export class ModalWindow {
   static instance = null;
@@ -227,7 +228,7 @@ export class ModalWindow {
       `;
       favBtn.classList.remove('is-favorite');
 
-      this.removeFromFavorites();
+      removeFromFavorites(this.currentExerciseId);
     }
 
     favBtn.style.transform = 'scale(0.95)';
@@ -243,15 +244,6 @@ export class ModalWindow {
     };
     let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
     favorites.push(exerciseData);
-    localStorage.setItem('favorites', JSON.stringify(favorites));
-  }
-
-  removeFromFavorites() {
-    const exerciseId = this.currentExerciseId;
-    let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-    console.log('Current favorites before removal:', favorites);
-    favorites = favorites.filter(item => item.id !== exerciseId);
-    console.log('Favorites after removal:', favorites);
     localStorage.setItem('favorites', JSON.stringify(favorites));
   }
 

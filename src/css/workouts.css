@@ -165,12 +165,22 @@
   width: 100%;
 }
 
-@media screen and (min-width: 1280px) {
-  .workouts-container-list {
-    max-width: 900px;
+@media screen and (min-width: 1440px) {
+  .workouts-container {
+    width: 900px;
+    padding-left: 6px;
   }
 
-  .workouts-container {
-    padding-left: 6px;
+  .workouts-card {
+    border-radius: 15px;
+    background: white;
+    padding: 16px;
+    position: relative;
+    max-height: 152px;
+    width: 442px;
+  }
+
+  .workouts-container-list {
+    margin: 0;
   }
 }

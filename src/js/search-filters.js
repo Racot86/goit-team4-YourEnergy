@@ -20,11 +20,11 @@ filterButtons.forEach(button => {
         activeFilter = filterType;
 
       await loadCategories(filterType);
-      attachCategoryListeners();
+      // attachCategoryListeners();
         // Робимо кнопку активною
         filterButtons.forEach(btn => btn.classList.remove('active'));
         e.target.classList.add('active');
-      updateHeaderTitle();
+      updateHeaderTitle(); //clear breadcrumbs
       toggleSearchForm(false);
     });
 });
@@ -44,11 +44,11 @@ searchForm?.addEventListener('submit', async (e) => {
 });
 
 // Функція для показу або приховування пошукової форми
-function toggleSearchForm(show) {
-  if (show) {
-    searchForm.style.display = 'block'; // Показуємо форму пошуку
+function toggleSearchForm(isCategory) {
+  if (isCategory) {
+    searchForm.style.display = 'none'; // Показуємо форму пошуку
   } else {
-    searchForm.style.display = 'none'; // Приховуємо форму пошуку
+    searchForm.style.display = 'block'; // Приховуємо форму пошуку
   }
 }
 
@@ -57,21 +57,21 @@ function toggleSearchForm(show) {
 function openCategory(e) {
   const categoryName = e.currentTarget.dataset.name;
   updateHeaderTitle(categoryName);
-  selectedCategoryElement.textContent = ` / ${categoryName}`;
+  selectedCategoryElement.textContent = ` / <span class="breadcrumbs">${categoryName}</span>`;
   categoriesList.style.display = 'none';
   toggleSearchForm(true);
   loadExercises(categoryName);
 }
 
 // Функція для оновлення заголовка з обраним фільтром і категорією
-function updateHeaderTitle(categoryName = '') {
+export function updateHeaderTitle(categoryName = '') {
   selectedCategoryElement.textContent = categoryName ? ` / ${categoryName}` : '';
 }
 
 function attachCategoryListeners() {
   const categoriesItems = document.querySelectorAll('.categories-item');
   categoriesItems.forEach(item => {
-    item.removeEventListener('click', openCategory);
+    // item.removeEventListener('click', openCategory);
     item.addEventListener('click', openCategory);
   });
 }
@@ -101,4 +101,4 @@ function displayExercises(exercises) {
 }
 
 // Ініціалізація: Завантажуємо всі категорії на старті
-loadCategories(activeFilter);
+// loadCategories(activeFilter);

@@ -2,6 +2,7 @@ import createCategoriesMarkup from './markup/categoriesMarkup';
 import renderWorkoutsByCategory from './workouts';
 import { getCategories } from './api-requests';
 import { generatePages } from './pagination';
+import { updateHeaderTitle } from './search-filters.js';
 
 let categoriesList = document.querySelector('.categories-list');
 let workoutsContainer = document.querySelector('.workouts-container');
@@ -9,7 +10,7 @@ const categoriesPagination = document.querySelector('.m-categories .categories-p
 
 export async function loadCategories(currentCategoryName) {
   const categoriesContainer = document.querySelector('.m-categories');
-  
+
   if (categoriesContainer) {
     categoriesContainer.style.display = 'flex';
   }
@@ -24,7 +25,7 @@ export async function loadCategories(currentCategoryName) {
         categoriesPagination.style.display = 'flex';
         categoriesPagination.setAttribute('data-total', data.totalPages);
         categoriesPagination.setAttribute('data-current', 0);
-        
+
         const paginationElement = generatePages(data.totalPages, 0);
         categoriesPagination.appendChild(paginationElement);
 
@@ -33,7 +34,7 @@ export async function loadCategories(currentCategoryName) {
         });
       }
     }
-    
+
     if (categoriesList) {
       categoriesList.innerHTML = createCategoriesMarkup(data.results);
       categoryClickHandler();
@@ -45,16 +46,16 @@ export async function loadCategories(currentCategoryName) {
 
 async function handlePagination(e) {
   e.preventDefault();
-  
+
   const pageIndex = Number(e.target.dataset.index);
   const page = pageIndex + 1;
-  
+
   const activeFilter = document.querySelector('.filter-button.active');
   const filter = activeFilter ? activeFilter.dataset.filter.replace('-', ' ') : '';
 
   try {
     const data = await getCategories(filter, page);
-    
+
     if (categoriesList) {
       categoriesList.innerHTML = createCategoriesMarkup(data.results);
       categoryClickHandler();
@@ -62,7 +63,7 @@ async function handlePagination(e) {
 
     if (categoriesPagination) {
       categoriesPagination.setAttribute('data-current', pageIndex);
-      
+
       categoriesPagination.querySelectorAll('.pagination-page').forEach(page => {
         page.classList.remove('selected');
       });
@@ -82,18 +83,19 @@ function categoryClickHandler() {
 
 function openCategory(e) {
   e.preventDefault();
-  
+
   const categoriesContainer = document.querySelector('.m-categories');
   const workoutsSection = document.querySelector('.m-workouts');
-  
+
   if (categoriesContainer && workoutsSection) {
     categoriesContainer.style.display = 'none';
     workoutsSection.style.display = 'flex';
-    
+
     const categoryItem = e.target.closest('.categories-item');
     if (!categoryItem) return;
-    
+
     const categoryName = encodeURIComponent(categoryItem.dataset.name);
+    updateHeaderTitle(categoryName);
     const categoryFilter = categoryItem.dataset.filter;
     console.log(categoryName)
 

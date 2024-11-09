@@ -2,13 +2,13 @@ export default function createWorkoutsMarkup(cards) {
   return cards
     .sort((a, b) => a.name.localeCompare(b.name))
     .map(
-      ({ _id, name, burnedCalories, bodyPart, target, gifUrl }) => `
+      ({ _id, name, burnedCalories, bodyPart, target, gifUrl, rating }) => `
         <li class='workouts-card' data-name='${name}' data-id='${_id}'>
           <div class="card-header">
             <div class="card-header_left-side">
               <span class="label">workout</span>
               <div class="rating-container">
-                <span class="rating">5.0</span>
+                <span class="rating">${rating}</span>
                 <svg
                   class="star"
                   viewBox="0 0 16 16"

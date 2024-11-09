@@ -53,12 +53,46 @@ body {
   flex-direction: column;
   min-width: 100vw;
   min-height: 100vh;
-  margin: 0;
+  background-color: var(--white-color);
+  /* margin: 0; */
 }
 
-main {
-  flex-grow: 1;
+
+
+.m-categories,
+.m-workouts {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: inherit;
+  scroll-behavior: auto;
+  overflow-anchor: none;
 }
+
+.categories-wrap,
+.workouts-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.m-pagination {
+  margin-top: auto;
+  width: 100%;
+}
+
+.workouts-pagination,
+.categories-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  cursor: pointer;
+}
+
 
 main:has(.back-link) {
   text-align: center;
@@ -71,10 +105,10 @@ main {
   flex-direction: column;
 }
 
-.hidden{
+.hidden {
   display: none;
 }
-.sticky{
+.sticky {
   position: fixed;
   top: 28px;
   left: 50%;
@@ -86,9 +120,9 @@ main {
     flex-direction: column;
   }
 }
-@media screen and (min-width: 1280px) {
-  main {
-    flex-direction: row;
-  }
-}
+
 /* прибрати виккористовую в цілях тестування sidebar*/
+
+html {
+  scroll-behavior: smooth; /* Делаем прокрутку плавной */
+}

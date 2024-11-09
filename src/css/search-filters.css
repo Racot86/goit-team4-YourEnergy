@@ -1,12 +1,9 @@
 /* Базові стилі для всіх пристроїв */
-body {
-  font-family: "DM Sans", sans-serif;
-  margin: 0;
+.main-fitnes-content {
+  padding-top: 20px;
 }
-
 .filters-panel {
   display: flex;
-  padding: 0 20px;
   flex-wrap: wrap;
 }
 
@@ -20,26 +17,33 @@ body {
 
 }
 
-.search-form {
-  display: none;
+/* Стилі для пошукового рядка */
+
+.search-form.hidden {
+    display: none;
 }
 
-/* Стилі для пошукового рядка
-.search-form {
+.search-form.visible {
     display: flex;
     align-items: center;
     gap: 0.5rem;
     margin-bottom: 0;
     flex: 1;
-    max-width: 400px;
+    max-width: 335px;
 }
 
 .search-input {
     flex: 1;
-    padding: 0.5rem 1rem;
-    border: 1px solid #ddd;
-    border-radius: 20px;
-    font-size: 1rem;
+    padding: 12px 208px 12px 14px;
+    border: 1px solid #242424;
+    border-radius: 30px;
+    width: 100%;
+    height: 20px;
+    font-size: 14px;
+    line-height: 1.43;
+    color: #242424;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .search-button {
@@ -47,8 +51,7 @@ body {
     border: none;
     cursor: pointer;
     font-size: 1.2rem;
-} */
-/* Стилі для кнопок фільтрів */
+}
 
 .filters-buttons {
   display: flex;
@@ -92,15 +95,17 @@ body {
 
 /* Адаптивні стилі проміжні */
 @media (min-width: 376px) and (max-width: 600px) {
-
+  .main-fitnes-content {
+    padding-top: 32px;
+  }
   .filters-buttons {
     flex-basis: 100%;
   }
 }
 
 /* Адаптивні стилі для планшетів */
-@media (min-width: 601px) and (max-width: 1024px) {
-
+@media (min-width: 601px) and (max-width: 1440px) {
+ 
   .filters-panel {
     display: flex;
     align-items: center;
@@ -123,11 +128,39 @@ body {
     font-size: 14px;
     line-height: 1.43;
   }
+
+    .search-form.visible {
+      max-width: 335px;
+    }
+
+    .search-input {
+      height: 20px;
+      margin-top: 0;
+      margin-bottom: 32px;
+    }
+
+  /* Коли пошук активний, переносимо фільтри всередину пошукової області */
+    .filters-panel.search-active {
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .filters-buttons.search-active {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      margin-top: 10px;
+    }
 }
 
 /* Адаптивні стилі для десктопів */
-@media (min-width: 1025px) {
+@media (min-width: 1440px) {
+  .main-fitnes-content {
+    padding-top: 32px;
+    padding-bottom: 132px;
 
+  }
   .filters-panel {
     display: flex;
     align-items: flex-end;

@@ -1,54 +1,76 @@
 import createCategoriesMarkup from './markup/categoriesMarkup';
 import renderWorkoutsByCategory from './workouts';
 import { getCategories } from './api-requests';
-import { generatePages } from '../partials/components/pagination/PaginationComponent';
-
+import { generatePages } from './pagination';
+import { updateHeaderTitle } from './search-filters.js';
 
 let categoriesList = document.querySelector('.categories-list');
 let workoutsContainer = document.querySelector('.workouts-container');
-const paginationCatList = document.querySelector('.categories-pagination');
-
-// console.log(activeFilter)
+const categoriesPagination = document.querySelector('.m-categories .categories-pagination');
 
 export async function loadCategories(currentCategoryName) {
-  //завантаження категорій
+  const categoriesContainer = document.querySelector('.m-categories');
+
+  if (categoriesContainer) {
+    categoriesContainer.style.display = 'flex';
+  }
+
   try {
     const data = await getCategories(currentCategoryName);
-    console.log(data);
+    console.log('Categories data:', data);
 
-    paginationCatList.innerHTML = '';
-    if (data.totalPages > 1) {
-      paginationCatList.appendChild(generatePages(data.totalPages, 0));
-      const paginationPage = document.querySelectorAll('.pagination-page');
+    if (categoriesPagination) {
+      categoriesPagination.innerHTML = '';
+      if (data.totalPages > 1) {
+        categoriesPagination.style.display = 'flex';
+        categoriesPagination.setAttribute('data-total', data.totalPages);
+        categoriesPagination.setAttribute('data-current', 0);
 
-      paginationPage.forEach(btn =>
-        btn.addEventListener('click', handlePagination)
-      );
+        const paginationElement = generatePages(data.totalPages, 0);
+        categoriesPagination.appendChild(paginationElement);
+
+        categoriesPagination.querySelectorAll('.pagination-page').forEach(btn => {
+          btn.addEventListener('click', handlePagination);
+        });
+      }
     }
-    //логіка if для відображення сітки з фільтрами
-    
-    categoriesList.innerHTML = createCategoriesMarkup(data.results); // малюємо сітку без фільтрів
 
-    categoryClickHandler();
+    if (categoriesList) {
+      categoriesList.innerHTML = createCategoriesMarkup(data.results);
+      categoryClickHandler();
+    }
   } catch (error) {
-    console.error('Error loading categories:', error); //логіка помилок
+    console.error('Error loading categories:', error);
   }
 }
 
 async function handlePagination(e) {
+  e.preventDefault();
+
   const pageIndex = Number(e.target.dataset.index);
   const page = pageIndex + 1;
-  
+
   const activeFilter = document.querySelector('.filter-button.active');
-  const filter = activeFilter ? activeFilter.dataset.filter : '';
+  const filter = activeFilter ? activeFilter.dataset.filter.replace('-', ' ') : '';
 
   try {
     const data = await getCategories(filter, page);
-    
-    categoriesList.innerHTML = createCategoriesMarkup(data.results);
-    categoryClickHandler(); 
+
+    if (categoriesList) {
+      categoriesList.innerHTML = createCategoriesMarkup(data.results);
+      categoryClickHandler();
+    }
+
+    if (categoriesPagination) {
+      categoriesPagination.setAttribute('data-current', pageIndex);
+
+      categoriesPagination.querySelectorAll('.pagination-page').forEach(page => {
+        page.classList.remove('selected');
+      });
+      e.target.classList.add('selected');
+    }
   } catch (err) {
-    console.log(err);
+    console.error('Error handling pagination:', err);
   }
 }
 
@@ -59,26 +81,40 @@ function categoryClickHandler() {
   });
 }
 
-// логіка відкриття вправ по категорії
 function openCategory(e) {
-  e.target.removeEventListener('click', openCategory);
-  categoriesList.style.display = 'none';
-  let categoryName = e.target.dataset.name;
-  let categoryFilter = e.target.dataset.filter;
+  e.preventDefault();
 
-  switch (categoryFilter) {
-    case 'Muscles':
-      renderWorkoutsByCategory('', encodeURIComponent(categoryName), '', '', 1, 10);
-      break;
-    case 'Body parts':
-      renderWorkoutsByCategory(encodeURIComponent(categoryName), '', '', '', 1, 10);
-      break;
-    case 'Equipment':
-      renderWorkoutsByCategory('', '', encodeURIComponent(categoryName), '', 1, 10);
-      break;
-  } 
+  const categoriesContainer = document.querySelector('.m-categories');
+  const workoutsSection = document.querySelector('.m-workouts');
 
-  workoutsContainer.style.display = 'flex';  
+  if (categoriesContainer && workoutsSection) {
+    categoriesContainer.style.display = 'none';
+    workoutsSection.style.display = 'flex';
+
+    const categoryItem = e.target.closest('.categories-item');
+    if (!categoryItem) return;
+
+    const categoryName = encodeURIComponent(categoryItem.dataset.name);
+    updateHeaderTitle(categoryName);
+    const categoryFilter = categoryItem.dataset.filter;
+    console.log(categoryName)
+
+    switch (categoryFilter) {
+      case 'Muscles':
+        renderWorkoutsByCategory('', categoryName, '', '', 1, 10);
+        break;
+      case 'Body parts':
+        renderWorkoutsByCategory(categoryName, '', '', '', 1, 10);
+        break;
+      case 'Equipment':
+        renderWorkoutsByCategory('', '', categoryName, '', 1, 10);
+        break;
+    }
+  }
+
 }
 
-loadCategories('Musculs');
+// Инициализация при загрузке страницы
+document.addEventListener('DOMContentLoaded', () => {
+  loadCategories('Muscles');
+});

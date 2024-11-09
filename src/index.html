@@ -1,38 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Team4 Your Energy</title>
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
+  <body>
+    <load src="./partials/header.html" icon-path="img/sprite.svg#logo" />
 
-<head>
-  <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Team4 Your Energy</title>
-  <link rel="stylesheet" href="./css/styles.css" />
-</head>
-<body>
-  <load icon-path="img/sprite.svg#logo" src="./partials/header.html"/>
-  
-  <!-- <h1 style="text-align: center">Team4 Your Energy</h1> -->
-  <load src="./partials/body_content.html"/>
-  
-  <div class="home-page">
-    <load src="./partials/hero.html"/>
-    <load src="./partials/search-filters.html"/>
-    <main>
-      <load src="./partials/sidebar.html"/>
-      <load src="./partials/categories.html"/>
-      <load src="./partials/workouts.html" />
+    <main class="home-page">
+      <load src="./partials/hero.html" />
+      <section class="main-fitnes-content">
+        <div class="container">
+          <load src="./partials/search-filters.html" />
+          <div class="main-wrap">
+            <div class="m-content">
+              <div class="m-categories">
+                <load src="./partials/categories.html" />
+
+                <div class="categories-pagination m-pagination">
+                  <load src="./partials/pagination.html" />
+                </div>
+              </div>
+              <div class="m-workouts" style="display: none">
+                <div class="workouts-container">
+                  <load src="./partials/workouts.html" />
+                </div>
+                <div class="workouts-pagination m-pagination">
+                  <load src="./partials/pagination.html" />
+                </div>
+              </div>
+            </div>
+            <load src="./partials/sidebar.html" />
+          </div>
+        </div>
+      </section>
     </main>
+    <load src="./partials/footer.html" />
+    <div class="favorites-page hidden">
+      <load src="./partials/favorites.html" />
+    </div>
 
-    <load src="./partials/footer.html"/>
-  </div>
+    <load src="./partials/modal-window.html" />
 
-  <div class="favorites-page hidden">
-    <load src="./partials/favorites.html"/>
-  </div>
+    <load src="./partials/menu.html" />
 
-  <load src="./partials/modal-window.html" />
-  <load src="./partials/menu.html"/>
-
-  <script src="./main.js" type="module"></script>
-</body>
+    <script src="./main.js" type="module"></script>
+  </body>
 </html>

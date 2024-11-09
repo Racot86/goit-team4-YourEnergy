@@ -91,7 +91,7 @@
 
 .categories-pagination {
   margin-top: auto;
-  padding: 20px 0;
+  padding-top: 20px;
   width: 100%;
 }
 
@@ -101,7 +101,7 @@
     max-width: 705px;
     gap: 32px 15px;
   }
-  
+
   .categories-item {
     width: 100%;
   }

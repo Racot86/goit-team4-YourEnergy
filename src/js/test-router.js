@@ -11,7 +11,7 @@ function initRouter() {
     if (!allowedPaths.includes(currentPath)) {
       // Redirect to the main path
       window.history.replaceState({}, '', '/');
-      renderPageContent('/');
+      renderPageContent('goit-team4-YourEnergy/');
     } else {
       // Render the correct page content for the allowed path
       renderPageContent(currentPath);

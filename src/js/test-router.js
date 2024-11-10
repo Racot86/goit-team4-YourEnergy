@@ -1,72 +1,71 @@
-function onUrlChange(callback) {
-  const originalPushState = history.pushState;
-  const originalReplaceState = history.replaceState;
+// Router function to handle navigation
+function initRouter() {
+  // Define the allowed routes
+  const allowedPaths = ['/', '/favorites'];
 
-  const handleUrlChange = () => {
-    callback(window.location.href);
-  };
+  // Function to handle route changes
+  function handleRouteChange() {
+    // Check the current path
+    const currentPath = window.location.pathname;
 
-  history.pushState = function (...args) {
-    originalPushState.apply(history, args);
-    handleUrlChange();
-  };
+    // Redirect to '/' if the current path is not allowed
+    if (!allowedPaths.includes(currentPath)) {
+      window.history.replaceState({}, '', '/'); // Redirect to root
+      renderPageContent('/'); // Render root page content
+    } else {
+      renderPageContent(currentPath); // Render content for allowed paths
+    }
+  }
 
-  history.replaceState = function (...args) {
-    originalReplaceState.apply(history, args);
-    handleUrlChange();
-  };
-
-  window.addEventListener('popstate', handleUrlChange);
-}
-
-onUrlChange((newUrl) => {
-  console.log("URL changed to:", newUrl);
-  const homePage = document.querySelector('.home-page');
-  const favoritesPage = document.querySelector('.favorites-page');
-  switch (window.location.pathname) {
-    case '/':
+  // Function to render content based on the path
+  function renderPageContent(path) {
+    const homePage = document.querySelector('.home-page');
+    const favoritesPage = document.querySelector('.favorites-page');
+    if (path === '/') {
       homePage.classList.remove('hidden');
       favoritesPage.classList.add('hidden');
-      break;
-    case '/favorites':
+    } else if (path === '/favorites') {
       homePage.classList.add('hidden');
       favoritesPage.classList.remove('hidden');
-      break;
+    }
   }
-});
 
+  // Override `pushState` and `replaceState` to detect manual URL changes
+  const originalPushState = history.pushState;
+  history.pushState = function (...args) {
+    originalPushState.apply(history, args);
+    handleRouteChange();
+  };
 
-// Change the URL endpoint without reloading the page
-function changeLastEndpoint(newEndpoint) {
-  // Get the current URL path
-  const currentPath = window.location.pathname;
+  const originalReplaceState = history.replaceState;
+  history.replaceState = function (...args) {
+    originalReplaceState.apply(history, args);
+    handleRouteChange();
+  };
 
-  // Split the path into parts
-  const pathParts = currentPath.split('/');
+  // Listen for back/forward navigation
+  window.addEventListener('popstate', handleRouteChange);
 
-  // Replace the last part with the new endpoint
-  pathParts[pathParts.length - 1] = newEndpoint;
-
-  // Join the path back together
-  const newPath = pathParts.join('/');
-
-  // Update the URL without reloading the page
-  window.history.pushState({}, '', newPath);
+  // Initialize the route on page load
+  handleRouteChange();
 }
+
+// Initialize router
+document.addEventListener('DOMContentLoaded', initRouter);
+
+
 
 const routerButtons = document.querySelector('.router');
 routerButtons.addEventListener('click', (e)=>{
-  e.preventDefault();
+
   switch (e.target.innerHTML.toLowerCase()) {
     case 'home':
       routerButtons.children[0].classList.add('active');
       routerButtons.children[1].classList.remove('active');
-      changeLastEndpoint('/');
       break;
       case 'favorites':
         routerButtons.children[0].classList.remove('active');
         routerButtons.children[1].classList.add('active');
-        changeLastEndpoint('/favorites');
       break;
   }
 });

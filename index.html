@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/goit-team4-YourEnergy/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Team4 Your Energy</title>
+    <script type="module" crossorigin src="/goit-team4-YourEnergy/assets/index-H7Hm9Zmy.js"></script>
+    <link rel="modulepreload" crossorigin href="/goit-team4-YourEnergy/assets/vendor-CNNbG8jS.js">
+    <link rel="stylesheet" crossorigin href="/goit-team4-YourEnergy/assets/styles-Cj_0g0o4.css">
+  </head>
+  <body>
+    <header class="header">
+  <div class="container">
+    <nav class="nav">
+      <a class="logo" href="/" rel="noopener noreferrer" aria-label="YOUR ENERGY">
+        <svg width="132" height="24">
+          <use href="/goit-team4-YourEnergy/assets/icons-C2AWWUWW.svg#logo"></use>
+        </svg>
+      </a>
+      <ul class="menu-items router">
+        <li class="menu-item active">
+          <a href="./index.html">Home</a>
+        </li>
+        <li class="menu-item">
+          <a href="favorites">Favorites</a>
+        </li>
+      </ul>
+      <ul class="socials">
+        <li class="social-item">
+          <a href="https://www.facebook.com/goITclub/" rel="noopener noreferrer" target="_blank" aria-label="Link to Facebook">
+            <svg width="28" height="28">
+              <use href="/goit-team4-YourEnergy/assets/icons-C2AWWUWW.svg#facebook"></use>
+            </svg>
+          </a>
+        </li>
+        <li class="social-item">
+          <a href="https://www.instagram.com/goitclub/" rel="noopener noreferrer" target="_blank" aria-label="Link to Instagram">
+            <svg width="28" height="28">
+              <use href="/goit-team4-YourEnergy/assets/icons-C2AWWUWW.svg#instagram"></use>
+            </svg>
+          </a>
+        </li>
+        <li class="social-item">
+          <a href="https://www.youtube.com/c/GoIT" rel="noopener noreferrer" target="_blank" aria-label="Link to Youtube">
+            <svg width="28" height="28">
+              <use href="/goit-team4-YourEnergy/assets/icons-C2AWWUWW.svg#youtube"></use>
+            </svg>
+          </a>
+        </li>
+      </ul>
+      <button type="button" class="menu-btn" onclick="openMenu()">
+        <svg width="32" height="32">
+          <use href="/goit-team4-YourEnergy/assets/icons-C2AWWUWW.svg#menu"></use>
+        </svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+    <div class="home-page">
+    <main>
+      <section class="hero">
+<div class="container">
+
+  <div class="hero__text-content">
+    <div class="hero__title-wrapper">
+      <img
+        class="hero__sun-icon"
+        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACYAAAAmCAYAAACoPemuAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAASWSURBVHgB7Zi9TiMxEMe9AVqUgJCuYxFQE56AUF0JPAGhuw54gixPcEl11x2UVwFPwPIGSw2IpbuKbLqT+Mj9/2GMjLH3IxHdjRR5PeuPn8czY2+U+i+fLGEY1j36cGlpabFKnzypqYqSpmlWZSICo/h8MMr09HSzSnssJlUVxQuWZ5XhcBjaupmZGWd7LCJUY8zhBcvbsufn57OVlZWWqQNsfWpqasnUra6utp+enlKVM4eqCqY72gDGgC1VILSsaxsBXOgKhT6GFSfLy8ttxysntBY6PcBS9RGq/fj4mKpJwWgdbF1swwH4WBlW41aavodt7bCf+ggV521haTCBS2u1WoKB901gFGvaD/H+zR9prSAIGuY2wrodFElehJo+XbNehL5O19fXycvLy0AmGAkmP0fUHdhtEaEtWO/MghpwDNfY9Dnb796BcTWE47a5/Of29vaYPBoO28LJt+x2gNpn5BpQwc3NTdduxzn4o88R2tziQHmEgLBGmw4sQG8C8GNY6w6THckz37cEKsG2bmGiPUKh3kD/A8tCbVifaSf2ba0XzASEI0d4jPVA9AVAX2DSLqDu8Y5WuZQuG9D3ALeIsg34dRmHfeij3LIe9HHevIVg5iox0S5AUpj+iDoAXwCgC31EcJQ6v7EeYSGbKLMqQJXBTEBsQwdABDmB6pRABJYmIyeGbg/FFvRNWtB2h1JgYuYmBuGKmzoxsg7rZC4/gP8c0Mmlz6G2BHxuG7pf0qyHfNc1nVpSwigt6HOUORB9+vgNdPJ1WkyDSgcCL+rkyVJgMj7TcnR0s78EhL6b1WWcAZ7v2Bf1e7Fw4lv4tAtMVhhL9cwBzoAgcKT8EjBaJdOnqqJU8jGxZFu95i76Ukpr0Mn15JJmTvGYSZuEvpiXGsYCk4m28bghqktYIuYWEIBgo4GCoMdS+50GFj9q6v7Qn5eBDApglEwam8cJjw9MQAc/QbmG94RryetYwK4ICR/ccfRl27qkHidkYHZgiVRAh05zzrV9Jk5E2w7rzGUoDjEJcxWBzlF2UN/jJZHvaU3XkWSAjqzO9hryLV2UuYogRXzHIIE+YhB9jDJGJBfFwfUYXFQHMJvSL0Ix5BFWNIdmmWIly7K/RY0XFhZ+4PE3oH7KSnkSDFhvNBrfAMjo/YPyKwB60K3Pzc196ff7ycPDQ4znYH5+vjM7O3uF+bxG0CyF9zF9VsIXDs3jhMcTnDjiM3MWb7r8QT9yCb6DflffsdiXRxmjOu96VUqYxV3Xat4azGsRni88zy3ZRte42ypHvBbjoFh1Yp9xcpdvaOvRIsY5SUtemVbSfcwxMOYZx/Z8S4zkQ+bXZ5nvFsCtwJZFRr2JSNZXHl6xeR8L1WsAMNK6csuNzHEk+o4ZlTwf7eBzWazuS36y8ncfEwx1wug68xJAmwbA6HjzfVHZN9exhDeKkrrI1hX5lC2l/7vgiuWTrVB4vbZ1PIbyvkPHBpOsnDkg0jL92ZdjhCX/KSoFJtk4db2Tu9n7QXGkKTecUz82mE8YUUyqtp5R5vsTb2JHLyN52zJpdp/IYgUykWX+AfywGRzsP5sHAAAAAElFTkSuQmCC"
+        alt="sun icon"
+        loading="lazy"
+      />
+      <h1 class="hero__title">
+        Get <span class="hero__title--italic">Body</span> in shape,<br />
+        <span class="hero__title--indented">Stay healthy</span>
+      </h1>
+    </div>
+    <h3 class="hero__description">
+      Transform your physique and embrace a healthier lifestyle with our
+      comprehensive fitness and nutrition support.
+    </h3>
+  </div>
+
+  <div class="hero__media-content">
+    <picture class="hero-small-photo hidden-photo">
+      <source
+        media="(min-width: 1440px) and (min-resolution: 2dppx)"
+        srcset="/goit-team4-YourEnergy/assets/image_desktop_2x_jpg-BQRFqRsk.jpg 2x"
+      />
+      <source
+        media="(min-width: 1440px)"
+        srcset="/goit-team4-YourEnergy/assets/image_desktop_1x_jpg-kS2ogFuJ.jpg"
+      />
+      <img
+        class="hero-photo-small"
+        src="/goit-team4-YourEnergy/assets/image_desktop_1x_jpg-kS2ogFuJ.jpg"
+        alt="Two sportswomen against the backdrop of nature"
+      />
+    </picture>
+      <!-- <picture>
+        <source
+          srcset="
+            /img/hero_images/image_mobile_1x_webp.webp 1x,
+            /img/hero_images/image_mobile_2x_webp.webp 2x
+          "
+          type="image/webp"
+        />
+        <source
+          srcset="
+            /img/hero_images/image_mobile_1x_jpg.jpg 1x,
+            /img/hero_images/image_mobile_2x_jpg.jpg 2x
+          "
+          type="image/jpeg"
+        />
+        <img
+          class="hero__image hero__image--mobile"
+          src="/img/hero_images/image_mobile_1x_jpg.jpg"
+          alt="Young women giving a high-five"
+          loading="lazy"
+        />
+      </picture>
+      <picture>
+        <source
+          srcset="
+            /img/hero_images/image_tablet_1x_webp.webp 1x,
+            /img/hero_images/image_tablet_2x_webp.webp 2x
+          "
+          type="image/webp"
+        />
+        <source
+          srcset="
+            /img/hero_images/image_tablet_1x_jpg.jpg 1x,
+            /img/hero_images/image_tablet_2x_jpg.jpg 2x
+          "
+          type="image/jpeg"
+        />
+        <img
+          class="hero__image hero__image--tablet"
+          src="/img/hero_images/image_tablet_1x_jpg.jpg"
+          alt="Young women giving a high-five"
+          loading="lazy"
+        />
+      </picture>
+      <picture>
+        <source
+          srcset="
+            /img/hero_images/image_desktop_1x_webp.webp 1x,
+            /img/hero_images/image_desktop_2x_webp.webp 2x
+          "
+          type="image/webp"
+        />
+        <source
+          srcset="
+            /img/hero_images/image_desktop_1x_jpg.jpg 1x,
+            /img/hero_images/image_desktop_2x_jpg.jpg 2x
+          "
+          type="image/jpeg"
+        />
+        <img
+          class="hero__image hero__image--desktop"
+          src="/img/hero_images/image_desktop_1x_jpg.jpg"
+          alt="Young women giving a high-five"
+          loading="lazy"
+        />
+      </picture> -->
+      <picture>
+        <source
+          srcset="/goit-team4-YourEnergy/assets/image_mobile_1x_webp-Bqp_cjlv.webp 1x, /goit-team4-YourEnergy/assets/image_mobile_2x_webp-BBaNeV9q.webp 2x"
+          type="image/webp"
+          media="(max-width: 767px)"
+        />
+      
+        <source
+          srcset="/goit-team4-YourEnergy/assets/image_tablet_1x_webp-BbWRArFl.webp 1x, /goit-team4-YourEnergy/assets/image_tablet_2x_webp-x_h8jmBQ.webp 2x"
+          type="image/webp"
+          media="(min-width: 768px)"
+        />
+        <source
+          srcset="/goit-team4-YourEnergy/assets/desktop_high_five_1x_jpg-DIdmp51X.jpg 1x, /goit-team4-YourEnergy/assets/desktop_high_five_2x_jpg-BJOkVT8x.jpg 2x"
+          type="image/jpeg"
+          media="(min-width: 1440px)"
+        />
+      
+        <img
+          class="hero__image"
+          src="/goit-team4-YourEnergy/assets/image_mobile_1x_jpg-BITQmRab.jpg"
+          alt="Young women giving a high-five"
+          loading="lazy"
+        />
+      </picture>
+    <div class="hero__tags">
+      <p class="hero__tag">#Sport</p>
+      <p class="hero__tag">#Healthy</p>
+      <p class="hero__tag">#Workout</p>
+      <p class="hero__tag">#Diet</p>
+    </div>
+  </div>
+
+  <!-- <div class="hero__wide-image">
+    <picture>
+      <source
+        srcset="
+          /img/hero_images/desktop_high_five_1x_webp.webp 1x,
+          /img/hero_images/desktop_high_five_2x_webp.webp 2x
+        "
+        type="image/webp"
+      />
+      <source
+        srcset="
+          /img/hero_images/desktop_high_five_1x_jpg.jpg 1x,
+          /img/hero_images/desktop_high_five_2x_jpg.jpg 2x
+        "
+        type="image/jpeg"
+      />
+      <img
+        class="hero__image--wide"
+        src="/img/hero_images/desktop_high_five_1x_jpg.jpg"
+        alt="Young women giving a high-five"
+        loading="lazy"
+      />
+    </picture>
+  </div> -->
+</div>
+</section>
+
+      <section class="main-fitnes-content">
+        <div class="container">
+          <div class="filters-panel">
+
+  <h2 class="filters-title">Exercises<span class="selected-category"></span></h2>
+
+  <form class="search-form hidden" id="search-form">
+      <input type="text" class="search-input" id="search-input" placeholder="Search" aria-label="Search exercises">
+      <button type="submit" class="search-button" aria-label="Start search"></button>
+  </form>
+
+  <div class="filters-buttons">
+    <button class="filter-button active" data-filter="Muscles">Muscles</button>
+    <button class="filter-button" data-filter="Body-parts">Body parts</button>
+    <button class="filter-button" data-filter="Equipment">Equipment</button>
+  </div>
+</div>
+          <div class="main-wrap">
+            <div class="m-content">
+              <div class="m-categories">
+                <div class="categories">
+  <div class="categories-wrap">
+    <ul class="categories-list"></ul>
+  </div>
+</div>
+
+
+                <div class="categories-pagination m-pagination">
+                  <div>
+  <div
+    class="pagination bind categories-pagination workouts-pagination"
+    data-current="0"
+    data-total="0"
+  ></div>
+</div>
+
+
+                </div>
+              </div>
+              <div class="m-workouts" style="display: none">
+                <div class="workouts-container">
+                  <div class="workouts-container">
+  <ul class="workouts-container-list"></ul>
+</div>
+
+                </div>
+                <div class="workouts-pagination m-pagination">
+                  <div>
+  <div
+    class="pagination bind categories-pagination workouts-pagination"
+    data-current="0"
+    data-total="0"
+  ></div>
+</div>
+
+
+                </div>
+              </div>
+            </div>
+            <div class="sidebar-container">
+  <div class="sidebar-quote-container">
+    <svg
+      class="sidebar-quote-ranner-svg"
+      viewBox="0 0 32 32"
+      height="30"
+      width="32"
+      aria-hidden="true"
+    >
+      <use x="0" y="0" href="/goit-team4-YourEnergy/assets/icons-C2AWWUWW.svg#icon-running"></use>
+    </svg>
+    <div class="sidebar-quote-wrapper">
+      <h3 class="sidebar-quote-of-day">Quote of the day</h3>
+      <div class="sidebar-quote"></div>
+      <div class="sidebar-quote-author"></div>
+    </div>
+    <svg
+      class="sidebar-quote-commas-svg"
+      viewBox="0 0 32 32"
+      width="24"
+      height="24"
+      aria-hidden="true"
+    >
+      <use x="0" y="0" href="/goit-team4-YourEnergy/assets/icons-C2AWWUWW.svg#icon-commas"></use>
+    </svg>
+  </div>
+  <picture>
+    <source
+      media="(min-width: 1440px)"
+      srcset="/goit-team4-YourEnergy/assets/sidebar-img-desktop@1x-CxeGngm_.jpg 1x, /goit-team4-YourEnergy/assets/sidebar-img-desktop@2x-Bi4mR2ZG.jpg 2x"
+    />
+    <source
+      media="(min-width: 768px)"
+      srcset="/goit-team4-YourEnergy/assets/sidebar-img-tablet@1x-cCZFiTk6.jpg 1x, /goit-team4-YourEnergy/assets/sidebar-img-tablet@2x-BHsn_n0i.jpg 2x"
+    />
+    <img
+      class="sidebar-quote-image"
+      srcset="/goit-team4-YourEnergy/assets/sidebar-img-mobile@1x-FeKAmjRU.jpg 1x, /goit-team4-YourEnergy/assets/sidebar-img-mobile@2x-DiOBOa_G.jpg 2x"
+      src="/goit-team4-YourEnergy/assets/sidebar-img-mobile@1x-FeKAmjRU.jpg"
+      alt="sidebar-container"
+      loading="lazy"
+    />
+  </picture>
+  <div class="sidebar-sports-info">
+    <svg
+      class="sidebar-quote-dumbbell-svg"
+      viewBox="0 0 32 32"
+      height="30"
+      width="32"
+      aria-hidden="true"
+    >
+      <use x="0" y="0" href="/goit-team4-YourEnergy/assets/icons-C2AWWUWW.svg#icon-dumbbell"></use>
+    </svg>
+    <div class="sidebar-sports-wrapper">
+      <div class="sidebar-time">110 min</div>
+      <p class="sidebar-norm-sport">Daily norm of sports</p>
+      <div class="static-info">
+        The World Health Organization recommends at least 150 minutes of
+        moderate-intensity aerobic physical activity throughout the week for
+        adults aged 18-64. However, what happens if we adjust that number to 110
+        minutes every day? While it might seem like a high number to hit,
+        dedicating 110 minutes daily to sporting activities may offer
+        unparalleled benefits to physical health, mental well-being, and overall
+        quality of life.
+      </div>
+    </div>
+  </div>
+</div>
+
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="footer">
+  <div class="footer-container container">
+    <div class="footer-content">
+      <div class="footer-logo-and-social">
+        <a
+          href="./index.html"
+          class="footer-logo-link"
+          aria-label="YouEnergy"
+        >
+          <svg
+            class="footer-svg-logo"
+            viewBox="0 0 302 32"
+            width="132"
+            height="14"
+            aria-hidden="true"
+          >
+            <use x="0" y="0" href="/goit-team4-YourEnergy/assets/icons-C2AWWUWW.svg#icon-your-energy"></use>
+          </svg>
+        </a>
+
+        <ul class="footer-social-list">
+          <li class="footer-social-link">
+            <a
+              class="footer-icon"
+              href="https://www.facebook.com/goITclub/"
+              target="_blank"
+              aria-label="Facebook"
+            >
+              <svg
+                class="footer-svg"
+                viewBox="0 0 32 32"
+                width="24"
+                height="24"
+                aria-hidden="true"
+              >
+                <use x="0" y="0" href="/goit-team4-YourEnergy/assets/icons-C2AWWUWW.svg#icon-facebook"></use>
+              </svg>
+            </a>
+          </li>
+          <li class="footer-social-link">
+            <a
+              class="footer-icon"
+              href="https://www.instagram.com/goitclub/"
+              target="_blank"
+              aria-label="Instagram"
+            >
+              <svg
+                class="footer-svg"
+                viewBox="0 0 32 32"
+                width="24"
+                height="24"
+                aria-hidden="true"
+              >
+                <use x="0" y="0" href="/goit-team4-YourEnergy/assets/icons-C2AWWUWW.svg#icon-instagram"></use>
+              </svg>
+            </a>
+          </li>
+          <li class="footer-social-link">
+            <a
+              class="footer-icon"
+              href="https://www.youtube.com/c/GoIT"
+              target="_blank"
+              aria-label="YouTube"
+            >
+              <svg
+                class="footer-svg"
+                viewBox="0 0 32 32"
+                width="24"
+                height="24"
+                aria-hidden="true"
+              >
+                <use x="0" y="0" href="/goit-team4-YourEnergy/assets/icons-C2AWWUWW.svg#icon-youtube"></use>
+              </svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="footer-form">
+          <h2>Transforming  your <span class="footer-span">body</span> shape with us</h2>
+        <form class="subscribe-form" autocomplete="off">
+          <label>
+            Subscribe and learn about new exercises!
+            <input
+              type="email"
+              name="email"
+              required
+              pattern="^\w+(\.\w+)?@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$"
+              placeholder="Email"
+            />
+          </label>
+          <button type="submit">Send</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="bottom">
+        <p class="bottom-p">Your Energy. All rights reserved.</p>
+      <div class="footer-links-wrapper">
+        <ul class="footer-links">
+          <li><a class="policy" href="#">Privacy Policy /</a></li>
+          <li><a class="policy" href="#">Terms of Service</a></li>
+        </ul>
+        <p class="copyright">&#169; 2023</p>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+    </div>
+    <div class="favorites-page hidden">
+      <div class="container">
+  <h2 class="favorites-title">Favorites</h2>
+
+  <div class="bars-wrapper">
+    <div class="left-bar">
+      <div class="sidebar-quote-container favorites-card">
+        <h4 class="sidebar-quote-of-day">Quote of the day</h4>
+        <p class="sidebar-quote"></p>
+        <h4 class="sidebar-quote-author"></h4>
+      </div>
+      <div class="card-group">
+        <picture>
+          <source
+            media="(min-width: 1280px)"
+            srcset="/goit-team4-YourEnergy/assets/sidebar-img-desktop@1x-CxeGngm_.jpg 1x, /goit-team4-YourEnergy/assets/sidebar-img-desktop@2x-Bi4mR2ZG.jpg 2x"
+          />
+          <source
+            media="(min-width: 768px)"
+            srcset="/goit-team4-YourEnergy/assets/sidebar-img-tablet@1x-cCZFiTk6.jpg 1x, /goit-team4-YourEnergy/assets/sidebar-img-tablet@2x-BHsn_n0i.jpg 2x"
+          />
+          <img
+            class="sidebar-quote-image"
+            srcset="/goit-team4-YourEnergy/assets/sidebar-img-mobile@1x-FeKAmjRU.jpg 1x, /goit-team4-YourEnergy/assets/sidebar-img-mobile@2x-DiOBOa_G.jpg 2x"
+            src="/goit-team4-YourEnergy/assets/sidebar-img-mobile@1x-FeKAmjRU.jpg"
+            alt="sidebar-container"
+            loading="lazy"
+          />
+        </picture>
+        <div class="sidebar-sports-info">
+          <h4 class="sidebar-time">110 min</h4>
+          <h6 class="sidebar-norm-sport">Daily norm of sports</h6>
+        </div>
+      </div>
+    </div>
+    <div class="right-bar saved">
+
+    </div>
+  </div>
+</div>
+    </div>
+
+    <div class="modal-backdrop is-hidden" data-modal>
+  <div class="modal">
+    <button type="button" class="modal-close-btn" data-modal-close>
+      <svg class="modal-close-icon" width="24" height="24">
+        <use href="/goit-team4-YourEnergy/assets/icons-C2AWWUWW.svg#icon-x_icon"></use>
+      </svg>
+    </button>
+    
+    <div class="modal-content">
+      <div class="modal-media">
+        <div class="modal-media-container">
+          <!-- Зображення буде додано через JavaScript -->
+        </div>
+      </div>
+      
+      <div class="modal-info">
+        <div class="modal-info-description">
+            <div class="modal-title-rating">
+                <h3 class="modal-title"><!-- Назва вправи буде додана через JavaScript --></h3>
+                
+                <div class="modal-rating">
+                    <p class="rating-value">
+                        <!-- Значення рейтингу буде додано через JavaScript -->
+                    </p>
+                    <div class="rating-stars">
+                        <!-- Зірки рейтингу будуть додані через JavaScript -->
+                    </div>
+                </div>
+            </div>
+            
+            <ul class="modal-parameters">
+            <!-- Один шаблонний елемент -->
+            <li class="parameter-item">
+                <p class="modal-parameter-label"></p>
+                <p class="modal-parameter-value"></p>
+            </li>
+            </ul>
+            
+            <p class="modal-description">
+            <!-- Опис буде додано через JavaScript -->
+            </p>
+        </div>
+        
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button type="button" class="modal-btn modal-favorites-btn">
+        Add to favorites
+        <svg class="modal-icon-heart">
+          <use href="/goit-team4-YourEnergy/assets/icons-C2AWWUWW.svg#icon-heart"></use>
+        </svg>
+      </button>
+      <button type="button" class="modal-btn modal-rating-btn">
+        Give a rating
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Додаємо нове модальне вікно для рейтингу після основного -->
+<div class="modal-backdrop is-hidden" data-rating-modal>
+  <div class="modal rating-modal">
+    <button type="button" class="modal-close-btn" data-rating-close>
+      <svg class="modal-close-icon" width="24" height="24">
+        <use href="/goit-team4-YourEnergy/assets/icons-C2AWWUWW.svg#icon-x_icon"></use>
+      </svg>
+    </button>
+    
+    <form class="rating-form">
+
+      <div class="rating-form-stars-container">
+        <p class="rating-form-stars-title">Rating</p>
+        <div class="rating-form-value-stars">
+          <p class="rating-form-value">
+            <!-- Значення рейтингу буде додано через JavaScript -->
+          </p>
+          <div class="rating-form-stars">
+            <!-- Зірки рейтингу будуть додані через JavaScript -->
+          </div>
+        </div>
+      </div>
+      
+      <div class="rating-form-group-container">
+          <div class="rating-form-group">
+            <input 
+            type="email" 
+            id="rating-email" 
+            class="rating-form-input" 
+            placeholder="Email"
+            required
+          >
+          </div>
+      
+        <div class="rating-form-group">
+          <textarea 
+            id="rating-comment" 
+            class="rating-form-textarea"
+            placeholder="Your comment"
+            required
+          ></textarea>
+        </div>
+      </div>
+      
+      <button type="submit" class="modal-btn rating-form-btn">
+        Send
+      </button>
+    </form>
+  </div>
+</div>
+
+
+    <div id="backdrop" class="backdrop" onclick="closeMenu()">
+  <div class="mobile-menu" onclick="menuLayoutClickHandler(event)">
+    <div class="btn-menu-wrap">
+      <button
+        type="button"
+        onclick="closeMenu()"
+        class="menu-close-button"
+        aria-label="Close mobile menu button"
+      >
+        <svg class="menu-close-icon" width="32" height="32">
+          <use href="/goit-team4-YourEnergy/assets/icons-C2AWWUWW.svg#icon-x_icon"></use>
+        </svg>
+      </button>
+    </div>
+    <ul class="menu-items">
+      <li class="menu-item" onclick="closeMenu()">
+        <a href="/">Home</a>
+      </li>
+      <li class="menu-item" onclick="closeMenu()">
+        <a href="/favorites">Favorites</a>
+      </li>
+    </ul>
+
+    <ul class="socials">
+      <li class="social-item">
+        <a
+          href="https://www.facebook.com/goITclub/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Link to Facebook"
+        >
+          <svg class="social-icon" width="26" height="26">
+            <use href="/goit-team4-YourEnergy/assets/icons-C2AWWUWW.svg#facebook"></use>
+          </svg>
+        </a>
+      </li>
+      <li class="social-item">
+        <a
+          href="https://www.instagram.com/goitclub/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Link to Instagram"
+        >
+          <svg class="social-icon" width="26" height="26">
+            <use href="/goit-team4-YourEnergy/assets/icons-C2AWWUWW.svg#instagram"></use>
+          </svg>
+        </a>
+      </li>
+      <li class="social-item">
+        <a
+          href="https://www.youtube.com/c/GoIT"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Link to Youtube"
+        >
+          <svg class="social-icon" width="26" height="26">
+            <use href="/goit-team4-YourEnergy/assets/icons-C2AWWUWW.svg#youtube"></use>
+          </svg>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+  </body>
+</html>

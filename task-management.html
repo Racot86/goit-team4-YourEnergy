@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Management System</title>
+    
+
+  <link rel="stylesheet" crossorigin href="/goit-team4-YourEnergy/assets/task-management-DLB-MEM-.css">
+  <link rel="stylesheet" crossorigin href="/goit-team4-YourEnergy/assets/styles-Cj_0g0o4.css">
+  <link rel="stylesheet" crossorigin href="/goit-team4-YourEnergy/assets/task-manager-Di9FvUSR.css">
+</head>
+<body>
+    <header class="header">
+  <div class="container">
+    <nav class="nav">
+      <a class="logo" href="/" rel="noopener noreferrer" aria-label="YOUR ENERGY">
+        <svg width="132" height="24">
+          <use href="/goit-team4-YourEnergy/assets/icons-C2AWWUWW.svg#logo"></use>
+        </svg>
+      </a>
+      <ul class="menu-items router">
+        <li class="menu-item active">
+          <a href="./index.html">Home</a>
+        </li>
+        <li class="menu-item">
+          <a href="favorites">Favorites</a>
+        </li>
+      </ul>
+      <ul class="socials">
+        <li class="social-item">
+          <a href="https://www.facebook.com/goITclub/" rel="noopener noreferrer" target="_blank" aria-label="Link to Facebook">
+            <svg width="28" height="28">
+              <use href="/goit-team4-YourEnergy/assets/icons-C2AWWUWW.svg#facebook"></use>
+            </svg>
+          </a>
+        </li>
+        <li class="social-item">
+          <a href="https://www.instagram.com/goitclub/" rel="noopener noreferrer" target="_blank" aria-label="Link to Instagram">
+            <svg width="28" height="28">
+              <use href="/goit-team4-YourEnergy/assets/icons-C2AWWUWW.svg#instagram"></use>
+            </svg>
+          </a>
+        </li>
+        <li class="social-item">
+          <a href="https://www.youtube.com/c/GoIT" rel="noopener noreferrer" target="_blank" aria-label="Link to Youtube">
+            <svg width="28" height="28">
+              <use href="/goit-team4-YourEnergy/assets/icons-C2AWWUWW.svg#youtube"></use>
+            </svg>
+          </a>
+        </li>
+      </ul>
+      <button type="button" class="menu-btn" onclick="openMenu()">
+        <svg width="32" height="32">
+          <use href="/goit-team4-YourEnergy/assets/icons-C2AWWUWW.svg#menu"></use>
+        </svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+
+    <div class="container">
+        <!-- Галерея изображений -->
+        <div class="task-images-gallery">
+            <div class="gallery-container" id="taskImagesGrid">
+                <!-- Сюда будут добавляться картинки -->
+            </div>
+        </div>
+
+        <!-- Новый блок с сеткой задач -->
+        <div class="tasks-compact-grid" id="tasksCompactGrid">
+            <!-- Сюда будут добавляться задачи в компактном виде -->
+        </div>
+
+        <!-- Таблица задач -->
+        <div class="task-grid">
+            <!-- Заголовки -->
+            <div class="header-cell"></div>
+            <div class="header-cell">Who Take</div>
+            <div class="header-cell">In Progress</div>
+            <div class="header-cell">To Verify</div>
+            <div class="header-cell">Done</div>
+
+            <!-- Important строка -->
+            <div class="priority-cell">Important</div>
+            <div class="drop-zone" data-priority="important" data-status="who-take"></div>
+            <div class="drop-zone" data-priority="important" data-status="in-progress"></div>
+            <div class="drop-zone" data-priority="important" data-status="to-verify"></div>
+            <div class="drop-zone" data-priority="important" data-status="done"></div>
+
+            <!-- To Fix строка -->
+            <div class="priority-cell">To Fix</div>
+            <div class="drop-zone" data-priority="to-fix" data-status="who-take"></div>
+            <div class="drop-zone" data-priority="to-fix" data-status="in-progress"></div>
+            <div class="drop-zone" data-priority="to-fix" data-status="to-verify"></div>
+            <div class="drop-zone" data-priority="to-fix" data-status="done"></div>
+
+            <!-- Normal строка -->
+            <div class="priority-cell">Normal</div>
+            <div class="drop-zone" data-priority="normal" data-status="who-take"></div>
+            <div class="drop-zone" data-priority="normal" data-status="in-progress"></div>
+            <div class="drop-zone" data-priority="normal" data-status="to-verify"></div>
+            <div class="drop-zone" data-priority="normal" data-status="done"></div>
+        </div>
+
+        <!-- После основной таблицы добавляем новые блоки -->
+        <div class="task-categories">
+            <!-- Must Have блок -->
+            <div class="category-block">
+                <div class="category-header">
+                    <div class="header-left">Must Have</div>
+                    <div class="header-right">Sort Type</div>
+                </div>
+                <div class="category-grid must-have-grid">
+                    <!-- Здесь будут отображаться задачи Must Have -->
+                </div>
+            </div>
+
+            <!-- Upgrade блок -->
+            <div class="category-block">
+                <div class="category-header">
+                    <div class="header-left">Upgrade</div>
+                    <div class="header-right">Sort Type</div>
+                </div>
+                <div class="category-grid upgrade-grid">
+                    <!-- Здесь будут отображаться задачи Upgrade -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Добавляем кнопку переключения темы рядом с кнопкой добавления -->
+        <div class="floating-buttons">
+            <button id="addTaskBtn" class="add-task-btn">+</button>
+            <button id="themeToggleBtn" class="theme-toggle-btn">
+                <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+                <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Модальные окна -->
+    <div id="taskModal" class="modal">
+    <div class="modal-content">
+        <form id="taskForm" class="modal-grid">
+            <!-- Row 1: Title and Delete button -->
+            <div class="title-row">
+                <input type="text" id="taskTitle" placeholder="Заголовок задачи" required>
+                <button type="button" class="delete-task-btn">Удалить<br>задачу</button>
+                <span class="close">&times;</span>
+            </div>
+
+            <!-- Row 2: Image section -->
+            <div class="image-row">
+                <button type="button" id="addImageBtn" class="add-image-btn">
+                    <i class="fas fa-plus"></i> Добавить изображение
+                </button>
+                <div id="taskImagePreview" class="task-image-preview"></div>
+                <input type="file" id="taskImageInput" accept="image/*" style="display: none;">
+            </div>
+
+            <!-- Row 3: Assignees -->
+            <div class="assignees-row">
+                <div class="assignees-container">
+                    <div class="assignee-header">
+                        <label>Исполнители</label>
+                        <button type="button" id="addAssigneeBtn" class="add-assignee-btn">+</button>
+                    </div>
+                    <div id="assigneesList">
+                        <div class="assignee-item">
+                            <select class="taskAssignee" required>
+                                <option value="empty">Empty</option>
+                                <option value="Andrii Sushylnikov">Andrii Sushylnikov</option>
+                                <option value="Daria Honcharuk">Daria Honcharuk</option>
+                                <option value="Dmytro Mayevsky">Dmytro Mayevsky</option>
+                                <option value="Maks Ki">Maks Ki</option>
+                                <option value="Mariia Sv.">Mariia Sv.</option>
+                                <option value="Roman Turas">Roman Turas</option>
+                                <option value="Viktoriia Didenko">Viktoriia Didenko</option>
+                                <option value="Hryhorii Chernysh">Hryhorii Chernysh (Mentor)</option>
+                                <option value="Daria">Daria (client manager)</option>
+                                <option value="Lesya Katanova">Lesya Katanova</option>
+                                <option value="Olena Deineha">Olena Deineha</option>
+                            </select>
+                            <button type="button" class="remove-assignee-btn">×</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Row 4: Task details -->
+            <div class="details-row">
+                <div class="task-number-container">
+                    <input type="text" id="taskNumber" placeholder="№" pattern="[0-9]{1,6}" maxlength="6">
+                    <div id="taskNumberSuggestions" class="suggestions-container"></div>
+                </div>
+                <select id="taskCategory" required>
+                    <option value="Must_Have" selected>Must Have</option>
+                    <option value="Upgrade">Upgrade</option>
+                    <option value="Specific">Specific</option>
+                </select>
+                <select id="taskPriority" required>
+                    <option value="important">Important</option>
+                    <option value="to-fix">To Fix</option>
+                    <option value="normal">Normal</option>
+                </select>
+                <select id="taskStatus" required>
+                    <option value="who-take">Who Take</option>
+                    <option value="in-progress">In Progress</option>
+                    <option value="to-verify">To Verify</option>
+                    <option value="done">Done</option>
+                </select>
+            </div>
+
+            <!-- Row 5: Description -->
+            <div class="description-row">
+                <textarea id="taskDescription" placeholder="Описание задачи" required></textarea>
+            </div>
+
+            <!-- Row 6: Subtasks -->
+            <div class="subtasks-row">
+                <div class="subtasks-container">
+                    <div class="subtasks-header">
+                        <label>Подзадачи</label>
+                        <button type="button" id="addSubtaskBtn" class="add-subtask-btn">+</button>
+                    </div>
+                    <div id="subtasksList">
+                        <!-- Subtasks will be added here -->
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="save-btn">Сохранить</button>
+        </form>
+    </div>
+</div>
+
+<div id="deleteConfirmModal" class="modal">
+    <div class="modal-content delete-confirm">
+        <h2>Подтверждение удаления</h2>
+        <p>Вы уверены, что хотите удалить эту задачу?</p>
+        <div class="confirm-buttons">
+            <button id="confirmDelete" class="danger-btn">Удалить</button>
+            <button id="cancelDelete" class="cancel-btn">Отмена</button>
+        </div>
+    </div>
+</div> 
+    
+    <script src="./js/task-manager.js"></script>
+    <!-- Модальное окно подтверждения удаления -->
+    <div id="deleteConfirmModal" class="modal">
+        <div class="modal-content delete-confirm">
+            <h2>Подтверждение удаления</h2>
+            <p>Вы уверены, что хотите удалить эту задачу?</p>
+            <div class="confirm-buttons">
+                <button id="confirmDelete" class="danger-btn">Удалить</button>
+                <button id="cancelDelete" class="cancel-btn">Отмена</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+  <div class="footer-container container">
+    <div class="footer-content">
+      <div class="footer-logo-and-social">
+        <a
+          href="./index.html"
+          class="footer-logo-link"
+          aria-label="YouEnergy"
+        >
+          <svg
+            class="footer-svg-logo"
+            viewBox="0 0 302 32"
+            width="132"
+            height="14"
+            aria-hidden="true"
+          >
+            <use x="0" y="0" href="/goit-team4-YourEnergy/assets/icons-C2AWWUWW.svg#icon-your-energy"></use>
+          </svg>
+        </a>
+
+        <ul class="footer-social-list">
+          <li class="footer-social-link">
+            <a
+              class="footer-icon"
+              href="https://www.facebook.com/goITclub/"
+              target="_blank"
+              aria-label="Facebook"
+            >
+              <svg
+                class="footer-svg"
+                viewBox="0 0 32 32"
+                width="24"
+                height="24"
+                aria-hidden="true"
+              >
+                <use x="0" y="0" href="/goit-team4-YourEnergy/assets/icons-C2AWWUWW.svg#icon-facebook"></use>
+              </svg>
+            </a>
+          </li>
+          <li class="footer-social-link">
+            <a
+              class="footer-icon"
+              href="https://www.instagram.com/goitclub/"
+              target="_blank"
+              aria-label="Instagram"
+            >
+              <svg
+                class="footer-svg"
+                viewBox="0 0 32 32"
+                width="24"
+                height="24"
+                aria-hidden="true"
+              >
+                <use x="0" y="0" href="/goit-team4-YourEnergy/assets/icons-C2AWWUWW.svg#icon-instagram"></use>
+              </svg>
+            </a>
+          </li>
+          <li class="footer-social-link">
+            <a
+              class="footer-icon"
+              href="https://www.youtube.com/c/GoIT"
+              target="_blank"
+              aria-label="YouTube"
+            >
+              <svg
+                class="footer-svg"
+                viewBox="0 0 32 32"
+                width="24"
+                height="24"
+                aria-hidden="true"
+              >
+                <use x="0" y="0" href="/goit-team4-YourEnergy/assets/icons-C2AWWUWW.svg#icon-youtube"></use>
+              </svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="footer-form">
+          <h2>Transforming  your <span class="footer-span">body</span> shape with us</h2>
+        <form class="subscribe-form" autocomplete="off">
+          <label>
+            Subscribe and learn about new exercises!
+            <input
+              type="email"
+              name="email"
+              required
+              pattern="^\w+(\.\w+)?@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$"
+              placeholder="Email"
+            />
+          </label>
+          <button type="submit">Send</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="bottom">
+        <p class="bottom-p">Your Energy. All rights reserved.</p>
+      <div class="footer-links-wrapper">
+        <ul class="footer-links">
+          <li><a class="policy" href="#">Privacy Policy /</a></li>
+          <li><a class="policy" href="#">Terms of Service</a></li>
+        </ul>
+        <p class="copyright">&#169; 2023</p>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+
+    <!-- Скрипты в конце body
+    <script src="./js/dev-drive.js"></script> -->
+
+</body>
+</html> 

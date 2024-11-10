@@ -10,7 +10,7 @@ import './js/router.js'
 import './js/sticky-header.js'
 import './js/modal-window.js';
 import './js/favorites.js';
-//test
+//test2
 // Если мы на странице task-management, загружаем дополнительные стили
 if (window.location.pathname.includes('task-management')) {
   import('./css/task-manager.css');

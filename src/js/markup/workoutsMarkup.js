@@ -1,12 +1,13 @@
+import { capitalizeFirstLetter } from './stringUtils';
+
 export default function createWorkoutsMarkup(cards) {
   return cards
     .sort((a, b) => a.name.localeCompare(b.name))
-    .map(
-      ({ _id, name, burnedCalories, bodyPart, target, gifUrl, rating }) => {
-        const rounded = Math.round(rating);
-        const formattedRating = rounded.toFixed(1);
+    .map(({ _id, name, burnedCalories, bodyPart, target, gifUrl, rating }) => {
+      const rounded = Math.round(rating);
+      const formattedRating = rounded.toFixed(1);
 
-        return `
+      return `
           <li class='workouts-card' data-name='${name}' data-id='${_id}'>
             <div class="card-header">
               <div class="card-header_left-side">
@@ -51,17 +52,18 @@ export default function createWorkoutsMarkup(cards) {
               >
                 <use x="0" y="0" href="./img/icons.svg#icon-running"></use>
               </svg>
-              <h3 class="title text-overflow">${name}</h3>
+              <h3 class="title text-overflow">${capitalizeFirstLetter(
+                name
+              )}</h3>
             </div>
             <div class="card-footer">
               <ul class="card-footer_items">
-                <li class="card-footer_item">Burned calories:: <span class="strong text-overflow item-one">${burnedCalories}</span></li>
+                <li class="card-footer_item">Burned calories: <span class="strong text-overflow item-one">${burnedCalories}</span></li>
                 <li class="card-footer_item">Body Part: <span class="strong text-overflow item-two">${bodyPart}</span></li>
                 <li class="card-footer_item">Target: <span class="strong text-overflow item-three">${target}</span></li>
               </ul>
             </div>
           </li>`;
-      }
-    )
+    })
     .join('');
 }

@@ -5,15 +5,17 @@ function initRouter() {
 
   // Function to handle route changes
   function handleRouteChange() {
-    // Check the current path
+    // Get the current path
     const currentPath = window.location.pathname;
 
-    // Redirect to '/' if the current path is not allowed
+    // If the current path is not allowed, redirect to '/'
     if (!allowedPaths.includes(currentPath)) {
-      window.history.replaceState({}, '', '/'); // Redirect to root
-      renderPageContent('/'); // Render root page content
+      // Redirect to the main path
+      window.history.replaceState({}, '', '/');
+      renderPageContent('/');
     } else {
-      renderPageContent(currentPath); // Render content for allowed paths
+      // Render the correct page content for the allowed path
+      renderPageContent(currentPath);
     }
   }
 
@@ -50,20 +52,37 @@ function initRouter() {
   handleRouteChange();
 }
 
+// Function to navigate, only changing the last endpoint
+function navigate(newEndpoint) {
+  //event.preventDefault(); // Prevent default link behavior
+
+  // Get the current path and replace only the last segment
+  const pathParts = window.location.pathname.split('/');
+  pathParts[pathParts.length - 1] = newEndpoint.replace('/', ''); // Replace last part with new endpoint
+
+  // Construct the new path
+  const newPath = pathParts.join('/');
+
+  // Update the URL to the new path without reloading the page
+  history.pushState({}, '', newPath);
+  //handleRouteChange();
+}
+
 // Initialize router
 document.addEventListener('DOMContentLoaded', initRouter);
 
 
-
 const routerButtons = document.querySelector('.router');
 routerButtons.addEventListener('click', (e)=>{
-
+e.preventDefault();
   switch (e.target.innerHTML.toLowerCase()) {
     case 'home':
+      navigate('/')
       routerButtons.children[0].classList.add('active');
       routerButtons.children[1].classList.remove('active');
       break;
       case 'favorites':
+        navigate('/favorites');
         routerButtons.children[0].classList.remove('active');
         routerButtons.children[1].classList.add('active');
       break;

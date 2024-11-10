@@ -37,7 +37,20 @@ onUrlChange((newUrl) => {
 
 
 // Change the URL endpoint without reloading the page
-function changeUrlEndpoint(newPath) {
+function changeLastEndpoint(newEndpoint) {
+  // Get the current URL path
+  const currentPath = window.location.pathname;
+
+  // Split the path into parts
+  const pathParts = currentPath.split('/');
+
+  // Replace the last part with the new endpoint
+  pathParts[pathParts.length - 1] = newEndpoint;
+
+  // Join the path back together
+  const newPath = pathParts.join('/');
+
+  // Update the URL without reloading the page
   window.history.pushState({}, '', newPath);
 }
 
@@ -48,12 +61,12 @@ routerButtons.addEventListener('click', (e)=>{
     case 'home':
       routerButtons.children[0].classList.add('active');
       routerButtons.children[1].classList.remove('active');
-      changeUrlEndpoint('/');
+      changeLastEndpoint('/');
       break;
       case 'favorites':
         routerButtons.children[0].classList.remove('active');
         routerButtons.children[1].classList.add('active');
-        changeUrlEndpoint('/favorites');
+        changeLastEndpoint('/favorites');
       break;
   }
 });

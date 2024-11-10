@@ -1,8 +1,7 @@
 // Router function to handle navigation
 function initRouter() {
   // Define the allowed routes
-  const allowedPaths = ['/', '/favorites'];
-
+  const allowedPaths = ['goit-team4-YourEnergy/', 'goit-team4-YourEnergy/favorites'];
   // Function to handle route changes
   function handleRouteChange() {
     // Get the current path
